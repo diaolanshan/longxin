@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<security:http auto-config="true" use-expressions="false"
+		access-denied-page="/user/login_failure.html">
+		
+		<!--允许所有人访问 -->
+		<!-- <security:intercept-url pattern="/**" access="permitAll" /> -->
+		<!--允许ROLE_ADMIN权限访问 -->
+		<security:intercept-url pattern="/user/findAll.html"
+			access="ROLE_ADMIN" />
+		<!--允许ROLE_ADMIN权限访问 -->
+		<security:intercept-url pattern="/user/**"
+			access="ROLE_ADMIN" />
+		<!--允许ROLE_USER权限访问 -->
+		<security:intercept-url pattern="/success.jsp"
+			access="ROLE_USER,ROLE_ADMIN" />
+		<!--允许IS_AUTHENTICATED_ANONYMOUSLY匿名访问 -->
+		<security:intercept-url pattern="/anonymously.jsp"
+			access="IS_AUTHENTICATED_ANONYMOUSLY" />
+
+		<!-- login-page:默认指定的登录页面. authentication-failure-url:出错后跳转页面. default-target-url:成功登陆后跳转页面 -->
+		<security:form-login login-page="/view/login/login.jsp"
+			authentication-failure-url="/view/login/login_failure.html"
+			default-target-url="/view/login/success.jsp" />
+			
+		<!-- invalidate-session：指定在退出系统时是否要销毁Session。logout-success-url：退出系统后转向的URL。logout-url：指定了用于响应退出系统请求的URL。其默认值为：/j_spring_security_logout。 -->
+		<security:logout invalidate-session="true"
+			logout-success-url="/view/login/index.jsp" logout-url="/j_spring_security_logout" />
+			
+		<!-- max-sessions:允许用户帐号登录的次数。范例限制用户只能登录一次。exception-if-maximum-exceeded: 
+			默认为false，此值表示：用户第二次登录时，前一次的登录信息都被清空。当exception-if-maximum-exceeded="true"时系统会拒绝第二次登录。 -->
+		<security:session-management>
+			<security:concurrency-control
+				error-if-maximum-exceeded="true" max-sessions="1" />
+		</security:session-management>
+
+	</security:http>
+	<!-- 指定一个自定义的authentication-manager :customUserDetailsService -->
+	<security:authentication-manager>
+		<security:authentication-provider
+			user-service-ref="customUserDetailsService">
+			<!-- <security:password-encoder ref="passwordEncoder" /> -->
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<!-- 对密码进行MD5编码 -->
+	<bean id="passwordEncoder"
+		class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+		
+	<bean id="customUserDetailsService" class="org.longxin.service.impl.UserDetailsServiceImpl"></bean>
+</beans>
