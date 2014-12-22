@@ -20,4 +20,14 @@ public class UserDAOImpl extends HibernateDaoSupport implements UserDAO {
 		
 		return null;
 	}
+
+	public void deleteUserByID(int userID) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void saveUser(Users user) {
+		// TODO Auto-generated method stub
+		
+	}
 }

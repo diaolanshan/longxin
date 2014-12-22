@@ -11,4 +11,8 @@ public interface ProductService {
 	public void saveProduct(Product product);
 
 	public void deleteProduct(Product product);
+	
+	public Product getProjectByID(int prodcutID);
+	
+	public void deleteProduct(int productID);
 }
