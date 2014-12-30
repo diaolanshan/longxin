@@ -16,7 +16,7 @@
 		<!--允许所有人访问 -->
 		<!-- <security:intercept-url pattern="/**" access="permitAll" /> -->
 		<!--允许ROLE_ADMIN权限访问 -->
-		<security:intercept-url pattern="/user/findAll.html"
+		<security:intercept-url pattern="/product/**"
 			access="ROLE_ADMIN" />
 		<!--允许ROLE_ADMIN权限访问 -->
 		<security:intercept-url pattern="/user/**"
@@ -29,9 +29,9 @@
 			access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
 		<!-- login-page:默认指定的登录页面. authentication-failure-url:出错后跳转页面. default-target-url:成功登陆后跳转页面 -->
-		<security:form-login login-page="/view/login/login.jsp"
-			authentication-failure-url="/view/login/login_failure.html"
-			default-target-url="/view/login/success.jsp" />
+		<security:form-login login-page="/view/login.jsp"
+			authentication-failure-url="/view/login.jsp"
+			default-target-url="/view/success.jsp" />
 			
 		<!-- invalidate-session：指定在退出系统时是否要销毁Session。logout-success-url：退出系统后转向的URL。logout-url：指定了用于响应退出系统请求的URL。其默认值为：/j_spring_security_logout。 -->
 		<security:logout invalidate-session="true"

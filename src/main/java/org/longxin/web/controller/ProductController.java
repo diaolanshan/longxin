@@ -3,6 +3,8 @@ package org.longxin.web.controller;
 import org.longxin.domains.Product;
 import org.longxin.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,7 +39,10 @@ public class ProductController {
      */
     @RequestMapping(value="/add", method=RequestMethod.POST) 
 	public String addProduct(Product product) {
-		productService.saveProduct(product);
+    	UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+    		    .getAuthentication()
+    		    .getPrincipal();
+    	productService.saveProduct(product);
 		return "redirect:/product/addproduct";
 	}
 
