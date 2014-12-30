@@ -34,12 +34,34 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		return user;
 	}
 
+	@SuppressWarnings("deprecation")
 	public Collection<GrantedAuthority> getAuthorities(Roles role) {
 
 		List<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
 
-		authList.add(new GrantedAuthorityImpl(role.toString()));
-
+		if(Roles.ROLE_ADMIN.equals(role))
+		{
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_ADMIN.toString()));
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_SUPERTECHNICALSUPPORT.toString()));
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_TECHNICALSUPPORT.toString()));
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_VISITOR.toString()));
+		}
+		else if(Roles.ROLE_SUPERTECHNICALSUPPORT.equals(role))
+		{
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_SUPERTECHNICALSUPPORT.toString()));
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_TECHNICALSUPPORT.toString()));
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_VISITOR.toString()));
+		}
+		else if(Roles.ROLE_TECHNICALSUPPORT.equals(role))
+		{
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_TECHNICALSUPPORT.toString()));
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_VISITOR.toString()));
+		}
+		else if(Roles.ROLE_VISITOR.equals(role))
+		{
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_VISITOR.toString()));
+		}
+		
 		return authList;
 	}
 }
