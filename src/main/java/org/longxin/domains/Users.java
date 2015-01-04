@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.longxin.util.Roles;
 
@@ -33,6 +34,7 @@ public class Users implements java.io.Serializable {
 	private String password;
 	private Date createdat;
 	private Roles role;
+	private String passwordAgain;
 
 	public Users() {
 	}
@@ -97,5 +99,15 @@ public class Users implements java.io.Serializable {
 	public void setRole(Roles role) {
 		this.role = role;
 	}
+	
+	@Transient
+	public String getPasswordAgain()
+	{
+		return passwordAgain;
+	}
 
+	public void setPasswordAgain(String passwordAgain)
+	{
+		this.passwordAgain = passwordAgain;
+	}
 }
