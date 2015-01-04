@@ -1,5 +1,7 @@
 package org.longxin.service.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.longxin.dao.UserDAO;
 import org.longxin.domains.Users;
@@ -16,5 +18,10 @@ public class UserServiceImpl implements UserService{
 	public Users findUserByUserName(String userName)
 	{
 		return userDAO.findUserByUserName(userName);
+	}
+	
+	public List<Users> getAllUsers()
+	{
+		return userDAO.getAllUsers();
 	}
 }

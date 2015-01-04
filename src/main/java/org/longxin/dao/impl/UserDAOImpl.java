@@ -6,28 +6,41 @@ import org.longxin.dao.UserDAO;
 import org.longxin.domains.Users;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-public class UserDAOImpl extends HibernateDaoSupport implements UserDAO {
-
+public class UserDAOImpl extends HibernateDaoSupport implements UserDAO
+{
 	@SuppressWarnings("unchecked")
-	public Users findUserByUserName(String userName) {
+	public Users findUserByUserName(String userName)
+	{
 		List<Users> users = (List<Users>) this.getHibernateTemplate().find(
 				"FROM Users user WHERE user.username = ?", userName);
-		
-		if(users!=null&&users.size()>0)
+
+		if (users != null && users.size() > 0)
 		{
 			return users.get(0);
 		}
-		
+
 		return null;
 	}
 
-	public void deleteUserByID(int userID) {
-		// TODO Auto-generated method stub
-		
+	@SuppressWarnings("unchecked")
+	public List<Users> getAllUsers()
+	{
+		return this.getHibernateTemplate().find("FROM Users");
 	}
 
-	public void saveUser(Users user) {
-		// TODO Auto-generated method stub
-		
+	public void deleteUserByID(int userID)
+	{
+		Users user = this.findUserByID(userID);
+		this.getHibernateTemplate().delete(user);
+	}
+
+	public Users findUserByID(int userID)
+	{
+		return this.getHibernateTemplate().get(Users.class, userID);
+	}
+
+	public void saveUser(Users user)
+	{
+		this.getHibernateTemplate().saveOrUpdate(user);
 	}
 }

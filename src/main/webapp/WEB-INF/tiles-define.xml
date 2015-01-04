@@ -8,7 +8,6 @@
 		<put-attribute name="header" value="/tiles/header.jsp" />
 		<put-attribute name="menu" value="/tiles/menu.jsp" />
 		<put-attribute name="body" value="" />
-		<put-attribute name="footer" value="/tiles/footer.jsp" />
 	</definition>
 
 	<definition name="/product/addproduct" extends="base.definition">
