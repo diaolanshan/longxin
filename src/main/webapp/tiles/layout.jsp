@@ -9,8 +9,10 @@
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/layout.css" rel="stylesheet">
-<script src="../js/bootstrap.min.js"></script>
+<link href="../css/bootstrap-table.min.css" rel="stylesheet">
 <script src="../js/jquery-1.11.2.min.js"></script>
+<script src="../js/bootstrap-table.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
 <script src="../js/jquery.validate.js"></script>
 </head>
 <body>

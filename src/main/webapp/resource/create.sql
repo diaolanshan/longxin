@@ -1,0 +1,4 @@
+CREATE TABLE `longxin`.`users` (
+  `ID` INT NOT NULL AUTO_INCREMENT,
+  'USERNAME' 
+  PRIMARY KEY (`ID`));
