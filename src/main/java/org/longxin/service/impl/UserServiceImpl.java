@@ -24,4 +24,9 @@ public class UserServiceImpl implements UserService{
 	{
 		return userDAO.getAllUsers();
 	}
+	
+	public Users findUserByID(int userID)
+	{
+		return userDAO.findUserByID(userID);
+	}
 }

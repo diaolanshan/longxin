@@ -51,6 +51,7 @@
 			<list>
 				<value>org.longxin.domains.Product</value>
 				<value>org.longxin.domains.Users</value>
+				<value>org.longxin.domains.Department</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -99,6 +100,10 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
+	<bean id="departmentDAO" class="org.longxin.dao.impl.DepartmentDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
 	<bean id="productDAO" class="org.longxin.dao.impl.ProductDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
@@ -106,5 +111,7 @@
 	<bean id="userService" class="org.longxin.service.impl.UserServiceImpl"></bean>
 	
 	<bean id="productService" class="org.longxin.service.impl.ProductServiceImpl"></bean>
+	
+	<bean id="departmentService" class="org.longxin.service.impl.DepartmentServiceImpl"></bean>
 
 </beans>

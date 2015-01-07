@@ -12,7 +12,10 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -34,6 +37,7 @@ public class Users implements java.io.Serializable {
 	private String password;
 	private Date createdat;
 	private Roles role;
+	private Department department;
 	private String passwordAgain;
 
 	public Users() {
@@ -100,6 +104,18 @@ public class Users implements java.io.Serializable {
 		this.role = role;
 	}
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "DEPARTMENT")
+	public Department getDepartment()
+	{
+		return this.department;
+	}
+
+	public void setDepartment(Department department)
+	{
+		this.department = department;
+	}
+
 	@Transient
 	public String getPasswordAgain()
 	{
@@ -110,4 +126,5 @@ public class Users implements java.io.Serializable {
 	{
 		this.passwordAgain = passwordAgain;
 	}
+	
 }
