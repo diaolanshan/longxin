@@ -50,6 +50,8 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>org.longxin.domains.Product</value>
+				<value>org.longxin.domains.feature</value>
+				<value>org.longxin.domains.function</value>
 				<value>org.longxin.domains.Users</value>
 				<value>org.longxin.domains.Department</value>
 			</list>
