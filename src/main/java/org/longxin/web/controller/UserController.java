@@ -2,6 +2,7 @@ package org.longxin.web.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.longxin.domains.Users;
 import org.longxin.service.UserService;
 import org.longxin.web.controller.bean.UserSearchBean;
@@ -20,15 +21,9 @@ public class UserController
 	@Autowired
 	UserService userService;
 	
-	UserSearchBean searchForm;
-
 	@RequestMapping(value = "/list/all", method = RequestMethod.GET)
 	public @ResponseBody List<Users> listUsers(Model model)
 	{
-		if (searchForm != null)
-		{
-
-		}
 		return  userService.getAllUsers();
 	}
 	
@@ -36,14 +31,22 @@ public class UserController
 	public String searchUsers(Model model)
 	{
 		model.addAttribute("userSearchBean", new UserSearchBean());
+		model.addAttribute("users", userService.getAllUsers());
 		return "/user/usersearch";
 	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public String doSearchUsers(Model model, UserSearchBean searchForm)
 	{
-		this.searchForm = searchForm;
 		model.addAttribute("userSearchBean", searchForm);
+		if (StringUtils.isEmpty(searchForm.getKeyword()))
+		{
+			model.addAttribute("users", userService.getAllUsers());
+		} else
+		{
+			model.addAttribute("users",
+					userService.searchUsers(searchForm.getKeyword()));
+		}
 		return "/user/usersearch";
 	}
 	
@@ -55,9 +58,9 @@ public class UserController
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String updateUsers(Model model)
+	public String updateUsers(Model model, Users user)
 	{
-		model.addAttribute(new Users());
+		
 		return "/user/listusers";
 	}
 	

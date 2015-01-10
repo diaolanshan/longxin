@@ -29,4 +29,9 @@ public class UserServiceImpl implements UserService{
 	{
 		return userDAO.findUserByID(userID);
 	}
+	
+	public List<Users> searchUsers(String keyword)
+	{
+		return userDAO.searchUsers(keyword);
+	}
 }

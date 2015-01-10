@@ -38,6 +38,7 @@ public class Users implements java.io.Serializable {
 	private Date createdat;
 	private Roles role;
 	private Department department;
+	private String telephone;
 	private String passwordAgain;
 
 	public Users() {
@@ -104,7 +105,7 @@ public class Users implements java.io.Serializable {
 		this.role = role;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "DEPARTMENT")
 	public Department getDepartment()
 	{
@@ -114,6 +115,17 @@ public class Users implements java.io.Serializable {
 	public void setDepartment(Department department)
 	{
 		this.department = department;
+	}
+	
+	@Column(name = "TELEPHONE", length = 256)
+	public String getTelephone()
+	{
+		return telephone;
+	}
+
+	public void setTelephone(String telephone)
+	{
+		this.telephone = telephone;
 	}
 
 	@Transient
@@ -126,5 +138,7 @@ public class Users implements java.io.Serializable {
 	{
 		this.passwordAgain = passwordAgain;
 	}
+	
+	
 	
 }

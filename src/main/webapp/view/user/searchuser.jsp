@@ -1,60 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 
-<script>
-    $(function () {
-
-            $('#table-javascript').bootstrapTable({
-                method: 'get',
-                url: 'http://localhost:8080/longxin/user/list/all.json',
-                cache: false,
-                height: 400,
-                striped: true,
-                pagination: true,
-                pageSize: 50,
-                pageList: [10, 25, 50, 100, 200],
-                search: true,
-                showColumns: true,
-                showRefresh: true,
-                minimumCountColumns: 2,
-                clickToSelect: true,
-                columns: [{
-                    field: 'state',
-                    checkbox: true
-                }, {
-                    field: 'id',
-                    title: 'Item ID',
-                    align: 'right',
-                    valign: 'bottom',
-                    sortable: true
-                }, {
-                    field: 'name',
-                    title: 'Item Name',
-                    align: 'center',
-                    valign: 'middle',
-                    sortable: true,
-                    formatter: nameFormatter
-                }, {
-                    field: 'price',
-                    title: 'Item Price',
-                    align: 'left',
-                    valign: 'top',
-                    sortable: true,
-                    formatter: priceFormatter,
-                    sorter: priceSorter
-                }, {
-                    field: 'operate',
-                    title: 'Item Operate',
-                    align: 'center',
-                    valign: 'middle',
-                    clickToSelect: false,
-                    formatter: operateFormatter,
-                    events: operateEvents
-                }]
-            });
-        );
-    });
-</script>
 <form:form method="POST" modelAttribute="userSearchBean" role="form"
 	class="form-horizontal" id="searchUserForm">
 	
@@ -74,15 +21,30 @@
 		</div>
 	
 	</fieldset>
-	
-	<table data-toggle="table" data-url="/longxin/user/list/all.json" data-cache="false" data-height="299" data-pagination="true">
+	<br/>
+	<table data-toggle="table" data-cache="false" data-height="299" data-pagination="true">
 		<thead>
 	        <tr>
-	            <th data-field="id"  data-sortable="true" >Item ID</th>
-	            <th data-field="username"  data-sortable="true">Item Name</th>
-	            <th data-field="createdat"  data-sortable="true">Item Price</th>
+	            <th data-field="id"  data-sortable="true">用户名</th>
+	            <th data-field="username"  data-sortable="true">用户名</th>
+	            <th data-field="createdat"  data-sortable="true">创建日期</th>
+	            <th data-field="role"  data-sortable="true">权限</th>
+	            <th data-field="department"  data-sortable="true">部门</th>
+	            <th data-sortable="false">操作</th>
 	        </tr>
    	 	</thead>
+   	 	<tbody>
+   	 		<c:forEach var="item" items="${users}">
+   	 			<tr>
+   	 				<td>${item.username}</td>
+   	 				<td>${item.username}</td>
+   	 				<td>${item.createdat}</td>
+   	 				<td>${item.role.description}</td>
+   	 				<td>${item.getDepartment().getDepartmentname()}</td>
+   	 				<td><a href="/user/edit/${item.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a></td>
+   	 			</tr>
+   	 		</c:forEach>
+   	 	</tbody>
 	</table>
 	
 </form:form>

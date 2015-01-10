@@ -43,4 +43,12 @@ public class UserDAOImpl extends HibernateDaoSupport implements UserDAO
 	{
 		this.getHibernateTemplate().saveOrUpdate(user);
 	}
+
+	public List<Users> searchUsers(String keyword)
+	{
+		String wildcardKeyword = "%" + keyword +"%";
+		List<Users> users = (List<Users>) this.getHibernateTemplate().find(
+				"FROM Users user WHERE user.username LIKE ? OR user.telephone like ? ", wildcardKeyword, wildcardKeyword);
+		return users;
+	}
 }

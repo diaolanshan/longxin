@@ -10,6 +10,7 @@
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/layout.css" rel="stylesheet">
 <link href="../css/bootstrap-table.min.css" rel="stylesheet">
+<link href="../css/bootstrap-theme.min.css" rel="stylesheet">
 <script src="../js/jquery-1.11.2.min.js"></script>
 <script src="../js/bootstrap-table.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>

@@ -15,4 +15,6 @@ public interface UserDAO {
 	public Users findUserByID(int userID);
 
 	public void saveUser(Users user);
+	
+	public List<Users> searchUsers(String keyword);
 }

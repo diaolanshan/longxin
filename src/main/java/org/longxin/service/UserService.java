@@ -11,4 +11,6 @@ public interface UserService {
 	public List<Users> getAllUsers();
 	
 	public Users findUserByID(int userID);
+	
+	public List<Users> searchUsers(String keyword);
 }
