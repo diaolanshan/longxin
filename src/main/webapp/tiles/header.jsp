@@ -1,3 +1,4 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
 <div class="navbar-header">
 	<button type="button" class="navbar-toggle collapsed"
 		data-toggle="collapse" data-target="#navbar" aria-expanded="false"
@@ -12,7 +13,7 @@
 		<li><a href="#">Dashboard</a></li>
 		<li><a href="#">Settings</a></li>
 		<li><a href="#">Profile</a></li>
-		<li><a href="#">Help</a></li>
+		<li><a href="/longxin/view/login.jsp">退出</a></li>
 	</ul>
 	<form class="navbar-form navbar-right">
 		<input type="text" class="form-control" placeholder="Search...">

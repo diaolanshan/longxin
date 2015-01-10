@@ -7,6 +7,7 @@
 		<put-attribute name="title" value="" />
 		<put-attribute name="header" value="/tiles/header.jsp" />
 		<put-attribute name="menu" value="/tiles/menu.jsp" />
+		<put-attribute name="menuItem" value="productmanagement" />
 		<put-attribute name="body" value="" />
 	</definition>
 
@@ -18,11 +19,13 @@
 	<definition name="/user/adduser" extends="base.definition">
 		<put-attribute name="title" value="添加用户" />
 		<put-attribute name="body" value="/view/user/adduser.jsp" />
+		<put-attribute name="menuItem" value="usermanagement" />
 	</definition>
 	
 	<definition name="/user/usersearch" extends="base.definition">
 		<put-attribute name="title" value="用户管理" />
 		<put-attribute name="body" value="/view/user/searchuser.jsp" />
+		<put-attribute name="menuItem" value="usermanagement" />
 	</definition>
 
 </tiles-definitions>  

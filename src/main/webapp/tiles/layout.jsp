@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -15,9 +16,10 @@
 <script src="../js/bootstrap-table.min.js"></script>
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/jquery.validate.js"></script>
+<script src="../js/longxin.js"></script>
 </head>
 <body>
-
+	<div style="display:none" id="meanItem"><tiles:getAsString name="menuItem"></tiles:getAsString></div>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<tiles:insertAttribute name="header" />
@@ -31,6 +33,11 @@
 			</div>
 
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<ol class="breadcrumb">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">2013</a></li>
+					<li class="active">十一月</li>
+				</ol>
 				<tiles:insertAttribute name="body" />
 			</div>
 		</div>
