@@ -27,6 +27,13 @@ public class UserController
 		return  userService.getAllUsers();
 	}
 	
+	@RequestMapping(value = "/check", method = RequestMethod.GET)
+	public @ResponseBody boolean checkUserName(Model model)
+	{
+		return  true;
+	}
+	
+	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String searchUsers(Model model)
 	{

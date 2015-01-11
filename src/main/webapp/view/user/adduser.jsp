@@ -7,7 +7,17 @@ $().ready(function(){
 		rules: {
 			username: {
 				required: true,
-				minlength: 5
+				minlength: 5,
+				remote: {
+					 url: "http://localhost:8080/longxin/user/check",
+					 type: "post",
+					 data: {
+					 	username: function() 
+					 		{
+					 			return $("#username").val();
+					 		}
+					 	}
+					 }
 			},
 			password: {
 				required: true,
@@ -26,7 +36,8 @@ $().ready(function(){
 		messages: {
 			username: {
 				required: "请输入用户名",
-				minlength: "Your username must consist of at least 2 characters"
+				minlength: "Your username must consist of at least 2 characters",
+				remote: "用户名已经存在"
 			},
 			password: {
 				required: "请输入密码",

@@ -1,5 +1,7 @@
 package org.longxin.web.controller;
 
+import java.util.List;
+
 import org.longxin.domains.Product;
 import org.longxin.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,9 @@ public class ProductController {
 	
 	@RequestMapping(method = RequestMethod.GET)  
     public String getAllProducts(Model model) {  
-        //messages = messageBoardService.listMessages();  
-        //model.addAttribute("messages", messages);  
-        return "messageList";  
+		List<Product> products = productService.getAllProducts();
+		model.addAttribute("products", products);
+        return "redirect:/product/list";  
     }
 	
     /**

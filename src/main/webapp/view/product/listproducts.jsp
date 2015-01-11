@@ -1,12 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<html>
-<head>
-<meta charset="utf-8">
-<link href="../../css/bootstrap.min.css" rel="stylesheet">
-<script src="../../js/bootstrap.min.js"></script>
-</head>
 <body>
 	<table class="table table-striped">
 		<caption>条纹表格布局</caption>
