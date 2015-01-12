@@ -2,21 +2,25 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%  
+String path = request.getContextPath();  
+String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";  
+%>  
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
     "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
-<link href="../css/bootstrap.min.css" rel="stylesheet">
-<link href="../css/layout.css" rel="stylesheet">
-<link href="../css/bootstrap-table.min.css" rel="stylesheet">
-<link href="../css/bootstrap-theme.min.css" rel="stylesheet">
-<script src="../js/jquery-1.11.2.min.js"></script>
-<script src="../js/bootstrap-table.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/jquery.validate.js"></script>
-<script src="../js/longxin.js"></script>
+<link href="<%=path%>/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=path%>/css/layout.css" rel="stylesheet">
+<link href="<%=path%>/css/bootstrap-table.min.css" rel="stylesheet">
+<link href="<%=path%>/css/bootstrap-theme.min.css" rel="stylesheet">
+<script src="<%=path%>/js/jquery-1.11.2.min.js"></script>
+<script src="<%=path%>/js/bootstrap-table.min.js"></script>
+<script src="<%=path%>/js/bootstrap.min.js"></script>
+<script src="<%=path%>/js/jquery.validate.js"></script>
+<script src="<%=path%>/js/longxin.js"></script>
 </head>
 <body>
 	<div style="display:none" id="meanItem"><tiles:getAsString name="menuItem"></tiles:getAsString></div>

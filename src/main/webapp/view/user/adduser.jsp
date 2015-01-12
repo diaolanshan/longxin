@@ -10,7 +10,7 @@ $().ready(function(){
 				minlength: 5,
 				remote: {
 					 url: "http://localhost:8080/longxin/user/check",
-					 type: "post",
+					 type: "get",
 					 data: {
 					 	username: function() 
 					 		{
@@ -45,14 +45,14 @@ $().ready(function(){
 			},
 			telephone: {
 				required: "请输入电话号码",
-				minlength: "密码长度不能小于7位"
+				minlength: "电话长度不能小于7位"
 			},
 			passwordAgain: {
 				required: "请输入确认密码",
 				minlength: "密码长度不能小于5位",
 				equalTo: "两次输入密码不一致"
 			}
-		},
+		}
 	});
 	});
 </script>
@@ -84,7 +84,7 @@ $().ready(function(){
 		<label for="telephone" class="col-sm-2 control-label">电话号码：</label>
 		<div class="col-sm-10">
 			<form:input type="text" class="form-control" id="telephone"
-				placeholder="电话号码" path="password" />
+				placeholder="电话号码" path="telephone" />
 		</div>
 	</div>
 

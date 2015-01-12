@@ -13,4 +13,10 @@ public interface UserService {
 	public Users findUserByID(int userID);
 	
 	public List<Users> searchUsers(String keyword);
+	
+	public void addUser(Users user);
+	
+	public void editUser(Users user);
+	
+	public void deleteUser(int userID);
 }
