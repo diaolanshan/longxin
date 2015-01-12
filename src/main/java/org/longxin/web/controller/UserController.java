@@ -21,6 +21,11 @@ public class UserController
 	@Autowired
 	UserService userService;
 	
+	/**
+	 * Json response
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/list/all", method = RequestMethod.GET)
 	public @ResponseBody List<Users> listUsers(Model model)
 	{
