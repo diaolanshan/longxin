@@ -87,6 +87,26 @@ $().ready(function(){
 				placeholder="电话号码" path="telephone" />
 		</div>
 	</div>
+	<div class="form-group">
+		<label for="role" class="col-sm-2 control-label">用户角色：</label>
+		<div class="col-sm-10">
+			<form:select path="role" class="form-control" id="role">  
+			  <option value="ROLE_VISITOR">普通用户</option>
+			  <option value="ROLE_TECHNICALSUPPORT">技术人员</option>
+			  <option value="ROLE_SUPERTECHNICALSUPPORT">高级技术人员</option>
+			  <option value="ROLE_ADMIN">管理员</option>
+	        </form:select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="department" class="col-sm-2 control-label">部门：</label>
+		<div class="col-sm-10">
+			<form:select path="department.id" class="form-control" id="department">  
+			  <option value="1">A</option>
+			  <option value="2">B</option>
+	        </form:select><br/>
+		</div>
+	</div>
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
