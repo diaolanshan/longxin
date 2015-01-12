@@ -17,4 +17,6 @@ public interface UserDAO {
 	public void saveUser(Users user);
 	
 	public List<Users> searchUsers(String keyword);
+	
+	public void editUser(Users user);
 }

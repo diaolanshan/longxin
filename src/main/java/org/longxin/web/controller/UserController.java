@@ -67,15 +67,32 @@ public class UserController
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String updateUsers(Model model, Users user)
 	{
-		
-		return "/user/listusers";
+		userService.addUser(user);
+		model.addAttribute("userSearchBean", new UserSearchBean());
+		model.addAttribute(new Users());
+		return "redirect:/user/search";
 	}
 	
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{userId}", method = RequestMethod.GET)
 	public String editUsers(@PathVariable String userId, Model model)
 	{
 		Users user = userService.findUserByID(Integer.valueOf(userId));
-		model.addAttribute(user);
+		model.addAttribute("user",user);
 		return "/user/edituser";
+	}
+	
+	@RequestMapping(value = "/edit/{userId}", method = RequestMethod.POST)
+	public String editUsers(Model model, Users user)
+	{
+		userService.editUser(user);
+		model.addAttribute("userSearchBean", new UserSearchBean());
+		model.addAttribute(new Users());
+		return "redirect:/user/search";
+	}
+	
+	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.POST)
+	public void deleteUsers(@PathVariable String userId,Model model)
+	{
+		userService.deleteUser(Integer.valueOf(userId));
 	}
 }
