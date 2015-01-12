@@ -2,6 +2,8 @@ package org.longxin.domains;
 
 // Generated 2014-12-17 22:42:16 by Hibernate Tools 3.4.0.CR1
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,7 +30,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @Entity
 @Table(name = "product", catalog = "longxin")
 @JsonIgnoreProperties
-public class Product implements java.io.Serializable {
+public class Product implements java.io.Serializable, Cloneable {
 
 	private static final long serialVersionUID = 3368790111062734832L;
 	private Integer id;
@@ -84,4 +86,23 @@ public class Product implements java.io.Serializable {
 	{
 		this.features = features;
 	}
+	
+	 public Object clone() throws CloneNotSupportedException  
+     {  
+      Product cloned = (Product) super.clone();  
+      cloned.setId(null);
+      if(this.features!=null)
+      {
+    	  Set<Feature> clonedFeatures = new HashSet<Feature>();
+    	  for(Feature feature : features)
+    	  {
+    		  Feature clonedFeature = (Feature) feature.clone();
+    		  clonedFeatures.add(clonedFeature);
+    	  }
+    	  
+    	  cloned.setFeatures(clonedFeatures);
+      }
+      cloned.createdat = (Date) this.createdat.clone();  
+      return cloned;  
+     }  
 }
