@@ -45,4 +45,9 @@ public class ProductServiceImpl implements ProductService
 	{
 		return productDAO.getProductByID(prodcutID);
 	}
+
+	public void cloneProduct(Product product) throws CloneNotSupportedException
+	{
+		Product cloned = (Product) product.clone(); 
+	}
 }

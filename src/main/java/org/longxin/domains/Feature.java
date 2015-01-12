@@ -4,11 +4,14 @@ package org.longxin.domains;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +23,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "feature", catalog = "longxin")
-public class Feature implements java.io.Serializable
+public class Feature implements java.io.Serializable, Cloneable
 {
 	private static final long serialVersionUID = 5379079441355132505L;
 	private Integer id;
@@ -90,6 +93,15 @@ public class Feature implements java.io.Serializable
 	public void setFunctions(Set<Function> functions)
 	{
 		this.functions = functions;
+	}
+	
+	public Object clone() throws CloneNotSupportedException 
+	{
+		//TODO
+		Feature cloned = (Feature) super.clone();
+		cloned.setId(null);
+		
+		throw new CloneNotSupportedException();
 	}
 
 }
