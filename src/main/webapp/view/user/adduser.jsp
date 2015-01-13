@@ -110,8 +110,8 @@ $().ready(function(){
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-			<input type="submit" class="btn btn-default" value="添加用户" /> <input
-				type="reset" class="btn btn-default" value="重置" />
+			<input type="submit" class="btn btn-primary" value="添加用户" /> <input
+				type="reset" class="btn btn-primary" value="重置" />
 		</div>
 	</div>
 </form:form>
