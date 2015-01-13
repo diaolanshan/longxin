@@ -32,7 +32,7 @@
 		<div class="form-group">
 			<label for="keyword" class="col-sm-2 control-label">关键字：</label>
 			<div class="col-sm-10">
-				<form:input type="text" class="form-control" id="keyword"  path="keyword" />
+				<form:input type="text" class="form-control" id="keyword"  path="keyword" placeholder="用户名或者手机号码"/>
 			</div>
 		</div>
 		<div class="form-group">
@@ -43,7 +43,7 @@
 	
 	</fieldset>
 	<br/>
-	<table data-toggle="table" data-cache="false" data-height="299" data-pagination="true" id="searchTable">
+	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable">
 		<thead>
 	        <tr>
 	            <th data-field="id"  data-sortable="true">用户名</th>
@@ -67,7 +67,7 @@
    	 				<td>
    	 					<a href="./edit/${item.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
    	 					&nbsp;&nbsp;
-   	 					<a href="javascript:void(0);" onclick="showDailog(${item.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+   	 					<a href="javascript:void(0);" onclick="showDailog(${item.id})"  data-toggle="popover" title="删除" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
    	 				</td>
    	 			</tr>
    	 		</c:forEach>
@@ -82,9 +82,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title" id="myModalLabel">确认框</h4>
+        <h4 class="modal-title" id="myModalLabel">确认</h4>
       </div>
-      <div class="modal-body"> 确认要删除该用户？</div>
+      <div class="modal-body"> 您确认要删除该用户？</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" onclick="deleteUser()">确定</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>

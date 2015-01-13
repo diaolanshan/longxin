@@ -60,6 +60,14 @@ $().ready(function(){
 
 <form:form method="POST" modelAttribute="users" role="form"
 	class="form-horizontal" id="addUserForm">
+	<c:if test="${messages!=null}">
+		<c:set var="display" value="block"></c:set>
+	</c:if>
+	<c:if test="${messages==null}">
+		<c:set var="display" value="none"></c:set>
+	</c:if>
+	
+	<div class="alert alert-success" style="display:${display}" role="alert">${messages}</div>
 	<div class="form-group">
 		<label for="username" class="col-sm-2 control-label">用户名：</label>
 		<div class="col-sm-10">
@@ -103,17 +111,15 @@ $().ready(function(){
 		<label for="department" class="col-sm-2 control-label">部门：</label>
 		<div class="col-sm-10">
 			<form:select path="department.id" class="form-control" id="department">  
-			  <c:forEach var="department" items="${departments}">
-				  <option value="${department.id}">${department.departmentname}</option>
-			  </c:forEach>
+			  <option value="1">A</option>
+			  <option value="2">B</option>
 	        </form:select><br/>
 		</div>
 	</div>
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-			<input type="submit" class="btn btn-primary" value="添加用户" /> <input
-				type="reset" class="btn btn-primary" value="重置" />
+			<input type="submit" class="btn btn-primary" value="保存" />
 		</div>
 	</div>
 </form:form>
