@@ -65,9 +65,9 @@
    	 				<td>${item.role.description}</td>
    	 				<td>${item.department.getDepartmentname()}</td>
    	 				<td>
-   	 					<a href="./edit/${item.id}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+   	 					<a href="./edit/${item.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
    	 					&nbsp;&nbsp;
-   	 					<a href="javascript:void(0);" onclick="showDailog(${item.id})"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+   	 					<a href="javascript:void(0);" onclick="showDailog(${item.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
    	 				</td>
    	 			</tr>
    	 		</c:forEach>
