@@ -40,14 +40,12 @@ public class UserServiceImpl implements UserService{
 	public void addUser(Users user) {
 		Date date=new Date();
 		user.setCreatedat(date);
-		user.setRole(Roles.ROLE_ADMIN);
 		userDAO.saveUser(user);
 	}
 
 	public void editUser(Users user) {
 		Date date=new Date();
 		user.setCreatedat(date);
-		user.setRole(Roles.ROLE_ADMIN);
 		userDAO.editUser(user);
 	}
 

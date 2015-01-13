@@ -25,3 +25,7 @@ CREATE TABLE `longxin`.`function` (
     REFERENCES `longxin`.`feature` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+alter table users modify role varchar(40) not null ;
+ 
+insert department values(2,"B");
