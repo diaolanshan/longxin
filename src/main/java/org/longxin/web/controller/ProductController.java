@@ -33,7 +33,7 @@ public class ProductController {
     }
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public String searchUsers(Model model)
+	public String searchProduct(Model model)
 	{
 		model.addAttribute("productSearchBean", new ProductSearchBean());
 		model.addAttribute("products", productService.getAllProducts());
@@ -41,7 +41,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String doSearchUsers(Model model, ProductSearchBean searchForm)
+	public String doSearchProduct(Model model, ProductSearchBean searchForm)
 	{
 		model.addAttribute("productSearchBean", searchForm);
 		System.out.println(searchForm.getKeyword());
@@ -83,7 +83,7 @@ public class ProductController {
     } 
       
     @RequestMapping(value = "/edit/{productId}", method = RequestMethod.GET)
-	public String editUsers(@PathVariable int productId, Model model)
+	public String editProduct(@PathVariable int productId, Model model)
 	{
 		Product product = productService.getProjectByID(productId);
 		model.addAttribute("product", product);
@@ -105,42 +105,7 @@ public class ProductController {
 	{
 		productService.deleteProduct(productId);
 	}
-    /**
-     * 查询用户信息
-     * @see 访问该方法的路径就应该是"/user/具体的用户名"
-     * @see 这里value="/{username}"的写法，需要格外注意一下，它是一个路径变量，此时用来接收前台的一个资源
-     * @see 这时value="/{username}"就会到方法参数中找@PathVariable String username，并将路径变量值传给username参数
-     */ 
-    @RequestMapping(value="/{myname}", method=RequestMethod.GET) 
-    public String show(@PathVariable String myname, Model model){ 
-        //model.addAttribute(users.get(myname)); 
-        return "user/show"; 
-    } 
-       
-    /**
-     * 编辑用户信息
-     * @see 访问该方法的路径就应该是"/user/具体的用户名/update"
-     */ 
-    @RequestMapping(value="/{id}/update", method=RequestMethod.GET) 
-    public String update(@PathVariable String productID, Model model){ 
-    	
-        model.addAttribute(productService.getProjectByID(Integer.valueOf(productID))); 
-        return "/product/update"; 
-    } 
-    
-    @RequestMapping(value="/{id}/update", method=RequestMethod.POST) 
-    public String update(Product product){ 
-        return "redirect:/user/list";  
-    } 
-       
-    /**
-     * delete user
-     */ 
-    @RequestMapping(value="/{id}/delete", method=RequestMethod.GET) 
-    public String delete(@PathVariable String productID){ 
-    	productService.deleteProduct(Integer.valueOf(productID));
-        return "redirect:/user/list";  
-    }  
+  
 
 	public ProductService getProductService() {
 		return productService;

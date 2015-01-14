@@ -76,7 +76,7 @@ public class Product implements java.io.Serializable, Cloneable {
 		this.createdat = createdat;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
 	public Set<Feature> getFeatures()
 	{
 		return this.features;

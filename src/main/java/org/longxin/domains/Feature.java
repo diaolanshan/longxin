@@ -61,7 +61,7 @@ public class Feature implements java.io.Serializable, Cloneable
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PRODUCT", nullable = false)
 	public Product getProduct()
 	{
@@ -84,7 +84,7 @@ public class Feature implements java.io.Serializable, Cloneable
 		this.featureName = featureName;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "feature")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "feature")
 	public Set<Function> getFunctions()
 	{
 		return this.functions;

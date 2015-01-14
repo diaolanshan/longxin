@@ -3,6 +3,7 @@ package org.longxin.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.longxin.domains.Feature;
 import org.longxin.domains.Product;
 import org.apache.log4j.Logger;
 import org.longxin.dao.ProductDAO;
@@ -43,7 +44,12 @@ public class ProductServiceImpl implements ProductService
 
 	public Product getProjectByID(int prodcutID)
 	{
-		return productDAO.getProductByID(prodcutID);
+		Product product = productDAO.getProductByID(prodcutID);
+		for(Feature feature : product.getFeatures())
+		{
+			feature.getId();
+		}
+		return product;
 	}
 
 	public void cloneProduct(Product product) throws CloneNotSupportedException
