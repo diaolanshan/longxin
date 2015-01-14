@@ -30,4 +30,8 @@ public class FeatureServiceImpl implements FeatureService
 	{
 		featureDAO.saveFeature(features);
 	}
+
+	public List<Feature> getFeatureByProductId(int id) {
+		return featureDAO.getFeatureByProductId(id);
+	}
 }
