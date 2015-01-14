@@ -26,6 +26,6 @@ public class ProductDAOImpl extends HibernateDaoSupport implements ProductDAO {
 	
 	public Product getProductByID(int id)
 	{
-		return this.getHibernateTemplate().load(Product.class, id);
+		return this.getHibernateTemplate().get(Product.class, id);
 	}
 }

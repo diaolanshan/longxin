@@ -2,8 +2,6 @@ package org.longxin.domains;
 
 // Generated 2014-12-17 22:42:16 by Hibernate Tools 3.4.0.CR1
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -76,7 +74,7 @@ public class Product implements java.io.Serializable, Cloneable {
 		this.createdat = createdat;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
 	public Set<Feature> getFeatures()
 	{
 		return this.features;

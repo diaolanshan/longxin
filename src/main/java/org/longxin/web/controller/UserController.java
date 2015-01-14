@@ -35,7 +35,8 @@ public class UserController
 	@RequestMapping(value = "/check", method = RequestMethod.GET)
 	public @ResponseBody boolean checkUserName(String username)
 	{
-		if(userService.findUserByUserName(username)==null){
+		if (userService.findUserByUserName(username) == null)
+		{
 			return true;
 		}
 		return  false;

@@ -52,7 +52,7 @@ public class Function implements java.io.Serializable
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "FEATURE", nullable = false)
 	public Feature getFeature()
 	{

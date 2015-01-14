@@ -45,10 +45,6 @@ public class ProductServiceImpl implements ProductService
 	public Product getProjectByID(int prodcutID)
 	{
 		Product product = productDAO.getProductByID(prodcutID);
-		for(Feature feature : product.getFeatures())
-		{
-			feature.getId();
-		}
 		return product;
 	}
 
