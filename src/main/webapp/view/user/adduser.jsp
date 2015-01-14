@@ -9,7 +9,7 @@ $().ready(function(){
 				required: true,
 				minlength: 5,
 				remote: {
-					 url: "http://localhost:8080/longxin/user/check",
+					 url: "http://localhost:8080/longxin/user/check/",
 					 type: "get",
 					 data: {
 					 	username: function() 
