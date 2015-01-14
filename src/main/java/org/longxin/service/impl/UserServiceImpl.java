@@ -7,7 +7,6 @@ import org.apache.log4j.Logger;
 import org.longxin.dao.UserDAO;
 import org.longxin.domains.Users;
 import org.longxin.service.UserService;
-import org.longxin.util.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserServiceImpl implements UserService{
