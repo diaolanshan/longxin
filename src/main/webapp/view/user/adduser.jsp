@@ -1,6 +1,5 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 
 <script type="text/javascript">
 $().ready(function(){
@@ -10,7 +9,7 @@ $().ready(function(){
 				required: true,
 				minlength: 5,
 				remote: {
-					 url: "http://localhost:8080/longxin/user/check",
+					 url: "http://localhost:8080/longxin/user/check/",
 					 type: "get",
 					 data: {
 					 	username: function() 
@@ -103,9 +102,8 @@ $().ready(function(){
 		<label for="department" class="col-sm-2 control-label">部门：</label>
 		<div class="col-sm-10">
 			<form:select path="department.id" class="form-control" id="department">  
-			  <c:forEach var="department" items="${departments}">
-				  <option value="${department.id}">${department.departmentname}</option>
-			  </c:forEach>
+			  <option value="1">A</option>
+			  <option value="2">B</option>
 	        </form:select><br/>
 		</div>
 	</div>

@@ -12,8 +12,18 @@
 	</definition>
 
 	<definition name="/product/addproduct" extends="base.definition">
-		<put-attribute name="title" value="Contact Manager" />
+		<put-attribute name="title" value="添加产品" />
 		<put-attribute name="body" value="/view/product/addproduct.jsp" />
+	</definition>
+
+	<definition name="/product/listproducts" extends="base.definition">
+		<put-attribute name="title" value="查询产品" />
+		<put-attribute name="body" value="/view/product/listproducts.jsp" />
+	</definition>
+		
+	<definition name="/product/editproduct" extends="base.definition">
+		<put-attribute name="title" value="修改产品" />
+		<put-attribute name="body" value="/view/product/editproduct.jsp" />
 	</definition>
 	
 	<definition name="/user/adduser" extends="base.definition">
@@ -32,11 +42,6 @@
 		<put-attribute name="title" value="修改用户" />
 		<put-attribute name="body" value="/view/user/edituser.jsp" />
 		<put-attribute name="menuItem" value="usermanagement" />
-	</definition>
-	
-	<definition name="/login/updateprofile" extends="base.definition">
-		<put-attribute name="title" value="信息修改" />
-		<put-attribute name="body" value="/view/login/updateprofile.jsp" />
 	</definition>
 
 </tiles-definitions>  
