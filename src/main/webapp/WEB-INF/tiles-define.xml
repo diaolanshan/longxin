@@ -26,6 +26,11 @@
 		<put-attribute name="body" value="/view/product/editproduct.jsp" />
 	</definition>
 	
+	<definition name="/product/listoneproduct" extends="base.definition">
+		<put-attribute name="title" value="查看产品" />
+		<put-attribute name="body" value="/view/product/viewproduct.jsp" />
+	</definition>
+	
 	<definition name="/user/adduser" extends="base.definition">
 		<put-attribute name="title" value="添加用户" />
 		<put-attribute name="body" value="/view/user/adduser.jsp" />

@@ -46,7 +46,7 @@
 	<table data-toggle="table" data-cache="false" data-height="299" data-pagination="true" id="searchTable">
 		<thead>
 	        <tr>
-	            <th data-field="id"  data-sortable="true">用户名</th>
+	            <th data-field="id"  data-sortable="true">用户ID</th>
 	            <th data-field="username"  data-sortable="true">用户名</th>
 	            <th data-field="createdat"  data-sortable="true">创建日期</th>
 	            <th data-field="telephone"  data-sortable="true">电话</th>
