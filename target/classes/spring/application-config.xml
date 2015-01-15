@@ -106,6 +106,10 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
+	<bean id="featureDAO" class="org.longxin.dao.impl.FeatureDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
 	<bean id="productDAO" class="org.longxin.dao.impl.ProductDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
@@ -113,6 +117,8 @@
 	<bean id="userService" class="org.longxin.service.impl.UserServiceImpl"></bean>
 	
 	<bean id="productService" class="org.longxin.service.impl.ProductServiceImpl"></bean>
+	
+	<bean id="featureService" class="org.longxin.service.impl.FeatureServiceImpl"></bean>
 	
 	<bean id="departmentService" class="org.longxin.service.impl.DepartmentServiceImpl"></bean>
 

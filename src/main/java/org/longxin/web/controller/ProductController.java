@@ -23,6 +23,7 @@ public class ProductController {
 	@Autowired
 	ProductService productService;
 	
+	@Autowired
 	FeatureService featureService;
 	
 	@RequestMapping(method = RequestMethod.GET)  
@@ -76,10 +77,12 @@ public class ProductController {
 		return "redirect:/product/list";
 	}
 
-    @RequestMapping("/list") 
-    public String list(Model model){ 
-        model.addAttribute("product", productService.getAllProducts()); 
-        return "/product/listproducts"; 
+    @RequestMapping(value ="/list/{productId}", method = RequestMethod.GET) 
+    public String listOneProduct(@PathVariable int productId, Model model){ 
+		Product product = productService.getProjectByID(productId);
+        model.addAttribute("product", product); 
+		model.addAttribute("features", featureService.getFeatureByProduct(product));
+        return "/product/listoneproduct"; 
     } 
       
     @RequestMapping(value = "/edit/{productId}", method = RequestMethod.GET)
@@ -87,12 +90,12 @@ public class ProductController {
 	{
 		Product product = productService.getProjectByID(productId);
 		model.addAttribute("product", product);
-		//model.addAttribute("feature", featureService);
+		//model.addAttribute("features", featureService.getFeatureByProductId(productId));
 		return "/product/editproduct";
 	}
 	
 	@RequestMapping(value = "/edit/{productId}", method = RequestMethod.POST)
-	public String editUsers(Model model, Product product)
+	public String editProduct(Model model, Product product)
 	{
 		//productService.editProduct(product);
 		//model.addAttribute("userSearchBean", new UserSearchBean());
@@ -101,11 +104,19 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/delete/{productId}", method = RequestMethod.POST)
-	public void deleteUsers(@PathVariable int productId,Model model)
+	public void deleteProduct(@PathVariable int productId,Model model)
 	{
 		productService.deleteProduct(productId);
 	}
   
+
+	public FeatureService getFeatureService() {
+		return featureService;
+	}
+
+	public void setFeatureService(FeatureService featureService) {
+		this.featureService = featureService;
+	}
 
 	public ProductService getProductService() {
 		return productService;

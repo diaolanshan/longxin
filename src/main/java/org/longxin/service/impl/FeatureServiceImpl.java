@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.longxin.dao.FeatureDAO;
 import org.longxin.domains.Feature;
+import org.longxin.domains.Product;
 import org.longxin.service.FeatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,7 +32,7 @@ public class FeatureServiceImpl implements FeatureService
 		featureDAO.saveFeature(features);
 	}
 
-	public List<Feature> getFeatureByProductId(int id) {
-		return featureDAO.getFeatureByProductId(id);
+	public List<Feature> getFeatureByProduct(Product product) {
+		return featureDAO.getFeatureByProduct(product);
 	}
 }

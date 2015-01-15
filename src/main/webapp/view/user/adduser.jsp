@@ -102,9 +102,10 @@ $().ready(function(){
 		<label for="department" class="col-sm-2 control-label">部门：</label>
 		<div class="col-sm-10">
 			<form:select path="department.id" class="form-control" id="department">  
-			  <option value="1">A</option>
-			  <option value="2">B</option>
-	        </form:select><br/>
+			  <c:forEach var="department" items="${departments}">
+			  <option value="${department.id}">${department.departmentname}</option>
+			  </c:forEach>
+       		 </form:select><br/>
 		</div>
 	</div>
 
