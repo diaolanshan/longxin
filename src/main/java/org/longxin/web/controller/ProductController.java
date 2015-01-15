@@ -12,12 +12,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping("/product") 
+@SessionAttributes("product")
 public class ProductController {
 
 	@Autowired
@@ -95,7 +98,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/edit/{productId}", method = RequestMethod.POST)
-	public String editProduct(Model model, Product product)
+	public String editProduct(Model model, @ModelAttribute("product") Product product)
 	{
 		//productService.editProduct(product);
 		//model.addAttribute("userSearchBean", new UserSearchBean());

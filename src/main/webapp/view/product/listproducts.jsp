@@ -44,10 +44,10 @@
 	
 	</fieldset>
 	<br/>
-	<table data-toggle="table" data-cache="false" data-height="299" data-pagination="true" id="searchTable1">
+	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1">
 		<thead>
-	        <tr>
-				<th data-field="id"  data-sortable="true">ID</th>
+	        <tr class="success">
+				<th data-field="id"  data-sortable="true" >ID</th>
 				<th data-field="name"  data-sortable="true">产品名称</th>
 				<th data-field="createdat"  data-sortable="true">创建日期</th>
 	            <th data-sortable="false">操作</th>

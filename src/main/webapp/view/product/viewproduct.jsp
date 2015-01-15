@@ -30,7 +30,8 @@
 		
 		<div class="form-group">
 			<label for="id" class="col-sm-2 control-label">产品ID：</label>
-			<div class="col-sm-10">${product.id}</div>
+			<div class="col-sm-10">${product.id} <a href="#" class="btn btn-primary start-example" style="margin-left:550px"><font style="color:#fff">复制产品</font></a></div>
+			
 		</div>
 		<div class="form-group">
 			<label for="name" class="col-sm-2 control-label">产品名称：</label>
