@@ -46,17 +46,18 @@ $().ready(function(){
 
 <form:form method="POST" modelAttribute="user" role="form"
 	class="form-horizontal" id="editUserForm">
+	<!-- 
 	<div class="form-group">
 		<label for="id" class="col-sm-2 control-label">用户ID：</label>
 		<div class="col-sm-10">
 			<form:input type="text" class="form-control" id="id" path="id" />
 		</div>
-	</div>
+	</div> -->
 	<div class="form-group">
 		<label for="username" class="col-sm-2 control-label">用户名：</label>
 		<div class="col-sm-10">
 			<form:input type="text" class="form-control" id="username"
-				placeholder="输入用户名" path="username" />
+				placeholder="输入用户名" path="username" disabled="true"/>
 		</div>
 	</div>
 

@@ -43,11 +43,11 @@
 	
 	</fieldset>
 	<br/>
-	<table data-toggle="table" data-cache="false" data-height="299" data-pagination="true" id="searchTable">
+	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable" data-row-style="rowStyle">
 		<thead>
-	        <tr>
-	            <th data-field="id"  data-sortable="true">用户ID</th>
-	            <th data-field="username"  data-sortable="true">用户名</th>
+	        <tr class="success">
+	            <!-- <th data-field="id"  data-sortable="true">用户ID</th> -->
+	            <th data-field="username"  data-sortable="true" >用户名</th>
 	            <th data-field="createdat"  data-sortable="true">创建日期</th>
 	            <th data-field="telephone"  data-sortable="true">电话</th>
 	            <th data-field="role"  data-sortable="true">权限</th>
@@ -58,7 +58,7 @@
    	 	<tbody>
    	 		<c:forEach var="item" items="${users}">
    	 			<tr>
-   	 				<td>${item.id}</td>
+   	 				<!-- <td>${item.id}</td> -->
    	 				<td>${item.username}</td>
    	 				<td>${item.createdat}</td>
    	 				<td>${item.telephone}</td>
