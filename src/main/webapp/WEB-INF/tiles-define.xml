@@ -48,5 +48,11 @@
 		<put-attribute name="body" value="/view/user/edituser.jsp" />
 		<put-attribute name="menuItem" value="usermanagement" />
 	</definition>
+	
+	<definition name="/user/profile" extends="base.definition">
+		<put-attribute name="title" value="用户个人信息" />
+		<put-attribute name="body" value="/view/login/profile.jsp" />
+		<put-attribute name="menuItem" value="usermanagement" />
+	</definition>
 
 </tiles-definitions>  

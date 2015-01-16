@@ -12,7 +12,7 @@
 	<ul class="nav navbar-nav navbar-right">
 		<li><a href="#">Dashboard</a></li>
 		<li><a href="#">Settings</a></li>
-		<li><a href="#">Profile</a></li>
+		<li><a href="/longxin/user/profile">Profile</a></li>
 		<li><a href="/longxin/view/login.jsp">退出</a></li>
 	</ul>
 	<form class="navbar-form navbar-right">

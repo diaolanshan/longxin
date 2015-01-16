@@ -8,6 +8,8 @@ import org.longxin.service.DepartmentService;
 import org.longxin.service.UserService;
 import org.longxin.web.controller.bean.UserSearchBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,8 +29,6 @@ public class UserController
 	@Autowired
 	DepartmentService departmentService;
 	
-	static String editUsername = "";
-	
 	/**
 	 * Json response
 	 * @param model
@@ -46,10 +46,6 @@ public class UserController
 		if (userService.findUserByUserName(username) == null)
 		{
 			return true;
-		}
-		else{
-			if(userService.findUserByUserName(username).getUsername().equals(editUsername))
-				return true;
 		}
 		return  false;
 	}
@@ -99,7 +95,6 @@ public class UserController
 	public String editUsers(@PathVariable String userId, Model model)
 	{
 		Users user = userService.findUserByID(Integer.valueOf(userId));
-		editUsername = user.getUsername();
 		model.addAttribute("user",user);
 		model.addAttribute("departments", departmentService.getAllDepartments());
 		return "/user/edituser";
@@ -108,7 +103,6 @@ public class UserController
 	@RequestMapping(value = "/edit/{userId}", method = RequestMethod.POST)
 	public String editUsers(Model model,@ModelAttribute("user") Users user)
 	{
-		editUsername = "";
 		userService.editUser(user);
 		model.addAttribute(new Users());
 		return "redirect:/user/search";
@@ -118,5 +112,25 @@ public class UserController
 	public void deleteUsers(@PathVariable String userId,Model model)
 	{
 		userService.deleteUser(Integer.valueOf(userId));
+	}
+	
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public String editProfileUser( Model model)
+	{
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		Users user = userService.findUserByUserName(userDetails.getUsername());
+		model.addAttribute("user",user);
+		return "/user/profile";
+	}
+	
+	@RequestMapping(value = "/profile", method = RequestMethod.POST)
+	public String editProfileUser(Model model,@ModelAttribute("user") Users user)
+	{
+		userService.editUser(user);
+		//request.getSession().setAttribute("userInfo", user);
+		model.addAttribute(new Users());
+		return "redirect:/user/search";
 	}
 }
