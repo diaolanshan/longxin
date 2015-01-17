@@ -51,7 +51,13 @@
 			<list>
 				<value>org.longxin.domains.Product</value>
 				<value>org.longxin.domains.Feature</value>
-				<value>org.longxin.domains.Function</value>
+				<value>org.longxin.domains.Module</value>
+				<value>org.longxin.domains.L1Component</value>
+				<value>org.longxin.domains.L1ComponentParameter</value>
+				<value>org.longxin.domains.L2Component</value>
+				<value>org.longxin.domains.L2ComponentParameter</value>
+				<value>org.longxin.domains.L3Component</value>
+				<value>org.longxin.domains.L3ComponentParameter</value>
 				<value>org.longxin.domains.Users</value>
 				<value>org.longxin.domains.Department</value>
 			</list>

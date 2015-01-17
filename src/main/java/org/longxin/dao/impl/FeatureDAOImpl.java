@@ -16,13 +16,11 @@ public class FeatureDAOImpl extends HibernateDaoSupport implements FeatureDAO
 
 	@SuppressWarnings("unchecked")
 	public List<Feature> getFeatureByProduct(Product product) {
-		List<Feature> features = (List<Feature>) this.getHibernateTemplate().find("FROM Feature WHERE product = ?", product);
+		return (List<Feature>) this.getHibernateTemplate().find("FROM Feature WHERE product = ?", product);
+	}
 
-		if (features != null)
-		{
-			return features;
-		}
-
-		return null;
+	public Feature getFeatureByID(Integer featureID)
+	{
+		return this.getHibernateTemplate().get(Feature.class, featureID);
 	}
 }

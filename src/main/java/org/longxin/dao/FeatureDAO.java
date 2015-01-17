@@ -10,4 +10,6 @@ public interface FeatureDAO
 	public void saveFeature(Feature feature);
 	
 	public List<Feature> getFeatureByProduct(Product product);
+	
+	public Feature getFeatureByID(Integer featureID);
 }

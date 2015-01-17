@@ -10,4 +10,6 @@ public interface FeatureService
 	public void saveFeatures(List<Feature> features);
 	
 	public List<Feature> getFeatureByProduct(Product product);
+	
+	public Feature getFeatureByID(Integer featureID);
 }

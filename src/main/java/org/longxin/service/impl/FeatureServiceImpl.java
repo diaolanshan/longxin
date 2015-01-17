@@ -35,4 +35,9 @@ public class FeatureServiceImpl implements FeatureService
 	public List<Feature> getFeatureByProduct(Product product) {
 		return featureDAO.getFeatureByProduct(product);
 	}
+
+	public Feature getFeatureByID(Integer featureID)
+	{
+		return featureDAO.getFeatureByID(featureID);
+	}
 }
