@@ -120,6 +120,22 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
+	<bean id="moduleDAO" class="org.longxin.dao.impl.ModuleDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="l1ComponentDAO" class="org.longxin.dao.impl.L1ComponentDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="l2ComponentDAO" class="org.longxin.dao.impl.L2ComponentDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="l3ComponentDAO" class="org.longxin.dao.impl.L3ComponentDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
 	<bean id="userService" class="org.longxin.service.impl.UserServiceImpl"></bean>
 	
 	<bean id="productService" class="org.longxin.service.impl.ProductServiceImpl"></bean>
@@ -128,4 +144,11 @@
 	
 	<bean id="departmentService" class="org.longxin.service.impl.DepartmentServiceImpl"></bean>
 
+	<bean id="l1ComponentService" class="org.longxin.service.impl.L1ComponentServiceImpl"></bean>
+
+	<bean id="l2ComponentService" class="org.longxin.service.impl.L2ComponentServiceImpl"></bean>
+
+	<bean id="l3ComponentService" class="org.longxin.service.impl.L3ComponentServiceImpl"></bean>
+
+	<bean id="moduleService" class="org.longxin.service.impl.ModuleServiceImpl"></bean>
 </beans>
