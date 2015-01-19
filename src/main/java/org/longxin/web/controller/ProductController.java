@@ -36,6 +36,16 @@ public class ProductController {
         return "redirect:/product/list";  
     }
 	
+	@RequestMapping(value = "/diagram/{productId}", method = RequestMethod.GET)
+	public String showProductDiagram(@PathVariable int productId,Model model)
+	{
+		//product
+		Product product = productService.getProjectByID(productId);
+		model.addAttribute("product", product);
+		
+		return "/product/diagram";
+	}
+	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String searchProduct(Model model)
 	{

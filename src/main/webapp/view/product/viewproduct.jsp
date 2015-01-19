@@ -26,7 +26,7 @@
 	class="form-horizontal" id="viewProductForm">
 
 	<fieldset>
-		<legend>产品细节</legend>
+		<legend>产品细节 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${product.id}"><span class="glyphicon glyphicon-indent-left"></span></a> </legend>
 		<table style="width: 100%">
 			<tr>
 				<td style="width: 25%; vertical-align: top"><img alt=""
@@ -63,7 +63,7 @@
 		<div class="row placeholders">
             <c:forEach items="${features}" var="feature">
 	            <div class="col-xs-6 col-sm-3 placeholder">
-	              <a href="/feature/view/${feature.id}"> <img src="../../images/${feature.iconName}.jpg" class="img-responsive" alt="Generic placeholder thumbnail"></a>
+	              <a href="../../feature/view/${feature.id}"> <img src="../../images/${feature.iconName}.jpg" class="img-responsive" alt="Generic placeholder thumbnail"></a>
 	              <h4>${feature.featureName}</h4>
 	              <span class="text-muted">${feature.description}</span>
 	            </div>

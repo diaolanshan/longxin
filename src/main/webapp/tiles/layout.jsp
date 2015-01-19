@@ -13,14 +13,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 <link href="<%=path%>/css/bootstrap.min.css" rel="stylesheet">
-<link href="<%=path%>/css/layout.css" rel="stylesheet">
 <link href="<%=path%>/css/bootstrap-table.min.css" rel="stylesheet">
 <link href="<%=path%>/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="<%=path%>/css/custom.css" rel="stylesheet">
+<link href="<%=path%>/css/jquery.jOrgChart.css" rel="stylesheet">
+<link href="<%=path%>/css/prettify.css" rel="stylesheet">
+<link href="<%=path%>/css/layout.css" rel="stylesheet">
 <script src="<%=path%>/js/jquery-1.11.2.min.js"></script>
 <script src="<%=path%>/js/bootstrap-table.min.js"></script>
 <script src="<%=path%>/js/bootstrap.min.js"></script>
 <script src="<%=path%>/js/jquery.validate.js"></script>
 <script src="<%=path%>/js/longxin.js"></script>
+<script src="<%=path%>/js/jquery.jOrgChart.js"></script>
+<!-- <script src="<%=path%>/js/prettify.js"></script> -->
 </head>
 <body>
 	<div style="display:none" id="meanItem"><tiles:getAsString name="menuItem"></tiles:getAsString></div>

@@ -3,7 +3,6 @@ package org.longxin.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.longxin.domains.Feature;
 import org.longxin.domains.Product;
 import org.apache.log4j.Logger;
 import org.longxin.dao.ProductDAO;

@@ -114,7 +114,7 @@ public class L1Component implements java.io.Serializable
 		this.l1ComponentParameters = l1ComponentParameters;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "l1Component")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "l1Component")
 	public Set<L2Component> getL2Components()
 	{
 		return this.l2Components;
