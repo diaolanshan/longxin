@@ -2,11 +2,17 @@ package org.longxin.domains;
 
 // Generated 2015-1-17 19:49:59 by Hibernate Tools 3.4.0.CR1
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.OneToMany;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,6 +31,7 @@ public class Module implements java.io.Serializable
 	private Feature feature;
 	private String moduleName;
 	private Boolean template;
+	private Set<L1Component> l1Components = new HashSet<L1Component>(0);
 
 	public Module()
 	{
@@ -89,4 +96,14 @@ public class Module implements java.io.Serializable
 		this.template = template;
 	}
 
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "module")
+	public Set<L1Component> getL1Components()
+	{
+		return l1Components;
+	}
+
+	public void setL1Components(Set<L1Component> l1Components)
+	{
+		this.l1Components = l1Components;
+	}
 }

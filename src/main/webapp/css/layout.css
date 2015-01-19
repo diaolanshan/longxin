@@ -128,3 +128,12 @@ label.valid {
 {
 	margin-bottom: 5px;
 }
+
+.node {
+    border: 2px solid #808040;
+}
+
+.control-label
+{
+	text-align: left;
+}

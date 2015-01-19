@@ -128,7 +128,7 @@ public class Feature implements java.io.Serializable
 		this.iconName = iconName;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "feature")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "feature")
 	public Set<Module> getModules()
 	{
 		return this.modules;

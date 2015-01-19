@@ -1,6 +1,7 @@
 package org.longxin.web.controller;
 
 import org.longxin.domains.Feature;
+import org.longxin.domains.Product;
 import org.longxin.service.FeatureService;
 import org.longxin.service.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,17 @@ public class FeatureController
 		model.addAttribute("feature", feature);
 		model.addAttribute("modules",
 				moduleService.getModulesByFeature(feature));
-		return "/feature/viewfeature";
+		return "/feature/view";
+	}
+	
+	@RequestMapping(value = "/diagram/{featureId}", method = RequestMethod.GET)
+	public String showFeatureDiagram(@PathVariable int featureId,Model model)
+	{
+		//product
+		Feature feature = featureService.getFeatureByID(featureId);
+		model.addAttribute("feature", feature);
+		
+		return "/feature/diagram";
 	}
 
 	public FeatureService getFeatureService()

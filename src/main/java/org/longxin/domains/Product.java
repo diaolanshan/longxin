@@ -108,7 +108,7 @@ public class Product implements java.io.Serializable
 		this.description = description;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product")
 	public Set<Feature> getFeatures()
 	{
 		return this.features;
