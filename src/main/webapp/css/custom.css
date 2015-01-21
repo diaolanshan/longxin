@@ -28,7 +28,11 @@ h1 {
 }
 
 a{
+<<<<<<< HEAD
 	color 				: #004080;	
+=======
+	color 				: #E05E00;	
+>>>>>>> c2d1932faa4ec5d63440de0661946f56ed0e9493
 	text-decoration		: none;
 }
 
@@ -82,7 +86,10 @@ a:hover{
 	border 				: 2px solid #808040;
 	color 				: #F38630;
 	-moz-border-radius 	: 8px;
+<<<<<<< HEAD
 	font-weight: 550;
+=======
+>>>>>>> c2d1932faa4ec5d63440de0661946f56ed0e9493
 }
 	.node p{
 		font-family 	: tahoma;

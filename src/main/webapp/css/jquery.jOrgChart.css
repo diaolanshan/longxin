@@ -31,7 +31,7 @@
 
 /* The node */
 .jOrgChart .node {
-  background 			: url('../images/bkgd.png') repeat top left;
+  background-color 		: #35363B;
   display               : inline-block;
   width                 : 96px;
   height                : 40px;

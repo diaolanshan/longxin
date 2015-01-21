@@ -70,8 +70,8 @@
 	</definition>
 	
 	<definition name="/module/diagram" extends="base.definition">
-		<put-attribute name="title" value="结构模块" />
-		<put-attribute name="body" value="/view/module/modulediagram.jsp" />
+		<put-attribute name="title" value="功能结构" />
+		<put-attribute name="body" value="/view/feature/featurediagram.jsp" />
 	</definition>
 
 
