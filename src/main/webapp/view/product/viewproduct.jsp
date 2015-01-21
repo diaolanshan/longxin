@@ -58,6 +58,7 @@
 				</td>
 			</tr>
 		</table>
+		</fieldset>
 		<br/>
 		<br/>
 		<div class="row placeholders">

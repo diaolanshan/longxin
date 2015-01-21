@@ -18,7 +18,7 @@
 					<li id="${feature.id}"><a href="../../feature/view/${feature.id}">${feature.featureName}</a>
 						<ul>
 							<c:forEach items="${feature.modules}" var="module">
-								<li><a href="#" target="_blank">${module.moduleName}</a>
+								<li><a href="./../../module/view/${module.id}">${module.moduleName}</a>
 									<ul>
 										<c:forEach items="${module.l1Components}" var="l1">
 											<li><a href="#" target="_blank">${l1.name}</a>

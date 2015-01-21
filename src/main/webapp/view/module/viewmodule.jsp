@@ -26,14 +26,14 @@
 	class="form-horizontal" id="viewProductForm">
 
 	<fieldset>
-		<legend>${feature.featureName} &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${feature.id}"><span class="glyphicon glyphicon-indent-left"></span></a> </legend>
+		<legend>${module.moduleName} &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${module.id}"><span class="glyphicon glyphicon-indent-left"></span></a> </legend>
 		<div class="form-group">
-			<label for="name" class="col-sm-2 control-label">功能名称：</label>
-			<div class="col-sm-5 control-label">${feature.featureName}</div>
+			<label for="name" class="col-sm-2 control-label">模块名称：</label>
+			<div class="col-sm-5 control-label">${module.moduleName}</div>
 		</div>
 		<div class="form-group">
 			<label for="description" class="col-sm-2 control-label">描述：</label>
-			<div class="col-sm-5 control-label">${feature.description}</div>
+			<div class="col-sm-5 control-label">${module.description}</div>
 		</div>
 	</fieldset>
 	<br>
@@ -46,14 +46,14 @@
 	        </tr>
    	 	</thead>
    	 	<tbody>
-   	 		<c:forEach items="${modules}" var="module">  
+   	 		<c:forEach items="${l1components}" var="l1component">  
             <tr>  
-                <td>${module.moduleName}</td>  
-                <td>${module.description}</td>  
+                <td>${l1component.name}</td> 
+                <td>${l1component.description}</td>  
                 <td>
-                <a href="./list/${module.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
+                <a href="./list/${l1component.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
                 &nbsp;&nbsp;
-                <a href="./edit/${module.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                <a href="./edit/${l1component.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
    	 			&nbsp;&nbsp;
             </tr>  
        		</c:forEach>

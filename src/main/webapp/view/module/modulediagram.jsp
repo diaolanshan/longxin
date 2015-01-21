@@ -12,21 +12,16 @@
 </script>
 <body onload="prettyPrint();">
 	<ul id="org" style="display: none">
-		<li id="${feature.id}"><a href="./../view/${feature.id}">${feature.featureName}</a>
+		<li><a href="./../view/${module.id}">${module.moduleName}</a>
 			<ul>
-				<c:forEach items="${feature.modules}" var="module">
-					<li><a href="./../../module/view/${module.id}">${module.moduleName}</a>
+				<c:forEach items="${module.l1Components}" var="l1">
+					<li><a href="#" target="_blank">${l1.name}</a>
 						<ul>
-							<c:forEach items="${module.l1Components}" var="l1">
-								<li><a href="#" target="_blank">${l1.name}</a>
+							<c:forEach items="${l1.l2Components}" var="l2">
+								<li><a href="#" target="_blank">${l2.name}</a>
 									<ul>
-										<c:forEach items="${l1.l2Components}" var="l2">
-											<li><a href="#" target="_blank">${l2.name}</a>
-												<ul>
-													<c:forEach items="${l2.l3Components}" var="l3">
-														<li><a href="#" target="_blank">${l3.name}</a></li>
-													</c:forEach>
-												</ul></li>
+										<c:forEach items="${l2.l3Components}" var="l3">
+											<li><a href="#" target="_blank">${l3.name}</a></li>
 										</c:forEach>
 									</ul></li>
 							</c:forEach>

@@ -31,6 +31,7 @@ public class Module implements java.io.Serializable
 	private Feature feature;
 	private String moduleName;
 	private Boolean template;
+	private String description;
 	private Set<L1Component> l1Components = new HashSet<L1Component>(0);
 
 	public Module()
@@ -105,5 +106,16 @@ public class Module implements java.io.Serializable
 	public void setL1Components(Set<L1Component> l1Components)
 	{
 		this.l1Components = l1Components;
+	}
+	
+	@Column(name = "DESCRIPTION")
+	public String getDescription()
+	{
+		return description;
+	}
+
+	public void setDescription(String description)
+	{
+		this.description = description;
 	}
 }

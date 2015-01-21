@@ -1,9 +1,7 @@
 package org.longxin.web.controller;
 
-import org.longxin.domains.Feature;
 import org.longxin.domains.Module;
-import org.longxin.domains.Product;
-import org.longxin.service.FeatureService;
+import org.longxin.service.L1ComponentService;
 import org.longxin.service.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,23 +19,25 @@ public class ModuleController
 
 	@Autowired
 	ModuleService moduleService;
+	
+	@Autowired
+	L1ComponentService l1ComponentService;
 
 	@RequestMapping(value = "/view/{moduleId}", method = RequestMethod.GET)
 	public String viewModule(@PathVariable int moduleId, Model model)
 	{
 		Module module = moduleService.getModuleByID(moduleId);
 		model.addAttribute("module", module);
-//		model.addAttribute("modules",
-//				moduleService.getModulesByFeature(feature));
+		model.addAttribute("l1components", module.getL1Components());
 		return "/module/view";
 	}
 	
 	@RequestMapping(value = "/diagram/{moduleId}", method = RequestMethod.GET)
-	public String showModuleDiagram(@PathVariable int featureId,Model model)
+	public String showModuleDiagram(@PathVariable int moduleId,Model model)
 	{
-		Module module = moduleService.getModuleByID(featureId);
+		Module module = moduleService.getModuleByID(moduleId);
 		model.addAttribute("module", module);
-		return "/feature/diagram";
+		return "/module/diagram";
 	}
 
 	public ModuleService getModuleService()
