@@ -18,6 +18,6 @@ public class L1ComponentParameterDAOImpl extends HibernateDaoSupport implements 
 
 	public List<L1ComponentParameter> getL1Parameters(L1Component component)
 	{
-		return this.getHibernateTemplate().find("FROM L1ComponentParameter l1 WHERE l1.L1Component= ?", component);
+		return this.getHibernateTemplate().find("FROM L1ComponentParameter l1 WHERE l1.l1Component= ?", component);
 	}
 }

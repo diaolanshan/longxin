@@ -54,6 +54,12 @@
 		<put-attribute name="body" value="/view/product/viewdiagram.jsp" />
 	</definition>
 	
+	<definition name="/product/template" extends="base.definition">
+		<put-attribute name="title" value="产品模板" />
+		<put-attribute name="body" value="/view/product/viewdiagram.jsp" />
+		<put-attribute name="menuItem" value="producttemplate" />
+	</definition>
+	
 	<definition name="/feature/view" extends="base.definition">
 		<put-attribute name="title" value="产品结构" />
 		<put-attribute name="body" value="/view/feature/viewfeature.jsp" />
@@ -74,5 +80,14 @@
 		<put-attribute name="body" value="/view/feature/featurediagram.jsp" />
 	</definition>
 
+	<definition name="/l1/view" extends="base.definition">
+		<put-attribute name="title" value="结构模块" />
+		<put-attribute name="body" value="/view/l1component/viewl1.jsp" />
+	</definition>
+	
+	<definition name="/l1component/diagram" extends="base.definition">
+		<put-attribute name="title" value="结构模块" />
+		<put-attribute name="body" value="/view/l1component/l1diagram.jsp" />
+	</definition>
 
 </tiles-definitions>  

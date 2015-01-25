@@ -20,6 +20,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link href="<%=path%>/css/prettify.css" rel="stylesheet">
 <link href="<%=path%>/css/layout.css" rel="stylesheet">
 <script src="<%=path%>/js/jquery-1.11.2.min.js"></script>
+<script src="<%=path%>/js/jquery-ui.min.js"></script>
+<script src="<%=path%>/js/button.js"></script>
 <script src="<%=path%>/js/bootstrap-table.min.js"></script>
 <script src="<%=path%>/js/bootstrap.min.js"></script>
 <script src="<%=path%>/js/jquery.validate.js"></script>

@@ -1,16 +1,18 @@
 package org.longxin.web.controller;
 
 import org.longxin.domains.L1Component;
-import org.longxin.domains.Module;
+import org.longxin.domains.L1ComponentParameter;
 import org.longxin.service.L1ComponentParameterService;
 import org.longxin.service.L1ComponentService;
-import org.longxin.service.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
@@ -31,15 +33,24 @@ public class L1ComponentController
 		L1Component component = l1ComponentService.getL1ComponentByID(l1id);
 		model.addAttribute("component", component);
 		model.addAttribute("parameters", l1ComponentParameterService.getL1Paramters(component));
-		return "/module/view";
+		model.addAttribute("parameter", new L1ComponentParameter());
+		return "/l1/view";
 	}
 	
 	@RequestMapping(value = "/diagram/{componentId}", method = RequestMethod.GET)
-	public String showDiagram(@PathVariable int componentId,Model model)
+	public String showDiagram(@PathVariable int componentId, Model model)
 	{
 		L1Component component = l1ComponentService.getL1ComponentByID(componentId);
 		model.addAttribute("component", component);
 		return "/l1component/diagram";
+	}
+	
+	@RequestMapping(value = "/add/parameter", method = RequestMethod.POST)
+	public @ResponseBody ModelMap  addComponentParameter(@RequestBody L1ComponentParameter json)
+	{
+		System.out.println(json.getMaxValue());
+		
+		return new ModelMap("success", 1);
 	}
 
 }

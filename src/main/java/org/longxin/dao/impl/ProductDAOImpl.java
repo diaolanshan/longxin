@@ -28,4 +28,11 @@ public class ProductDAOImpl extends HibernateDaoSupport implements ProductDAO {
 	{
 		return this.getHibernateTemplate().get(Product.class, id);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public Product getTemplate()
+	{
+		List<Product> products = this.getHibernateTemplate().find("FROM Product WHERE template = ?", Boolean.TRUE);
+		return products.get(0);
+	}
 }

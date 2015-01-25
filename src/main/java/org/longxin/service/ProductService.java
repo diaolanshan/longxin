@@ -17,4 +17,6 @@ public interface ProductService {
 	public void deleteProduct(int productID);
 	
 	public void cloneProduct(Product product) throws CloneNotSupportedException;
+	
+	public Product getTemplate();
 }

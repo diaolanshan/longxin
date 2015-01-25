@@ -38,7 +38,6 @@
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<input type="submit" class="btn btn-primary start-example" value="查询" />&nbsp;&nbsp;&nbsp;&nbsp;
-				<a href="http://localhost:8080/longxin/product/add" class="btn btn-primary start-example"><font style="color:#fff">添加产品</font></a>
 			</div>
 		</div>
 	
@@ -65,7 +64,6 @@
                 <a href="./edit/${product.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
    	 			&nbsp;&nbsp;
    	 			<a href="javascript:void(0);" onclick="showDailog(${product.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-   	 					  
             </tr>  
        		</c:forEach>
    	 	</tbody>

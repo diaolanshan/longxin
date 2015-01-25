@@ -28,11 +28,7 @@ h1 {
 }
 
 a{
-<<<<<<< HEAD
 	color 				: #004080;	
-=======
-	color 				: #E05E00;	
->>>>>>> c2d1932faa4ec5d63440de0661946f56ed0e9493
 	text-decoration		: none;
 }
 
@@ -81,15 +77,12 @@ a:hover{
 /* Custom node styling */
 .jOrgChart .node {
 	font-size 			: 14px;
-	background-color 	: #35363B;
+	background : url('../images/bkgd.png') repeat top left;
 	border-radius 		: 8px;
 	border 				: 2px solid #808040;
 	color 				: #F38630;
 	-moz-border-radius 	: 8px;
-<<<<<<< HEAD
-	font-weight: 550;
-=======
->>>>>>> c2d1932faa4ec5d63440de0661946f56ed0e9493
+	font-weight: 700;
 }
 	.node p{
 		font-family 	: tahoma;

@@ -42,8 +42,16 @@ public class ProductController {
 		//product
 		Product product = productService.getProjectByID(productId);
 		model.addAttribute("product", product);
-		
 		return "/product/diagram";
+	}
+	
+	@RequestMapping(value = "/diagram/template", method = RequestMethod.GET)
+	public String showProductDiagram(Model model)
+	{
+		//product
+		Product product = productService.getTemplate();
+		model.addAttribute("product", product);
+		return "/product/template";
 	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)

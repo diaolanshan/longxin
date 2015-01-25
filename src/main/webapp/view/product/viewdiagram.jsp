@@ -2,14 +2,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<script>
-    jQuery(document).ready(function() {
-        $("#org").jOrgChart({
-            chartElement : '#chart',
-            dragAndDrop  : true
-        });
-    });
-</script>
 <body onload="prettyPrint();">
 	<ul id="org" style="display: none">
 		<li><a href="./../list/${product.id}">${product.name}</a>
@@ -21,7 +13,7 @@
 								<li><a href="./../../module/view/${module.id}">${module.moduleName}</a>
 									<ul>
 										<c:forEach items="${module.l1Components}" var="l1">
-											<li><a href="#" target="_blank">${l1.name}</a>
+											<li><a href="./../../l1component/view/${l1.id}" target="_blank">${l1.name}</a>
 												<ul>
 													<c:forEach items="${l1.l2Components}" var="l2">
 														<li>

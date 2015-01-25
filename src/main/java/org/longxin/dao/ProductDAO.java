@@ -13,4 +13,6 @@ public interface ProductDAO {
 	public void deleteProduct(Product product);
 	
 	public Product getProductByID(int id);
+	
+	public Product getTemplate();
 }

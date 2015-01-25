@@ -6,7 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -31,6 +33,8 @@ public class L3ComponentParameter implements java.io.Serializable
 	private String valueScope;
 	private String unitName;
 	private String options;
+	private String minValue;
+	private String maxValue;
 
 	public L3ComponentParameter()
 	{
@@ -127,5 +131,26 @@ public class L3ComponentParameter implements java.io.Serializable
 	{
 		this.options = options;
 	}
+	@Column(name = "MINVALUE", length = 128)
+	public String getMinValue()
+	{
+		return minValue;
+	}
 
+	public void setMinValue(String minValue)
+	{
+		this.minValue = minValue;
+	}
+
+	@Column(name = "MAXVALUE", length = 128)
+	public String getMaxValue()
+	{
+		return maxValue;
+	}
+
+	public void setMaxValue(String maxValue)
+	{
+		this.maxValue = maxValue;
+	}
+	
 }
