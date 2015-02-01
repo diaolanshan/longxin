@@ -1,5 +1,23 @@
 $(document).ready(function(){
 	
+	$.ajax({
+		type: "GET", 
+		url: "http://localhost:8080/longxin/product/menu", 
+		dataType: "json",
+		contentType: "application/json; charset=utf-8",
+		success: function(data){
+			$.each(data, function(idx,item)
+			{
+				var newMenu = "<ul id=" + item.id + "><a href='/longxin/product/diagram/" + item.id + "'>" + item.name + "<span class='sr-only'></span></a></ul>";
+				$("#productmanagement").append(newMenu);
+			}
+			)
+		},
+		error: function(res){
+			alert("Unexpected error! Try again.");
+		}
+	})
+	
 	var targetMenu = $("#meanItem").text();
 	$("#"+targetMenu).addClass("active");
 
@@ -24,7 +42,7 @@ $(document).ready(function(){
 	$("#cancel").click(function(){
 		$(".entry-form").fadeOut("fast");	
 	});
-
+	
 	function ajax(action,id){
 		if(action =="save")
 		{

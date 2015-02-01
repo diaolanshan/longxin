@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
@@ -29,11 +30,23 @@ public class ProductController {
 	@Autowired
 	FeatureService featureService;
 	
+	/**
+	 * Used to generate the product menu.
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/menu", method = RequestMethod.GET)
+	public @ResponseBody List<Product> getAllProductsForMenu(Model model)
+	{
+		List<Product> products = productService.getAllProducts();
+		return products;
+	}
+	
 	@RequestMapping(method = RequestMethod.GET)  
     public String getAllProducts(Model model) {  
 		List<Product> products = productService.getAllProducts();
 		model.addAttribute("products", products);
-        return "redirect:/product/list";  
+        return "/product/listproducts";  
     }
 	
 	@RequestMapping(value = "/diagram/{productId}", method = RequestMethod.GET)
@@ -45,14 +58,14 @@ public class ProductController {
 		return "/product/diagram";
 	}
 	
-	@RequestMapping(value = "/diagram/template", method = RequestMethod.GET)
-	public String showProductDiagram(Model model)
-	{
-		//product
-		Product product = productService.getTemplate();
-		model.addAttribute("product", product);
-		return "/product/template";
-	}
+//	@RequestMapping(value = "/diagram/template", method = RequestMethod.GET)
+//	public String showProductDiagram(Model model)
+//	{
+//		//product
+//		Product product = productService.getTemplate();
+//		model.addAttribute("product", product);
+//		return "/product/template";
+//	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String searchProduct(Model model)
@@ -85,6 +98,13 @@ public class ProductController {
         model.addAttribute(new Product()); 
         return "/product/addproduct"; 
     } 
+    
+	@RequestMapping(value = "/clone/{productId}", method = RequestMethod.GET)
+	public String cloneProduct(@PathVariable int productId, Model model) throws CloneNotSupportedException
+	{
+		productService.cloneProduct(productId);
+		return "";
+	}
     
     /**
      * Reponsbile for the product/add POST request.

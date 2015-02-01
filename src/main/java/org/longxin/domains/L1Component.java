@@ -4,11 +4,15 @@ package org.longxin.domains;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +24,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "l1_component", catalog = "longxin")
-public class L1Component implements java.io.Serializable
+public class L1Component implements java.io.Serializable, Cloneable
 {
 
 	/**
@@ -102,7 +106,7 @@ public class L1Component implements java.io.Serializable
 		this.description = description;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "l1Component")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "l1Component", cascade= CascadeType.ALL)
 	public Set<L1ComponentParameter> getL1ComponentParameters()
 	{
 		return this.l1ComponentParameters;
@@ -114,7 +118,7 @@ public class L1Component implements java.io.Serializable
 		this.l1ComponentParameters = l1ComponentParameters;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "l1Component")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "l1Component", cascade= CascadeType.ALL)
 	public Set<L2Component> getL2Components()
 	{
 		return this.l2Components;
@@ -125,4 +129,20 @@ public class L1Component implements java.io.Serializable
 		this.l2Components = l2Components;
 	}
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException
+	{
+		L1Component l1Compoennt = (L1Component)super.clone();
+		l1Compoennt.setId(null);
+		
+		if (this.getL1ComponentParameters() != null)
+		{
+
+		}
+
+		if (this.getL2Components() != null)
+		{
+
+		}
+	}
 }

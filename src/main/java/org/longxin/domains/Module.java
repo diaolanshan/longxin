@@ -5,6 +5,7 @@ package org.longxin.domains;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,7 +24,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "module", catalog = "longxin")
-public class Module implements java.io.Serializable
+public class Module implements java.io.Serializable, Cloneable
 {
 
 	private static final long serialVersionUID = 610942910382178152L;
@@ -97,7 +98,7 @@ public class Module implements java.io.Serializable
 		this.template = template;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "module")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "module", cascade= CascadeType.ALL)
 	public Set<L1Component> getL1Components()
 	{
 		return l1Components;
@@ -117,5 +118,25 @@ public class Module implements java.io.Serializable
 	public void setDescription(String description)
 	{
 		this.description = description;
+	}
+
+	@Override
+	protected Module clone() throws CloneNotSupportedException
+	{
+		Module cloned = (Module)super.clone();
+		cloned.setId(null);
+		if (this.l1Components != null)
+		{
+			Set<L1Component> clonedL1Components = new HashSet<L1Component>();
+			for (L1Component l1Component : l1Components)
+			{
+				L1Component clonedL1Component = (L1Component) l1Component.clone();
+				clonedL1Components.add(clonedL1Component);
+			}
+
+			cloned.setL1Components(clonedL1Components);
+		}
+		
+		return cloned;
 	}
 }

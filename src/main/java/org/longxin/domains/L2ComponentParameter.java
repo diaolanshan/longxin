@@ -19,7 +19,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "l2_component_parameter", catalog = "longxin")
-public class L2ComponentParameter implements java.io.Serializable
+public class L2ComponentParameter implements java.io.Serializable, Cloneable
 {
 
 	/**

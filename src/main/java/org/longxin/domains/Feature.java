@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,7 +26,7 @@ import com.mysql.jdbc.StringUtils;
  */
 @Entity
 @Table(name = "feature", catalog = "longxin")
-public class Feature implements java.io.Serializable
+public class Feature implements java.io.Serializable, Cloneable
 {
 	private static final long serialVersionUID = 4452069230447771945L;
 	private Integer id;
@@ -128,7 +129,7 @@ public class Feature implements java.io.Serializable
 		this.iconName = iconName;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "feature")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "feature", cascade= CascadeType.ALL)
 	public Set<Module> getModules()
 	{
 		return this.modules;
@@ -141,11 +142,20 @@ public class Feature implements java.io.Serializable
 	
 	public Object clone() throws CloneNotSupportedException 
 	{
-		//TODO
 		Feature cloned = (Feature) super.clone();
 		cloned.setId(null);
-		
-		throw new CloneNotSupportedException();
-	}
+		if (this.modules != null)
+		{
+			Set<Module> clonedModules = new HashSet<Module>();
+			for (Module module : modules)
+			{
+				Module clonedModule = (Module) module.clone();
+				clonedModules.add(clonedModule);
+			}
 
+			cloned.setModules(clonedModules);
+		}
+		
+		return cloned;
+	}
 }

@@ -22,7 +22,7 @@ import org.apache.commons.lang.StringUtils;
  */
 @Entity
 @Table(name = "l1_component_parameter", catalog = "longxin")
-public class L1ComponentParameter implements java.io.Serializable
+public class L1ComponentParameter implements java.io.Serializable, Cloneable
 {
 
 	/**

@@ -17,19 +17,19 @@
 		</legend>
 		<div class="form-group">
 			<label for="id" class="col-sm-3 control-label">组件描述：</label>
-			<div class="col-sm-5 control-label">${component.description}</div>
+			<div class="control-label">${component.description}</div>
 		</div>
 		<c:forEach items="${parameters}" var="parameter">
 			<div class="form-group">
 				<label for="id" class="col-sm-3 control-label">${parameter.parameterName}：</label>
-				<div class="col-sm-5 control-label" style="width:800px">
+				<div class="control-label" style="width:100%">
 					<div style="width:150px;float:left;display:inline">${parameter.parameterValue}&nbsp;&nbsp;${parameter.unitName}</div>
 					<c:choose>
 						<c:when test="${parameter.valueScope!=null}">
-							<div style="width: 300px; hefloat: left; display: inline;font-size:11px;color:gray">取值范围(${parameter.minValue},${parameter.maxValue})</div>
+							<div style="width: 100px; hefloat: left; display: inline;font-size:11px;color:gray">取值范围(${parameter.minValue},${parameter.maxValue})</div>
 						</c:when>
 						<c:otherwise>
-							<div style="width: 300px; hefloat: left; display: inline;font-size:11px;color:gray">可选值(${parameter.options})</div>
+							<div style="width: 200px; hefloat: left; display: inline;font-size:11px;color:gray">可选值(${parameter.options})</div>
 						</c:otherwise>
 					</c:choose>
 				</div>

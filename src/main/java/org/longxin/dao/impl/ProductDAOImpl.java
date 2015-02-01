@@ -11,7 +11,7 @@ public class ProductDAOImpl extends HibernateDaoSupport implements ProductDAO {
 	@SuppressWarnings("unchecked")
 	public List<Product> getAllProducts()
 	{
-		return this.getHibernateTemplate().find("FROM Product");
+		return this.getHibernateTemplate().find("FROM Product ORDER BY id DESC");
 	}
 	
 	public void saveProduct(Product product)

@@ -53,6 +53,9 @@
 					<div class="form-group">
 						<div class="col-sm-offset-7 col-sm-5" style="align:right">
 							<button type="button" class="btn btn-primary" onclick="location='../edit/${product.id}'">编辑</button>
+							<c:if test="${product.template}">
+								<button type="button" class="btn btn-primary" onclick="location='../clone/${product.id}'">复制产品</button>
+							</c:if>
 						</div>
 					</div>
 				</td>

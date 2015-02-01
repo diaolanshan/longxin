@@ -54,12 +54,14 @@
 		<put-attribute name="body" value="/view/product/viewdiagram.jsp" />
 	</definition>
 	
+	<!-- 
 	<definition name="/product/template" extends="base.definition">
 		<put-attribute name="title" value="产品模板" />
 		<put-attribute name="body" value="/view/product/viewdiagram.jsp" />
 		<put-attribute name="menuItem" value="producttemplate" />
 	</definition>
-	
+	 -->
+	 
 	<definition name="/feature/view" extends="base.definition">
 		<put-attribute name="title" value="产品结构" />
 		<put-attribute name="body" value="/view/feature/viewfeature.jsp" />

@@ -4,11 +4,15 @@ package org.longxin.domains;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +24,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "l3_component", catalog = "longxin")
-public class L3Component implements java.io.Serializable
+public class L3Component implements java.io.Serializable, Cloneable
 {
 
 	/**
@@ -94,7 +98,7 @@ public class L3Component implements java.io.Serializable
 		this.description = description;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "l3Component")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "l3Component", cascade= CascadeType.ALL)
 	public Set<L3ComponentParameter> getL3ComponentParameters()
 	{
 		return this.l3ComponentParameters;

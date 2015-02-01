@@ -4,11 +4,15 @@ package org.longxin.domains;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,7 +24,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "l2_component", catalog = "longxin")
-public class L2Component implements java.io.Serializable
+public class L2Component implements java.io.Serializable, Cloneable
 {
 
 	/**
@@ -103,7 +107,7 @@ public class L2Component implements java.io.Serializable
 		this.description = description;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "l2Component")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "l2Component", cascade= CascadeType.ALL)
 	public Set<L2ComponentParameter> getL2ComponentParameters()
 	{
 		return this.l2ComponentParameters;
@@ -115,7 +119,7 @@ public class L2Component implements java.io.Serializable
 		this.l2ComponentParameters = l2ComponentParameters;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "l2Component")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "l2Component", cascade= CascadeType.ALL)
 	public Set<L3Component> getL3Components()
 	{
 		return this.l3Components;
