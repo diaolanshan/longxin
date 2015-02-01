@@ -1,5 +1,6 @@
 package org.longxin.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -79,13 +80,15 @@ public class ProductController {
 	public String doSearchProduct(Model model, ProductSearchBean searchForm)
 	{
 		model.addAttribute("productSearchBean", searchForm);
-		System.out.println(searchForm.getKeyword());
+		//System.out.println(searchForm.getKeyword());
 		if (StringUtils.isEmpty(searchForm.getKeyword()))
 		{
 			model.addAttribute("products", productService.getAllProducts());
 		} else
 		{
-			model.addAttribute("products", productService.getProjectByID(Integer.valueOf(searchForm.getKeyword())));
+			List<Product> products = new ArrayList<Product>();
+			products.add(productService.getProjectByID(Integer.valueOf(searchForm.getKeyword())));
+			model.addAttribute("products", products);
 		}
 		return "/product/listproducts";
 	}
@@ -111,9 +114,7 @@ public class ProductController {
      */
     @RequestMapping(value="/add", method=RequestMethod.POST) 
 	public String addProduct(Product product) {
-    	UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
-    		    .getAuthentication()
-    		    .getPrincipal();
+    	//UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     	productService.saveProduct(product);
 		return "redirect:/product/list";
 	}

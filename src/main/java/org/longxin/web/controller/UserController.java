@@ -27,8 +27,6 @@ public class UserController
 	@Autowired
 	DepartmentService departmentService;
 	
-	static String editUsername = "";
-	
 	/**
 	 * Json response
 	 * @param model
@@ -46,10 +44,6 @@ public class UserController
 		if (userService.findUserByUserName(username) == null)
 		{
 			return true;
-		}
-		else{
-			if(userService.findUserByUserName(username).getUsername().equals(editUsername))
-				return true;
 		}
 		return  false;
 	}
@@ -99,7 +93,6 @@ public class UserController
 	public String editUsers(@PathVariable String userId, Model model)
 	{
 		Users user = userService.findUserByID(Integer.valueOf(userId));
-		editUsername = user.getUsername();
 		model.addAttribute("user",user);
 		model.addAttribute("departments", departmentService.getAllDepartments());
 		return "/user/edituser";
@@ -108,7 +101,6 @@ public class UserController
 	@RequestMapping(value = "/edit/{userId}", method = RequestMethod.POST)
 	public String editUsers(Model model,@ModelAttribute("user") Users user)
 	{
-		editUsername = "";
 		userService.editUser(user);
 		model.addAttribute(new Users());
 		return "redirect:/user/search";

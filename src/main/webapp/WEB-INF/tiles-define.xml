@@ -79,7 +79,7 @@
 	
 	<definition name="/module/diagram" extends="base.definition">
 		<put-attribute name="title" value="功能结构" />
-		<put-attribute name="body" value="/view/feature/featurediagram.jsp" />
+		<put-attribute name="body" value="/view/module/modulediagram.jsp" />
 	</definition>
 
 	<definition name="/l1/view" extends="base.definition">
@@ -90,6 +90,26 @@
 	<definition name="/l1component/diagram" extends="base.definition">
 		<put-attribute name="title" value="结构模块" />
 		<put-attribute name="body" value="/view/l1component/l1diagram.jsp" />
+	</definition>
+
+	<definition name="/l2/view" extends="base.definition">
+		<put-attribute name="title" value="结构模块" />
+		<put-attribute name="body" value="/view/l2component/viewl2.jsp" />
+	</definition>
+	
+	<definition name="/l2component/diagram" extends="base.definition">
+		<put-attribute name="title" value="结构模块" />
+		<put-attribute name="body" value="/view/l2component/l2diagram.jsp" />
+	</definition>
+
+	<definition name="/l3/view" extends="base.definition">
+		<put-attribute name="title" value="结构模块" />
+		<put-attribute name="body" value="/view/l3component/viewl3.jsp" />
+	</definition>
+	
+	<definition name="/l3component/diagram" extends="base.definition">
+		<put-attribute name="title" value="结构模块" />
+		<put-attribute name="body" value="/view/l3component/l3diagram.jsp" />
 	</definition>
 
 </tiles-definitions>  
