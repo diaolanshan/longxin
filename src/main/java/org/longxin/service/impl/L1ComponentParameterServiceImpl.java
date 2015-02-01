@@ -19,4 +19,10 @@ public class L1ComponentParameterServiceImpl implements
 		return this.l1ComponentParameterDAO.getL1Parameters(component);
 		
 	}
+
+	@Override
+	public void addParameter(L1ComponentParameter l1parameter) {
+		this.l1ComponentParameterDAO.addParameter(l1parameter);
+		
+	}
 }

@@ -51,9 +51,9 @@
                 <td>${l1component.name}</td> 
                 <td>${l1component.description}</td>  
                 <td>
-                <a href="./list/${l1component.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
+                <a href="../../l1component/view/${l1component.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
                 &nbsp;&nbsp;
-                <a href="./edit/${l1component.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                <a href="../../l1component/edit/${l1component.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
    	 			&nbsp;&nbsp;
             </tr>  
        		</c:forEach>

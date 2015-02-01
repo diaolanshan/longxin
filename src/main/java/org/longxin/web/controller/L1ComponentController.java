@@ -1,5 +1,7 @@
 package org.longxin.web.controller;
 
+import javax.jws.WebParam.Mode;
+
 import org.longxin.domains.L1Component;
 import org.longxin.domains.L1ComponentParameter;
 import org.longxin.service.L1ComponentParameterService;
@@ -34,6 +36,7 @@ public class L1ComponentController
 		model.addAttribute("component", component);
 		model.addAttribute("parameters", l1ComponentParameterService.getL1Paramters(component));
 		model.addAttribute("parameter", new L1ComponentParameter());
+		model.addAttribute("l2components", l1ComponentService.getL2ComponentsByL1(component));
 		return "/l1/view";
 	}
 	
@@ -45,11 +48,13 @@ public class L1ComponentController
 		return "/l1component/diagram";
 	}
 	
-	@RequestMapping(value = "/add/parameter", method = RequestMethod.POST)
-	public @ResponseBody ModelMap  addComponentParameter(@RequestBody L1ComponentParameter json)
+	@RequestMapping(value = "/view/{l1id}/add/parameter", method = RequestMethod.POST)
+	public @ResponseBody ModelMap  addComponentParameter(@PathVariable int l1id, @RequestBody L1ComponentParameter json)
 	{
-		System.out.println(json.getMaxValue());
-		
+		L1Component component = l1ComponentService.getL1ComponentByID(l1id);
+		json.setL1Component(component);
+		json.setValueScope(json.getMinValue()+","+json.getMaxValue());
+		l1ComponentParameterService.addParameter(json);
 		return new ModelMap("success", 1);
 	}
 

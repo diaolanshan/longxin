@@ -1,10 +1,9 @@
 $(document).ready(function(){
-	
+
 	var targetMenu = $("#meanItem").text();
 	$("#"+targetMenu).addClass("active");
 
 	$("#add_new").click(function(){
-		alert(1);
 		$(".entry-form").fadeIn("fast");	
 	});
 	
@@ -24,26 +23,48 @@ $(document).ready(function(){
 	$("#cancel").click(function(){
 		$(".entry-form").fadeOut("fast");	
 	});
+	
+	//form 转 Object
+	$.fn.serializeObject = function()    
+	{    
+	   var o = {};    
+	   var a = this.serializeArray();    
+	   $.each(a, function() {    
+	       if (o[this.name]) {    
+	           if (!o[this.name].push) {    
+	               o[this.name] = [o[this.name]];    
+	           }    
+	           o[this.name].push(this.value || '');    
+	       } else {    
+	           o[this.name] = this.value || '';    
+	       }    
+	   });    
+	   return o;    
+	};  
 
 	function ajax(action,id){
 		if(action =="save")
 		{
-			data = $("#userinfo").serialize();
+			data = $("#parameterinfo").serializeObject();
+			//console.info(data);
 		}
 		else if(action == "delete"){
 			data = "action="+action+"&item_id="+id;
 		}
-
+		componentId  = $("#componentId").val();
+		//console.info(componentId);
 		$.ajax({
 			type: "POST", 
-			url: "http://localhost:8080/longxin/l1component/add/parameter", 
+			url: "./"+componentId+"/add/parameter", 
 			data : JSON.stringify(data),
 			dataType: "json",
 			contentType: "application/json; charset=utf-8",
 			success: function(response){
 				if(response.success == "1"){
-					alert(1);
-					if(action == "save"){
+					window.location.reload();
+					//$(".entry-form").fadeOut("fast");
+					//alert(1);
+					/*if(action == "save"){
 						$(".entry-form").fadeOut("fast",function(){
 							$(".table-list").append("<tr><td>"+response.fname+"</td><td>"+response.lname+"</td><td>"+response.email+"</td><td>"+response.phone+"</td><td><a href='#' id='"+response.row_id+"' class='del'>Delete</a></a></td></tr>");	
 							if ( ! $.browser.msie ) {
@@ -60,7 +81,7 @@ $(document).ready(function(){
 							}, 1000);
 						}
 						$("a[id='"+row_id+"']").closest("tr").fadeOut();
-					}
+					}*/
 				}
 			},
 			error: function(res){

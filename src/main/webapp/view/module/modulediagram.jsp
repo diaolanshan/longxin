@@ -4,23 +4,25 @@
 
 <body onload="prettyPrint();">
 	<ul id="org" style="display: none">
-		<li><a href="./../view/${module.id}">${module.moduleName}</a>
+		<li><a href="./../../module/view/${module.id}">${module.moduleName}</a>
 			<ul>
 				<c:forEach items="${module.l1Components}" var="l1">
-					<li><a href="./../../l1component/view/${l1.id}">${l1.name}</a>
+					<li><a href="./../../l1component/view/${l1.id}"
+						target="_blank">${l1.name}</a>
 						<ul>
 							<c:forEach items="${l1.l2Components}" var="l2">
-								<li><a href="#" target="_blank">${l2.name}</a>
+								<li><a href="./../../l2component/view/${l2.id}"
+									target="_blank">${l2.name}</a>
 									<ul>
 										<c:forEach items="${l2.l3Components}" var="l3">
-											<li><a href="#" target="_blank">${l3.name}</a></li>
+											<li><a href="./../../l3component/view/${l3.id}"
+												target="_blank">${l3.name}</a></li>
 										</c:forEach>
 									</ul></li>
 							</c:forEach>
 						</ul></li>
 				</c:forEach>
-			</ul>
-		</li>
+			</ul></li>
 	</ul>
 
 	<div id="chart" class="orgChart"></div>

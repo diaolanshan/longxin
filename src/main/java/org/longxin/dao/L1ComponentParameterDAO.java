@@ -10,4 +10,6 @@ public interface L1ComponentParameterDAO
 	public L1Component getL1ComponentByID(Integer ID);
 	
 	public List<L1ComponentParameter> getL1Parameters(L1Component component);
+	
+	public void addParameter(L1ComponentParameter l1parameter);
 }
