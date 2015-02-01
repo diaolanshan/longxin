@@ -109,5 +109,19 @@ public class L3Component implements java.io.Serializable, Cloneable
 	{
 		this.l3ComponentParameters = l3ComponentParameters;
 	}
+	
+	protected Object clone() throws CloneNotSupportedException{
+		L3Component l3Component = (L3Component)super.clone();
+		l3Component.setId(null);
+		if(this.l3ComponentParameters !=null){
+			Set<L3ComponentParameter> clonedl3ComponentParameters = new HashSet<L3ComponentParameter>();
+			for(L3ComponentParameter l3ComponentParameter : l3ComponentParameters){
+				L3ComponentParameter cloneL3ComponentParameter = (L3ComponentParameter) l3ComponentParameter.clone();
+				clonedl3ComponentParameters.add(cloneL3ComponentParameter);
+			}
+			l3Component.setL3ComponentParameters(clonedl3ComponentParameters);
+		}
+		return l3Component;
+	}
 
 }

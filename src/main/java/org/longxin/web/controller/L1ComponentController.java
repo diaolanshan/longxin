@@ -1,7 +1,5 @@
 package org.longxin.web.controller;
 
-import javax.jws.WebParam.Mode;
-
 import org.longxin.domains.L1Component;
 import org.longxin.domains.L1ComponentParameter;
 import org.longxin.service.L1ComponentParameterService;
@@ -53,7 +51,6 @@ public class L1ComponentController
 	{
 		L1Component component = l1ComponentService.getL1ComponentByID(l1id);
 		json.setL1Component(component);
-		json.setValueScope(json.getMinValue()+","+json.getMaxValue());
 		l1ComponentParameterService.addParameter(json);
 		return new ModelMap("success", 1);
 	}
