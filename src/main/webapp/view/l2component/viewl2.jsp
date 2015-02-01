@@ -22,14 +22,14 @@
 		<c:forEach items="${parameters}" var="parameter">
 			<div class="form-group">
 				<label for="id" class="col-sm-3 control-label">${parameter.parameterName}：</label>
-				<div class="control-label" style="width:100%">
+				<div class="control-label" style="width:800px">
 					<div style="width:150px;float:left;display:inline">${parameter.parameterValue}&nbsp;&nbsp;${parameter.unitName}</div>
 					<c:choose>
 						<c:when test="${parameter.valueScope!=null}">
-							<div style="width: 300px; hefloat: left; display: inline;font-size:11px;color:gray">取值范围(${parameter.valueScope})</div>
+							<div style="width: 300px; hefloat: left; display: inline;font-size:11px;color:gray">取值范围(${parameter.minValue},${parameter.maxValue})</div>
 						</c:when>
 						<c:otherwise>
-							<div style="width: 200px; hefloat: left; display: inline;font-size:11px;color:gray">可选值(${parameter.options})</div>
+							<div style="width: 300px; hefloat: left; display: inline;font-size:11px;color:gray">可选值(${parameter.options})</div>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -52,14 +52,14 @@
 	        </tr>
    	 	</thead>
    	 	<tbody>
-   	 		<c:forEach items="${l2components}" var="l2component">  
+   	 		<c:forEach items="${l3components}" var="l3component">  
             <tr>  
-                <td>${l2component.name}</td> 
-                <td>${l2component.description}</td>  
+                <td>${l3component.name}</td> 
+                <td>${l3component.description}</td>  
                 <td>
-                <a href="../../l2component/view/${l2component.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
+                <a href="../../l3component/view/${l3component.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
                 &nbsp;&nbsp;
-                <a href="../../l2component/edit/${l2component.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                <a href="../../l3component/edit/${l3component.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
    	 			&nbsp;&nbsp;
             </tr>  
        		</c:forEach>

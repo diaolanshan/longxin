@@ -51,9 +51,9 @@
                 <td>${module.moduleName}</td>  
                 <td>${module.description}</td>  
                 <td>
-                <a href="./list/${module.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
+                <a href="../../module/view/${module.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
                 &nbsp;&nbsp;
-                <a href="./edit/${module.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                <a href="../../module/edit/${module.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
    	 			&nbsp;&nbsp;
             </tr>  
        		</c:forEach>
