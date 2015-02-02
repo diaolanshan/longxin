@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("department")
 public class DepartmentController
 {
-	@Autowired
-	DepartmentService departmentService;
+//	@Autowired
+//	DepartmentService departmentService;
 	
 	
 }
