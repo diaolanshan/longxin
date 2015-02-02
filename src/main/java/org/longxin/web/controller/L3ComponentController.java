@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,5 +54,18 @@ public class L3ComponentController
 		l3ComponentParameterService.addParameter(json);
 		return new ModelMap("success", 1);
 	}
-
+	
+	@RequestMapping(value = "/delete/parameter/{parameterid}", method = RequestMethod.POST)
+	public @ResponseBody ModelMap  deleteComponentParameter(@PathVariable int parameterid)
+	{
+		l3ComponentParameterService.deleteParameter(parameterid);
+		return new ModelMap("success", 1);
+	}
+	
+	@RequestMapping(value = "/update/parameter", method = RequestMethod.POST)
+	public @ResponseBody ModelMap  updateComponentParameter(@ModelAttribute("l3ComponentParameter") L3ComponentParameter l3componentParameter)
+	{
+		l3ComponentParameterService.updateParameter(l3componentParameter);
+		return new ModelMap("success", 1);
+	}
 }

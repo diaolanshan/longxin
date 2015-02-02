@@ -29,5 +29,10 @@ public class ModuleServiceImpl implements ModuleService
 	{
 		return moduleDAO.getModuleByID(moduleID);
 	}
+
+	@Override
+	public void updateModule(Module module) {
+		moduleDAO.updateModule(module);
+	}
 	
 }

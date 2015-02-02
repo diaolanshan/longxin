@@ -22,4 +22,19 @@ public class L2ComponentServiceImpl implements L2ComponentService
 	public List<L3Component> getL3ComponentsByL2(L2Component l2Component) {
 		return l2ComponentDAO.getL3ComponentsByL2(l2Component);
 	}
+
+	@Override
+	public void updateL2Component(L2Component l2Component) {
+		l2ComponentDAO.updateL2Component(l2Component);
+	}
+
+	@Override
+	public void addL2Component(L2Component l2Component) {
+		l2ComponentDAO.addL2Component(l2Component);
+	}
+
+	@Override
+	public void deleteL2Component(int id) {
+		l2ComponentDAO.deleteL2Component(id);
+	}
 }

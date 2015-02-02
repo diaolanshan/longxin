@@ -10,4 +10,8 @@ public interface L3ComponentParameterService
 	public List<L3ComponentParameter> getL3Paramters(L3Component component);
 	
 	public void addParameter(L3ComponentParameter l3parameter);
+	
+	public void deleteParameter(int id);
+	
+	public void updateParameter(L3ComponentParameter l3parameter);
 }

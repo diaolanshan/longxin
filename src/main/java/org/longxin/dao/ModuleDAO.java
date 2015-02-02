@@ -12,4 +12,6 @@ public interface ModuleDAO
 	public List<Module> getModulesByFeature(Feature feature);
 	
 	public Module getModuleByID(Integer moduleID);
+	
+	public void updateModule(Module module);
 }

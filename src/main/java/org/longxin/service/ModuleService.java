@@ -11,5 +11,8 @@ public interface ModuleService
 	
 	public List<Module> getModulesByFeature(Feature feature);
 	
-	public Module getModuleByID(Integer ModuleID);
+	public Module getModuleByID(Integer moduleID);
+	
+	public void updateModule(Module module);
+	
 }

@@ -25,4 +25,14 @@ public class L1ComponentParameterServiceImpl implements
 		this.l1ComponentParameterDAO.addParameter(l1parameter);
 		
 	}
+
+	@Override
+	public void deleteParameter(int id) {
+		this.l1ComponentParameterDAO.deleteParameter(id);
+	}
+
+	@Override
+	public void updateParameter(L1ComponentParameter l1parameter) {
+		this.l1ComponentParameterDAO.updateParameter(l1parameter);
+	}
 }
