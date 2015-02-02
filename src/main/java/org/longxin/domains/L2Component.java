@@ -130,4 +130,35 @@ public class L2Component implements java.io.Serializable, Cloneable
 		this.l3Components = l3Components;
 	}
 
+	protected Object clone() throws CloneNotSupportedException
+	{
+		L2Component l2Compoennt = (L2Component)super.clone();
+		l2Compoennt.setId(null);
+		
+		if (this.l2ComponentParameters != null)
+		{
+			Set<L2ComponentParameter> clonedL2ComponentsParameters = new HashSet<L2ComponentParameter>();
+
+			for (L2ComponentParameter l2ComponentParameter : l2ComponentParameters)
+			{
+				L2ComponentParameter clonedL2ComponentsParameter = (L2ComponentParameter) l2ComponentParameter.clone();
+				clonedL2ComponentsParameters.add(clonedL2ComponentsParameter);
+			}
+
+			l2Compoennt.setL2ComponentParameters(clonedL2ComponentsParameters);
+		}
+
+		if (this.l3Components != null)
+		{
+			Set<L3Component> clonedl3Components = new HashSet<L3Component>();
+			
+			for(L3Component l3Component : l3Components){
+				L3Component clonedl3Component = (L3Component) l3Component.clone();
+				clonedl3Components.add(clonedl3Component);
+			}
+			
+			l2Compoennt.setL3Components(clonedl3Components);
+		}
+		return l2Compoennt;
+	}
 }

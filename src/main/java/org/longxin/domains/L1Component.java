@@ -135,14 +135,30 @@ public class L1Component implements java.io.Serializable, Cloneable
 		L1Component l1Compoennt = (L1Component)super.clone();
 		l1Compoennt.setId(null);
 		
-		if (this.getL1ComponentParameters() != null)
+		if (this.l1ComponentParameters != null)
 		{
+			Set<L1ComponentParameter> clonedL1ComponentsParameters = new HashSet<L1ComponentParameter>();
 
+			for (L1ComponentParameter l1ComponentParameter : l1ComponentParameters)
+			{
+				L1ComponentParameter clonedL1ComponentsParameter = (L1ComponentParameter) l1ComponentParameter.clone();
+				clonedL1ComponentsParameters.add(clonedL1ComponentsParameter);
+			}
+
+			l1Compoennt.setL1ComponentParameters(clonedL1ComponentsParameters);
 		}
 
-		if (this.getL2Components() != null)
+		if (this.l2Components != null)
 		{
-
+			Set<L2Component> clonedl2Components = new HashSet<L2Component>();
+			
+			for(L2Component l2Component : l2Components){
+				L2Component clonedl2Component = (L2Component) l2Component.clone();
+				clonedl2Components.add(clonedl2Component);
+			}
+			
+			l1Compoennt.setL2Components(clonedl2Components);
 		}
+		return l1Compoennt;
 	}
 }

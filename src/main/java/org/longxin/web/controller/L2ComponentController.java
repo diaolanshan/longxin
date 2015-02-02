@@ -51,7 +51,6 @@ public class L2ComponentController
 	{
 		L2Component component = l2ComponentService.getL2ComponentByID(l2id);
 		json.setL2Component(component);
-		json.setValueScope(json.getMinValue()+","+json.getMaxValue());
 		l2ComponentParameterService.addParameter(json);
 		return new ModelMap("success", 1);
 	}

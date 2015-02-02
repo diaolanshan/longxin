@@ -33,7 +33,6 @@ public class L1ComponentParameter implements java.io.Serializable, Cloneable
 	private L1Component l1Component;
 	private String parameterName;
 	private String parameterValue;
-	private String valueScope;
 	private String unitName;
 	private String options;
 	private String minValue;
@@ -55,7 +54,6 @@ public class L1ComponentParameter implements java.io.Serializable, Cloneable
 		this.l1Component = l1Component;
 		this.parameterName = parameterName;
 		this.parameterValue = parameterValue;
-		this.valueScope = valueScope;
 		this.unitName = unitName;
 		this.options = options;
 	}
@@ -107,17 +105,6 @@ public class L1ComponentParameter implements java.io.Serializable, Cloneable
 		this.parameterValue = parameterValue;
 	}
 
-	@Column(name = "VALUE_SCOPE", length = 128)
-	public String getValueScope()
-	{
-		return this.valueScope;
-	}
-
-	public void setValueScope(String valueScope)
-	{
-		this.valueScope = valueScope;
-	}
-
 	@Column(name = "UNIT_NAME", length = 45)
 	public String getUnitName()
 	{
@@ -140,7 +127,7 @@ public class L1ComponentParameter implements java.io.Serializable, Cloneable
 		this.options = options;
 	}
 
-	@Column(name = "MINVALUE", length = 128)
+	@Column(name = "MIN_VALUE", length = 128)
 	public String getMinValue()
 	{
 		return minValue;
@@ -151,7 +138,7 @@ public class L1ComponentParameter implements java.io.Serializable, Cloneable
 		this.minValue = minValue;
 	}
 
-	@Column(name = "MAXVALUE", length = 128)
+	@Column(name = "MAX_VALUE", length = 128)
 	public String getMaxValue()
 	{
 		return maxValue;
@@ -161,5 +148,10 @@ public class L1ComponentParameter implements java.io.Serializable, Cloneable
 	{
 		this.maxValue = maxValue;
 	}
-	
+
+	protected Object clone() throws CloneNotSupportedException{
+		L1ComponentParameter l1ComponentParameter = (L1ComponentParameter)super.clone();
+		l1ComponentParameter.setId(null);
+		return l1ComponentParameter;
+	}
 }

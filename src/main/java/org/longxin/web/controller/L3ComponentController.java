@@ -50,7 +50,6 @@ public class L3ComponentController
 	{
 		L3Component component = l3ComponentService.getL3ComponentByID(l3id);
 		json.setL3Component(component);
-		json.setValueScope(json.getMinValue()+","+json.getMaxValue());
 		l3ComponentParameterService.addParameter(json);
 		return new ModelMap("success", 1);
 	}
