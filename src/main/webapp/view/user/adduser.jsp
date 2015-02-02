@@ -37,7 +37,7 @@ $().ready(function(){
 		messages: {
 			username: {
 				required: "请输入用户名",
-				minlength: "用户名至少包含两个字符",,
+				minlength: "用户名至少包含两个字符",
 				remote: "用户名已经存在"
 			},
 			password: {
@@ -115,8 +115,9 @@ $().ready(function(){
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-			<input type="submit" class="btn btn-primary" value="添加用户" /> <input
-				type="reset" class="btn btn-primary" value="重置" />
+			<input type="submit" class="btn btn-primary" value="添加用户" /> 
+			<input type="reset" class="btn btn-primary" value="重置" />
+			<button type="button" class="btn btn-primary" onclick="location='../search'">关闭</button>
 		</div>
 	</div>
 </form:form>
