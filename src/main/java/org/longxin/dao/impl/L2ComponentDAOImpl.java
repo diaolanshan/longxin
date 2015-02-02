@@ -20,4 +20,19 @@ public class L2ComponentDAOImpl extends HibernateDaoSupport implements L2Compone
 
 		return l3Components;
 	}
+
+	@Override
+	public void updateL2Component(L2Component l2Component) {
+		this.getHibernateTemplate().update(l2Component);
+	}
+
+	@Override
+	public void addL2Component(L2Component l2Component) {
+		this.getHibernateTemplate().save(l2Component);
+	}
+
+	@Override
+	public void deleteL2Component(int id) {
+		this.getHibernateTemplate().delete(this.getHibernateTemplate().get(L2Component.class, id));
+	}
 }

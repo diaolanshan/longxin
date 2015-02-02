@@ -26,4 +26,14 @@ public class L2ComponentParameterServiceImpl implements
 		this.l2ComponentParameterDAO.addParameter(l2parameter);
 		
 	}
+
+	@Override
+	public void deleteParameter(int id) {
+		this.l2ComponentParameterDAO.deleteParameter(id);
+	}
+
+	@Override
+	public void updateParameter(L2ComponentParameter l2parameter) {
+		this.l2ComponentParameterDAO.updateParameter(l2parameter);
+	}
 }

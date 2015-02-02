@@ -3,8 +3,8 @@ package org.longxin.dao.impl;
 import java.util.List;
 
 import org.longxin.dao.L2ComponentParameterDAO;
-import org.longxin.domains.L2Component;
 import org.longxin.domains.L2ComponentParameter;
+import org.longxin.domains.L2Component;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class L2ComponentParameterDAOImpl extends HibernateDaoSupport implements L2ComponentParameterDAO
@@ -25,6 +25,15 @@ public class L2ComponentParameterDAOImpl extends HibernateDaoSupport implements 
 	public void addParameter(L2ComponentParameter l2parameter) {
 		
 		this.getHibernateTemplate().saveOrUpdate(l2parameter);
-		
+	}
+
+	@Override
+	public void deleteParameter(int id) {
+		this.getHibernateTemplate().delete(this.getHibernateTemplate().get(L2Component.class, id));
+	}
+
+	@Override
+	public void updateParameter(L2ComponentParameter l2parameter) {
+		this.getHibernateTemplate().update(l2parameter);
 	}
 }
