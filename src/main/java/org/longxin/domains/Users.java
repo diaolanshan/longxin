@@ -40,6 +40,7 @@ public class Users implements java.io.Serializable {
 	private Department department;
 	private String telephone;
 	private String passwordAgain;
+	private int loginCount; 
 
 	public Users() {
 	}
@@ -138,7 +139,15 @@ public class Users implements java.io.Serializable {
 	{
 		this.passwordAgain = passwordAgain;
 	}
-	
-	
-	
+
+	@Column(name = "LOGIN_COUNT", length = 256)
+	public int getLoginCount()
+	{
+		return loginCount;
+	}
+
+	public void setLoginCount(int loginCount)
+	{
+		this.loginCount = loginCount;
+	}
 }

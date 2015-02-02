@@ -10,12 +10,11 @@
 </div>
 <div id="navbar" class="navbar-collapse collapse">
 	<ul class="nav navbar-nav navbar-right">
-		<li><a href="#">Dashboard</a></li>
-		<li><a href="#">Settings</a></li>
+		<li><a href="#"><img style="width:23px" src="../../images/star.png"/></a></li>
 		<li><a href="#">Profile</a></li>
 		<li><a href="/longxin/view/login.jsp">退出</a></li>
 	</ul>
-	<form class="navbar-form navbar-right">
+	<!-- <form class="navbar-form navbar-right">
 		<input type="text" class="form-control" placeholder="Search...">
-	</form>
+	</form> -->
 </div>

@@ -6,6 +6,7 @@ import org.apache.commons.lang.StringUtils;
 import org.longxin.domains.Users;
 import org.longxin.service.DepartmentService;
 import org.longxin.service.UserService;
+import org.longxin.util.Roles;
 import org.longxin.web.controller.bean.UserSearchBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,6 +78,7 @@ public class UserController
 	{
 		model.addAttribute(new Users());
 		model.addAttribute("departments", departmentService.getAllDepartments());
+		model.addAttribute("roles", Roles.values());
 		return "/user/adduser";
 	}
 	
@@ -95,6 +97,7 @@ public class UserController
 		Users user = userService.findUserByID(Integer.valueOf(userId));
 		model.addAttribute("user",user);
 		model.addAttribute("departments", departmentService.getAllDepartments());
+		model.addAttribute("roles", Roles.values());
 		return "/user/edituser";
 	}
 	

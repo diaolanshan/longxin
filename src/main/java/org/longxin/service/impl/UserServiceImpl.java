@@ -51,4 +51,10 @@ public class UserServiceImpl implements UserService{
 	public void deleteUser(int userID) {
 		userDAO.deleteUserByID(userID);
 	}
+	
+	public void increaseLoginCount(Users user)
+	{
+		user.setLoginCount(user.getLoginCount()+1);
+		userDAO.saveUser(user);
+	}
 }

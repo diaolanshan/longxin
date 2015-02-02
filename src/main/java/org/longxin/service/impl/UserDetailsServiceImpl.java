@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
 	UserService userService;
-
+	
 	public UserDetails loadUserByUsername(String userName)
 			throws UsernameNotFoundException {
 
@@ -31,6 +31,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		User user = new User(localUser.getUsername(), localUser
 				.getPassword(), true, true, true, true,
 				getAuthorities(localUser.getRole()));
+		
+		if (localUser != null)
+		{
+			userService.increaseLoginCount(localUser);
+		}
 		return user;
 	}
 

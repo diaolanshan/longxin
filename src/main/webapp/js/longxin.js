@@ -17,6 +17,10 @@ $(document).ready(function(){
 		}
 	})
 	
+	 $("#logintooltips").tooltip({
+        title : 'It works in absence of title attribute.'
+    });
+	
 	var targetMenu = $("#meanItem").text();
 	$("#"+targetMenu).addClass("active");
 

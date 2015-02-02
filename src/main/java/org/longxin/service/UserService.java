@@ -19,4 +19,6 @@ public interface UserService {
 	public void editUser(Users user);
 	
 	public void deleteUser(int userID);
+	
+	public void increaseLoginCount(Users user);
 }

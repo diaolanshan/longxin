@@ -9,8 +9,6 @@ import org.longxin.service.FeatureService;
 import org.longxin.service.ProductService;
 import org.longxin.web.controller.bean.ProductSearchBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;

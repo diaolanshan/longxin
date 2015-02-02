@@ -6,20 +6,6 @@
 $().ready(function(){
 	$("#editUserForm").validate({
 		rules: {
-			username: {
-				required: true,
-				minlength: 5,
-				remote: {
-					 url: "http://localhost:8080/longxin/user/check",
-					 type: "get",
-					 data: {
-					 	username: function() 
-					 		{
-					 			return $("#username").val();
-					 		}
-					 	}
-					 }
-			},
 			telephone: {
 				required: true,
 				minlength: 7
@@ -28,7 +14,7 @@ $().ready(function(){
 		messages: {
 			username: {
 				required: "请输入用户名",
-				minlength: "Your username must consist of at least 2 characters",
+				minlength: "用户名至少包含两个字符",
 				remote: "用户名已经存在"
 			},
 			password: {
@@ -72,20 +58,19 @@ $().ready(function(){
 		<label for="role" class="col-sm-2 control-label">用户角色：</label>
 		<div class="col-sm-10">
 			<form:select path="role" class="form-control" id="role">  
-			  <option value="ROLE_VISITOR">普通用户</option>
-			  <option value="ROLE_TECHNICALSUPPORT">技术人员</option>
-			  <option value="ROLE_SUPERTECHNICALSUPPORT">高级技术人员</option>
-			  <option value="ROLE_ADMIN">管理员</option>
+			   <c:forEach var="item" items="${roles}">
+                  <form:option value="${item}">${item.description}</form:option>
+              	</c:forEach>  
 	        </form:select>
 		</div>
 	</div>
 	<div class="form-group">
 		<label for="department.id" class="col-sm-2 control-label">部门：</label>
 		<div class="col-sm-10">
-			<form:select path="department.id" class="form-control" id="department">  
-			  <c:forEach var="department" items="${departments}">
-			  	<option value="${department.id}">${department.departmentname}</option>
-			  </c:forEach>
+			<form:select path="department.id" class="form-control" id="department.id">  
+				  <c:forEach var="item" items="${departments}">
+				  	<form:option value="${item.id}">${item.departmentname}</form:option>
+				  </c:forEach>
        		 </form:select><br/>
 		</div>
 	</div>
