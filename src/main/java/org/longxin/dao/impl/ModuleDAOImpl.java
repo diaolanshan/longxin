@@ -26,4 +26,9 @@ public class ModuleDAOImpl extends HibernateDaoSupport implements ModuleDAO
 	{
 		return this.getHibernateTemplate().get(Module.class, moduleID);
 	}
+
+	@Override
+	public void updateModule(Module module) {
+		this.getHibernateTemplate().update(module);
+	}
 }

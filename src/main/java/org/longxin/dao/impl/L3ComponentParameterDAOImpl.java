@@ -26,4 +26,14 @@ public class L3ComponentParameterDAOImpl extends HibernateDaoSupport implements 
 		
 		this.getHibernateTemplate().saveOrUpdate(l3parameter);
 	}
+
+	@Override
+	public void deleteParameter(int id) {
+		this.getHibernateTemplate().delete(this.getHibernateTemplate().get(L3Component.class, id));
+	}
+
+	@Override
+	public void updateParameter(L3ComponentParameter l3parameter) {
+		this.getHibernateTemplate().update(l3parameter);
+	}
 }

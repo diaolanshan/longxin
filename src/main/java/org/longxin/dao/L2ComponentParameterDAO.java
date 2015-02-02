@@ -12,4 +12,8 @@ public interface L2ComponentParameterDAO
 	public List<L2ComponentParameter> getL2Parameters(L2Component component);
 	
 	public void addParameter(L2ComponentParameter l2parameter);
+	
+	public void deleteParameter(int id);
+	
+	public void updateParameter(L2ComponentParameter l2parameter);
 }

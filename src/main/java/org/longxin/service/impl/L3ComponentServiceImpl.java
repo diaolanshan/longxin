@@ -14,4 +14,19 @@ public class L3ComponentServiceImpl implements L3ComponentService
 	{
 		return l3ComponentDAO.getL3ComponentByID(ID);
 	}
+
+	@Override
+	public void updateL3Component(L3Component l3Component) {
+		l3ComponentDAO.updateL3Component(l3Component);
+	}
+
+	@Override
+	public void addL3Component(L3Component l3Component) {
+		l3ComponentDAO.addL3Component(l3Component);
+	}
+
+	@Override
+	public void deleteL3Component(int id) {
+		l3ComponentDAO.deleteL3Component(id);
+	}
 }

@@ -10,4 +10,8 @@ public interface L1ComponentParameterService
 	public List<L1ComponentParameter> getL1Paramters(L1Component component);
 	
 	public void addParameter(L1ComponentParameter l1parameter);
+	
+	public void deleteParameter(int id);
+	
+	public void updateParameter(L1ComponentParameter l1parameter);
 }

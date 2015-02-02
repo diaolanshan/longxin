@@ -10,4 +10,10 @@ public interface L1ComponentService
 	public L1Component getL1ComponentByID(Integer ID);
 
 	public List<L2Component> getL2ComponentsByL1(L1Component l1Component);
+	
+	public void updateL1Component(L1Component l1Component);
+
+	public void addL1Component(L1Component l1Component);
+	
+	public void deleteL1Component(int id);
 }

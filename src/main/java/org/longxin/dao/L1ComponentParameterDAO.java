@@ -12,4 +12,8 @@ public interface L1ComponentParameterDAO
 	public List<L1ComponentParameter> getL1Parameters(L1Component component);
 	
 	public void addParameter(L1ComponentParameter l1parameter);
+	
+	public void deleteParameter(int id);
+	
+	public void updateParameter(L1ComponentParameter l1parameter);
 }

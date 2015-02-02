@@ -2,12 +2,15 @@ package org.longxin.web.controller;
 
 import org.longxin.domains.L1Component;
 import org.longxin.domains.L1ComponentParameter;
+import org.longxin.domains.L2Component;
 import org.longxin.service.L1ComponentParameterService;
 import org.longxin.service.L1ComponentService;
+import org.longxin.service.L2ComponentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +29,9 @@ public class L1ComponentController
 	
 	@Autowired
 	L1ComponentService l1ComponentService;
+	
+	@Autowired
+	L2ComponentService l2ComponentService;
 
 	@RequestMapping(value = "/view/{l1id}", method = RequestMethod.GET)
 	public String viewModule(@PathVariable int l1id, Model model)
@@ -53,6 +59,35 @@ public class L1ComponentController
 		json.setL1Component(component);
 		l1ComponentParameterService.addParameter(json);
 		return new ModelMap("success", 1);
+	}
+	
+	@RequestMapping(value = "/delete/parameter/{parameterid}", method = RequestMethod.POST)
+	public @ResponseBody ModelMap  deleteComponentParameter(@PathVariable int parameterid)
+	{
+		l1ComponentParameterService.deleteParameter(parameterid);
+		return new ModelMap("success", 1);
+	}
+	
+	@RequestMapping(value = "/update/parameter", method = RequestMethod.POST)
+	public @ResponseBody ModelMap  updateComponentParameter(@ModelAttribute("l1ComponentParameter") L1ComponentParameter l1componentParameter)
+	{
+		l1ComponentParameterService.updateParameter(l1componentParameter);
+		return new ModelMap("success", 1);
+	}
+	
+	@RequestMapping(value = "/view/{l1Id}/add/component", method = RequestMethod.POST)
+	public String addL2Componment(@PathVariable int l1Id , L2Component l2Component)
+	{
+		l2Component.setL1Component(l1ComponentService.getL1ComponentByID(l1Id));
+		l2ComponentService.addL2Component(l2Component);
+		return "/l1/view";
+	}
+	
+	@RequestMapping(value = "/delete/component/{l2Id}", method = RequestMethod.POST)
+	public String deleteL2Componment(@PathVariable int l2Id)
+	{
+		l2ComponentService.deleteL2Component(l2Id);
+		return "/l1/view";
 	}
 
 }
