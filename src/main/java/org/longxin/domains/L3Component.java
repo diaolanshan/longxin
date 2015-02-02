@@ -117,6 +117,7 @@ public class L3Component implements java.io.Serializable, Cloneable
 			Set<L3ComponentParameter> clonedl3ComponentParameters = new HashSet<L3ComponentParameter>();
 			for(L3ComponentParameter l3ComponentParameter : l3ComponentParameters){
 				L3ComponentParameter cloneL3ComponentParameter = (L3ComponentParameter) l3ComponentParameter.clone();
+				cloneL3ComponentParameter.setL3Component(l3Component);
 				clonedl3ComponentParameters.add(cloneL3ComponentParameter);
 			}
 			l3Component.setL3ComponentParameters(clonedl3ComponentParameters);

@@ -139,6 +139,7 @@ public class Product implements java.io.Serializable, Cloneable
 			for (Feature feature : features)
 			{
 				Feature clonedFeature = (Feature) feature.clone();
+				clonedFeature.setProduct(cloned);
 				clonedFeatures.add(clonedFeature);
 			}
 

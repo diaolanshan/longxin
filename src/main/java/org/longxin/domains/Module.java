@@ -131,6 +131,7 @@ public class Module implements java.io.Serializable, Cloneable
 			for (L1Component l1Component : l1Components)
 			{
 				L1Component clonedL1Component = (L1Component) l1Component.clone();
+				clonedL1Component.setModule(cloned);
 				clonedL1Components.add(clonedL1Component);
 			}
 

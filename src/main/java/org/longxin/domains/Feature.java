@@ -150,6 +150,7 @@ public class Feature implements java.io.Serializable, Cloneable
 			for (Module module : modules)
 			{
 				Module clonedModule = (Module) module.clone();
+				clonedModule.setFeature(cloned);
 				clonedModules.add(clonedModule);
 			}
 

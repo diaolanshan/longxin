@@ -142,6 +142,7 @@ public class L2Component implements java.io.Serializable, Cloneable
 			for (L2ComponentParameter l2ComponentParameter : l2ComponentParameters)
 			{
 				L2ComponentParameter clonedL2ComponentsParameter = (L2ComponentParameter) l2ComponentParameter.clone();
+				clonedL2ComponentsParameter.setL2Component(l2Compoennt);
 				clonedL2ComponentsParameters.add(clonedL2ComponentsParameter);
 			}
 
@@ -154,6 +155,7 @@ public class L2Component implements java.io.Serializable, Cloneable
 			
 			for(L3Component l3Component : l3Components){
 				L3Component clonedl3Component = (L3Component) l3Component.clone();
+				clonedl3Component.setL2Component(l2Compoennt);
 				clonedl3Components.add(clonedl3Component);
 			}
 			
