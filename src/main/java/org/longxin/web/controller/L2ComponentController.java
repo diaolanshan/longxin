@@ -1,5 +1,6 @@
 package org.longxin.web.controller;
 
+import org.longxin.domains.L1Component;
 import org.longxin.domains.L2Component;
 import org.longxin.domains.L2ComponentParameter;
 import org.longxin.domains.L3Component;
@@ -34,7 +35,7 @@ public class L2ComponentController
 	L3ComponentService l3ComponentService;
 
 	@RequestMapping(value = "/view/{l2id}", method = RequestMethod.GET)
-	public String viewModule(@PathVariable int l2id, Model model)
+	public String viewL2Component(@PathVariable int l2id, Model model)
 	{
 		L2Component component = l2ComponentService.getL2ComponentByID(l2id);
 		model.addAttribute("component", component);
@@ -50,6 +51,13 @@ public class L2ComponentController
 		L2Component component = l2ComponentService.getL2ComponentByID(componentId);
 		model.addAttribute("component", component);
 		return "/l2component/diagram";
+	}
+	
+	@RequestMapping(value = "/update/{l2id}", method = RequestMethod.POST)
+	public String viewModule(@ModelAttribute("l2Component") L2Component l2component)
+	{
+		l2ComponentService.updateL2Component(l2component);
+		return "/l1/view";
 	}
 	
 	@RequestMapping(value = "/view/{l2id}/add/parameter", method = RequestMethod.POST)

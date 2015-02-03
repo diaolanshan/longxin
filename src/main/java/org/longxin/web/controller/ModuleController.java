@@ -47,7 +47,7 @@ public class ModuleController
 	{
 		moduleService.updateModule(module);
 		model.addAttribute("module", module);
-		return "/module/view";
+		return "redirect:/module/view/"+module.getId();
 	}
 	
 	@RequestMapping(value = "/view/{moduleId}/add/component", method = RequestMethod.POST)
@@ -56,14 +56,14 @@ public class ModuleController
 		Module module = moduleService.getModuleByID(moduleId);
 		l1Component.setModule(module);
 		l1ComponentService.addL1Component(l1Component);
-		return "/module/view";
+		return "redirect:/module/view/"+moduleId;
 	}
 	
-	@RequestMapping(value = "/delete/component/{l1Id}", method = RequestMethod.POST)
-	public String deleteL1Componment(@PathVariable int l1Id)
+	@RequestMapping(value = "/view/{moduleId}/delete/component/{l1Id}", method = RequestMethod.POST)
+	public String deleteL1Componment(@PathVariable int moduleId ,@PathVariable int l1Id)
 	{
 		l1ComponentService.deleteL1Component(l1Id);
-		return "/module/view";
+		return "redirect:/module/view/"+moduleId;
 	}
 
 	public ModuleService getModuleService()

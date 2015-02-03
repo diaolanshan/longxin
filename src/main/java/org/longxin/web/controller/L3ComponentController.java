@@ -1,5 +1,6 @@
 package org.longxin.web.controller;
 
+import org.longxin.domains.L1Component;
 import org.longxin.domains.L3Component;
 import org.longxin.domains.L3ComponentParameter;
 import org.longxin.service.L3ComponentParameterService;
@@ -29,7 +30,7 @@ public class L3ComponentController
 	L3ComponentService l3ComponentService;
 
 	@RequestMapping(value = "/view/{l3id}", method = RequestMethod.GET)
-	public String viewModule(@PathVariable int l3id, Model model)
+	public String viewL3Component(@PathVariable int l3id, Model model)
 	{
 		L3Component component = l3ComponentService.getL3ComponentByID(l3id);
 		model.addAttribute("component", component);
@@ -44,6 +45,13 @@ public class L3ComponentController
 		L3Component component = l3ComponentService.getL3ComponentByID(componentId);
 		model.addAttribute("component", component);
 		return "/l3component/diagram";
+	}
+	
+	@RequestMapping(value = "/update/{l3id}", method = RequestMethod.POST)
+	public String viewModule(@ModelAttribute("component") L3Component l3component)
+	{
+		l3ComponentService.updateL3Component(l3component);
+		return "/l3/view";
 	}
 	
 	@RequestMapping(value = "/view/{l3id}/add/parameter", method = RequestMethod.POST)

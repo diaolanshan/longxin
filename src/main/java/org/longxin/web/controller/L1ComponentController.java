@@ -34,7 +34,7 @@ public class L1ComponentController
 	L2ComponentService l2ComponentService;
 
 	@RequestMapping(value = "/view/{l1id}", method = RequestMethod.GET)
-	public String viewModule(@PathVariable int l1id, Model model)
+	public String viewL1Component(@PathVariable int l1id, Model model)
 	{
 		L1Component component = l1ComponentService.getL1ComponentByID(l1id);
 		model.addAttribute("component", component);
@@ -50,6 +50,13 @@ public class L1ComponentController
 		L1Component component = l1ComponentService.getL1ComponentByID(componentId);
 		model.addAttribute("component", component);
 		return "/l1component/diagram";
+	}
+	
+	@RequestMapping(value = "/update/{l1id}", method = RequestMethod.POST)
+	public String viewModule(@ModelAttribute("l1Component") L1Component l1component)
+	{
+		l1ComponentService.updateL1Component(l1component);
+		return "/l1/view";
 	}
 	
 	@RequestMapping(value = "/view/{l1id}/add/parameter", method = RequestMethod.POST)
