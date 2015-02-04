@@ -53,10 +53,10 @@ public class L1ComponentController
 	}
 	
 	@RequestMapping(value = "/update/{l1id}", method = RequestMethod.POST)
-	public String viewModule(@ModelAttribute("l1Component") L1Component l1component)
+	public String viewModule(@PathVariable int l1id, @ModelAttribute("l1Component") L1Component l1component)
 	{
 		l1ComponentService.updateL1Component(l1component);
-		return "/l1/view";
+		return "redirect:/l1component/view/"+l1id;
 	}
 	
 	@RequestMapping(value = "/view/{l1id}/add/parameter", method = RequestMethod.POST)
@@ -69,16 +69,17 @@ public class L1ComponentController
 	}
 	
 	@RequestMapping(value = "/delete/parameter/{parameterid}", method = RequestMethod.POST)
-	public @ResponseBody ModelMap  deleteComponentParameter(@PathVariable int parameterid)
+	public void deleteComponentParameter(@PathVariable int parameterid)
 	{
 		l1ComponentParameterService.deleteParameter(parameterid);
-		return new ModelMap("success", 1);
 	}
 	
-	@RequestMapping(value = "/update/parameter", method = RequestMethod.POST)
-	public @ResponseBody ModelMap  updateComponentParameter(@ModelAttribute("l1ComponentParameter") L1ComponentParameter l1componentParameter)
+	@RequestMapping(value = "/view/{l1id}/update/parameter", method = RequestMethod.POST)
+	public @ResponseBody ModelMap updateComponentParameter(@PathVariable int l1id, @RequestBody L1ComponentParameter json)
 	{
-		l1ComponentParameterService.updateParameter(l1componentParameter);
+		L1Component component = l1ComponentService.getL1ComponentByID(l1id);
+		json.setL1Component(component);
+		l1ComponentParameterService.updateParameter(json);
 		return new ModelMap("success", 1);
 	}
 	
@@ -87,14 +88,13 @@ public class L1ComponentController
 	{
 		l2Component.setL1Component(l1ComponentService.getL1ComponentByID(l1Id));
 		l2ComponentService.addL2Component(l2Component);
-		return "/l1/view";
+		return "redirect:/l1component/view/"+l1Id;
 	}
 	
 	@RequestMapping(value = "/delete/component/{l2Id}", method = RequestMethod.POST)
-	public String deleteL2Componment(@PathVariable int l2Id)
+	public void deleteL2Componment(@PathVariable int l2Id)
 	{
 		l2ComponentService.deleteL2Component(l2Id);
-		return "/l1/view";
 	}
 
 }

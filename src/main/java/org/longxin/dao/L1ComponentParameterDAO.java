@@ -7,7 +7,7 @@ import org.longxin.domains.L1ComponentParameter;
 
 public interface L1ComponentParameterDAO
 {
-	public L1Component getL1ComponentByID(Integer ID);
+	public L1ComponentParameter getL1ComponentByID(Integer ID);
 	
 	public List<L1ComponentParameter> getL1Parameters(L1Component component);
 	

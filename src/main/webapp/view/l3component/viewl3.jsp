@@ -8,6 +8,59 @@
 }
 </style>
 
+<script>
+	var deleteId;
+	var url ;
+    $(function () {
+		$('#searchTable1').bootstrapTable({
+			
+		}).on('dbl-click-row.bs.table', function (e, row, $element) {
+			//location.href="../../l2component/view/"+row.id;
+        });
+	});
+    function showDailog(id, type){
+    	deleteId = id;
+    	if(type=="parameter"){
+    		url = '../delete/parameter/'+deleteId;	
+    	}
+    	else{
+    		url = '../delete/component/'+deleteId;	
+    	}
+    	$('#myModal').modal('show');
+    }
+    function deleteThis(){
+    	$.post(url);
+    	location.reload();
+    }
+    
+    function showUpdateParameter(parameterId){
+    	$("#updateParameterinfo"+parameterId).fadeIn("fast");
+    }
+    
+    function updateParameter(parameterId){
+		componentId  = $("#componentId").val();
+		$.ajax({
+			type: "POST", 
+			url: "./"+componentId+"/update/parameter", 
+			data : JSON.stringify($("#updateParameterForm"+parameterId).serializeObject()),
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			success: function(response){
+				if(response.success == "1"){
+					window.location.reload();
+				}
+			},
+			error: function(res){
+				alert("Unexpected error! Try again.");
+			}
+		});
+    }
+    
+    function addComponent(){
+    	$("#addComponentForm").fadeIn("fast");
+    }
+</script>
+
 <form:form method="POST" modelAttribute="component" role="form"
 	class="form-horizontal" id="editProductForm">
 	<fieldset>
@@ -24,13 +77,18 @@
 				<div class="control-label" style="width:800px">
 					<div style="width:150px;float:left;display:inline">${parameter.parameterValue}&nbsp;&nbsp;${parameter.unitName}</div>
 					<c:choose>
-						<c:when test="${parameter.options == null}">
+						<c:when test="${parameter.options == \"\"}">
 							<div style="width: 300px; hefloat: left; display: inline;font-size:11px;color:gray">取值范围(${parameter.minValue},${parameter.maxValue})</div>
 						</c:when>
 						<c:otherwise>
 							<div style="width: 300px; hefloat: left; display: inline;font-size:11px;color:gray">可选值(${parameter.options})</div>
 						</c:otherwise>
 					</c:choose>
+					&nbsp;&nbsp;
+					&nbsp;&nbsp;
+						<a href="javascript:void(0);" onclick="showUpdateParameter(${parameter.id})" data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+						<a href="javascript:void(0);" onclick="showDailog(${parameter.id},'parameter')" data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+				
 				</div>
 			</div>
 		</c:forEach>
@@ -42,11 +100,75 @@
 		</div>
 	</fieldset>
 </form:form>
-<div class="entry-form">
+
+<!-- 确认框  -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">确认框</h4>
+      </div>
+      <div class="modal-body"> 确认要删除？</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="deleteThis()">确定</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 修改parameter细节form -->
+<c:forEach items="${parameters}" var="parameter">
+<div class="entry-form" id="updateParameterinfo${parameter.id}">
+	<form id="updateParameterForm${parameter.id}" >
+		<table width="100%" border="0" cellpadding="4" cellspacing="0">
+			<tr>
+				<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
+			</tr>
+			<tr>
+				<td><input type="text" name="id" style="display:none" value="${parameter.id}"></td>
+			</tr>
+			<tr>
+				<td>参数名称：</td>
+				<td><input type="text" name="parameterName" value="${parameter.parameterName}"></td>
+			</tr>
+			<tr>
+				<td>默认值：</td>
+				<td><input type="text" name="parameterValue" value="${parameter.parameterValue}"></td>
+			</tr>
+			<tr>
+				<td>最小值：</td>
+				<td><input type="text" name="minValue" value="${parameter.minValue}"></td>
+			</tr>
+			<tr>
+				<td>最大值：</td>
+				<td><input type="text" name="maxValue" value="${parameter.maxValue}"></td>
+			</tr>
+			<tr>
+				<td>单位：</td>
+				<td><input type="text" name="unitName" value="${parameter.unitName}"></td>
+			</tr>
+			<tr>
+				<td>可选项：</td>
+				<td><input type="text" name="options" value="${parameter.options}"></td>
+			</tr>
+			<tr>
+				<td align="right"></td>
+				<td><input type="button" value="保存" onclick="updateParameter(${parameter.id})" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;<input
+					type="button" value="取消" class="closeForm" class="btn btn-primary"></td>
+			</tr>
+		</table>
+	</form>
+</div>
+</c:forEach>
+
+<!-- 添加parameter细节form -->
+<div class="entry-form" id="parameterinfoForm">
 	<form name="parameterinfo" id="parameterinfo">
 		<table width="100%" border="0" cellpadding="4" cellspacing="0">
 			<tr>
-				<td colspan="2" align="right"><a href="#" id="close">关闭</a></td>
+				<td colspan="2" align="right"><a href="#" class="closeForm" id="close">关闭</a></td>
 			</tr>
 			<tr>
 				<td><input type="text" id="componentId" style="display:none" value="${component.id}"></td>
@@ -78,7 +200,7 @@
 			<tr>
 				<td align="right"></td>
 				<td><input type="button" value="保存" id="saveparameter" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;<input
-					type="button" value="取消" id="cancel" class="btn btn-primary"></td>
+					type="button" value="取消" class="closeForm" id="cancel" class="btn btn-primary"></td>
 			</tr>
 		</table>
 	</form>

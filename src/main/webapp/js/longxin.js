@@ -21,7 +21,7 @@ $(document).ready(function(){
 	$("#"+targetMenu).addClass("active");
 
 	$("#add_new").click(function(){
-		$(".entry-form").fadeIn("fast");	
+		$("#parameterinfoForm").fadeIn("fast");	
 	});
 	
 	 $("#org").jOrgChart({
@@ -33,7 +33,7 @@ $(document).ready(function(){
 		ajax("save");
 	});
 	
-	$("#close").click(function(){
+	$(".closeForm").click(function(){
 		$(".entry-form").fadeOut("fast");	
 	});
 

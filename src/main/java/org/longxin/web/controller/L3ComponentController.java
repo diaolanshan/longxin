@@ -1,6 +1,5 @@
 package org.longxin.web.controller;
 
-import org.longxin.domains.L1Component;
 import org.longxin.domains.L3Component;
 import org.longxin.domains.L3ComponentParameter;
 import org.longxin.service.L3ComponentParameterService;
@@ -48,10 +47,10 @@ public class L3ComponentController
 	}
 	
 	@RequestMapping(value = "/update/{l3id}", method = RequestMethod.POST)
-	public String viewModule(@ModelAttribute("component") L3Component l3component)
+	public String viewModule(@PathVariable int l3Id , @ModelAttribute("l3Component") L3Component l3component)
 	{
 		l3ComponentService.updateL3Component(l3component);
-		return "/l3/view";
+		return "redirect:/l1component/view/"+l3Id;
 	}
 	
 	@RequestMapping(value = "/view/{l3id}/add/parameter", method = RequestMethod.POST)
@@ -64,16 +63,17 @@ public class L3ComponentController
 	}
 	
 	@RequestMapping(value = "/delete/parameter/{parameterid}", method = RequestMethod.POST)
-	public @ResponseBody ModelMap  deleteComponentParameter(@PathVariable int parameterid)
+	public void deleteComponentParameter(@PathVariable int parameterid)
 	{
 		l3ComponentParameterService.deleteParameter(parameterid);
-		return new ModelMap("success", 1);
 	}
 	
-	@RequestMapping(value = "/update/parameter", method = RequestMethod.POST)
-	public @ResponseBody ModelMap  updateComponentParameter(@ModelAttribute("l3ComponentParameter") L3ComponentParameter l3componentParameter)
+	@RequestMapping(value = "/view/{l3id}/update/parameter", method = RequestMethod.POST)
+	public @ResponseBody ModelMap updateComponentParameter(@PathVariable int l3id, @RequestBody L3ComponentParameter json)
 	{
-		l3ComponentParameterService.updateParameter(l3componentParameter);
-		return new ModelMap("success", 1);
+		L3Component component = l3ComponentService.getL3ComponentByID(l3id);
+		json.setL3Component(component);
+		l3ComponentParameterService.updateParameter(json);
+		return new ModelMap("success",1);
 	}
 }

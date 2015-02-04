@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <script>
-	var deleteProductId;
+	var deleteId;
     $(function () {
 		$('#searchTable1').bootstrapTable({
 			
@@ -11,13 +11,13 @@
 			//location.href="./edit/"+row.id;
         });
 	});
-    function showDailog(productId){
-    	//deleteProductId = productId;
-    	//$('#myModal').modal('show');
+    function showDailog(id){
+    	deleteId = id;
+    	$('#myModal').modal('show');
     }
-    function deleteProduct(){
-    	$.post('./delete/'+deleteProductId);
-    	location.href="./search";
+    function deleteThis(){
+    	$.post('../delete/component/'+deleteId);
+    	location.reload();
     }
     
     function update(){
@@ -27,10 +27,6 @@
     function addComponent(){
     	$("#addComponentForm").fadeIn("fast");
     }
-    
-    function cancel(){
-		$("#addComponentForm").fadeOut("fast");	
-	};
     
 </script>
 
@@ -93,7 +89,7 @@
 			<div class="modal-body">确认要删除该产品？</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary"
-					onclick="deleteProduct()">确定</button>
+					onclick="deleteThis()">确定</button>
 				<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
 			</div>
 		</div>
@@ -104,6 +100,7 @@
 	<form name="updateModule" id="updateModule" method="POST" modelAttribute="module" action="../update/${module.id}">
 		<table width="100%" border="0" cellpadding="4" cellspacing="0">
 			<tr>
+			<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
 			</tr>
 			<tr>
 				<td>模块名称：</td>
@@ -116,7 +113,7 @@
 			<tr>
 				<td align="right"></td>
 				<td><input type="submit" value="保存" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="button" value="取消" id="cancel" class="btn btn-primary"></td>
+				<input type="button" value="取消" class="btn btn-primary closeForm"></td>
 			</tr>
 		</table>
 	</form>
@@ -125,6 +122,9 @@
 <div class="entry-form" id="addComponentForm">
 	<form name="addL1Component" id="addL1Component" method="POST" modelAttribute="l1Component" action="./${module.id}/add/component">
 		<table width="100%" border="0" cellpadding="4" cellspacing="0">
+			<tr>
+			<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
+			</tr>
 			<tr>
 				<td>模块名称：</td>
 				<td><input type="text" name="name"></td>
@@ -136,7 +136,7 @@
 			<tr>
 				<td align="right"></td>
 				<td><input type="submit" value="保存" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="button" value="取消" onclick="cancel()" class="btn btn-primary"></td>
+				<input type="button" value="取消" class="btn btn-primary closeForm"></td>
 			</tr>
 		</table>
 	</form>
