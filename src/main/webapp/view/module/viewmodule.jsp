@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <script>
-	var deleteProductId;
+	var deleteId;
     $(function () {
 		$('#searchTable1').bootstrapTable({
 			
@@ -11,13 +11,21 @@
 			//location.href="./edit/"+row.id;
         });
 	});
-    function showDailog(productId){
-    	//deleteProductId = productId;
-    	//$('#myModal').modal('show');
+    function showDailog(id){
+    	deleteId = id;
+    	$('#myModal').modal('show');
     }
-    function deleteProduct(){
-    	$.post('./delete/'+deleteProductId);
-    	location.href="./search";
+    function deleteThis(){
+    	$.post('../delete/component/'+deleteId);
+    	location.reload();
+    }
+    
+    function update(){
+    	$("#updateForm").fadeIn("fast");
+    }
+    
+    function addComponent(){
+    	$("#addComponentForm").fadeIn("fast");
     }
     
 </script>
@@ -26,7 +34,8 @@
 	class="form-horizontal" id="viewProductForm">
 
 	<fieldset>
-		<legend>${module.moduleName} &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${module.id}"><span class="glyphicon glyphicon-indent-left"></span></a> </legend>
+		<legend>${module.moduleName} &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${module.id}"><span class="glyphicon glyphicon-indent-left"></span></a></legend>
+		
 		<div class="form-group">
 			<label for="name" class="col-sm-2 control-label">模块名称：</label>
 			<div class="col-sm-5 control-label">${module.moduleName}</div>
@@ -35,6 +44,12 @@
 			<label for="description" class="col-sm-2 control-label">描述：</label>
 			<div class="col-sm-5 control-label">${module.description}</div>
 		</div>
+		<div class="form-group" align="right">
+				<div class="col-sm-offset-2 col-sm-10">
+					<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
+					<input type="button" onclick="addComponent()" class="btn btn-primary start-example" value="添加新模块" />&nbsp;&nbsp;
+				</div>
+			</div>
 	</fieldset>
 	<br>
 	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1">
@@ -53,7 +68,7 @@
                 <td>
                 <a href="../../l1component/view/${l1component.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
                 &nbsp;&nbsp;
-                <a href="../../l1component/edit/${l1component.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                <a href="javascript:void(0);" onclick="showDailog(${l1component.id})"  data-toggle="popover" title="删除该组件"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
    	 			&nbsp;&nbsp;
             </tr>  
        		</c:forEach>
@@ -61,7 +76,6 @@
 	</table>
 </form:form>
 
-<!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -75,9 +89,55 @@
 			<div class="modal-body">确认要删除该产品？</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary"
-					onclick="deleteProduct()">确定</button>
+					onclick="deleteThis()">确定</button>
 				<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
 			</div>
 		</div>
 	</div>
+</div>
+
+<div class="entry-form" id="updateForm">
+	<form name="updateModule" id="updateModule" method="POST" modelAttribute="module" action="../update/${module.id}">
+		<table width="100%" border="0" cellpadding="4" cellspacing="0">
+			<tr>
+			<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
+			</tr>
+			<tr>
+				<td>模块名称：</td>
+				<td><input type="text" name="moduleName" value="${module.moduleName}"></td>
+			</tr>
+			<tr>
+				<td>描述：</td>
+				<td><input type="text" name="description" value="${module.description}"></td>
+			</tr>
+			<tr>
+				<td align="right"></td>
+				<td><input type="submit" value="保存" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="button" value="取消" class="btn btn-primary closeForm"></td>
+			</tr>
+		</table>
+	</form>
+</div>
+
+<div class="entry-form" id="addComponentForm">
+	<form name="addL1Component" id="addL1Component" method="POST" modelAttribute="l1Component" action="./${module.id}/add/component">
+		<table width="100%" border="0" cellpadding="4" cellspacing="0">
+			<tr>
+			<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
+			</tr>
+			<tr>
+				<td>模块名称：</td>
+				<td><input type="text" name="name"></td>
+			</tr>
+			<tr>
+				<td>描述：</td>
+				<td><input type="text" name="description"></td>
+			</tr>
+			<tr>
+				<td align="right"></td>
+				<td><input type="submit" value="保存" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="button" value="取消" class="btn btn-primary closeForm"></td>
+			</tr>
+		</table>
+	</form>
 </div>
