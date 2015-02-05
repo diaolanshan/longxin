@@ -59,11 +59,10 @@ public class ModuleController
 		return "redirect:/module/view/"+moduleId;
 	}
 	
-	@RequestMapping(value = "/view/{moduleId}/delete/component/{l1Id}", method = RequestMethod.POST)
-	public String deleteL1Componment(@PathVariable int moduleId ,@PathVariable int l1Id)
+	@RequestMapping(value = "/delete/component/{l1Id}", method = RequestMethod.POST)
+	public void deleteL1Componment(@PathVariable int l1Id)
 	{
 		l1ComponentService.deleteL1Component(l1Id);
-		return "redirect:/module/view/"+moduleId;
 	}
 
 	public ModuleService getModuleService()

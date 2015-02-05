@@ -35,4 +35,9 @@ public class L1ComponentParameterServiceImpl implements
 	public void updateParameter(L1ComponentParameter l1parameter) {
 		this.l1ComponentParameterDAO.updateParameter(l1parameter);
 	}
+
+	@Override
+	public L1ComponentParameter getL1ComponentParamtersByID(Integer ID) {
+		return this.l1ComponentParameterDAO.getL1ComponentByID(ID);
+	}
 }

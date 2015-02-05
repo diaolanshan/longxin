@@ -10,10 +10,9 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 public class L1ComponentParameterDAOImpl extends HibernateDaoSupport implements L1ComponentParameterDAO
 {
 
-	public L1Component getL1ComponentByID(Integer ID)
+	public L1ComponentParameter getL1ComponentByID(Integer ID)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this.getHibernateTemplate().get(L1ComponentParameter.class,ID);
 	}
 
 	public List<L1ComponentParameter> getL1Parameters(L1Component component)
@@ -29,7 +28,8 @@ public class L1ComponentParameterDAOImpl extends HibernateDaoSupport implements 
 
 	@Override
 	public void deleteParameter(int id) {
-		this.getHibernateTemplate().delete(this.getHibernateTemplate().get(L1Component.class, id));
+		L1ComponentParameter l1 = this.getL1ComponentByID(id);
+		this.getHibernateTemplate().delete(l1);
 	}
 
 	@Override
