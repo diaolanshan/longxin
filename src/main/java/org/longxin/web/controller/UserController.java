@@ -85,7 +85,7 @@ public class UserController
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String updateUsers(Model model, Users user)
 	{
-		userService.addUser(user);
+		userService.editUser(user);
 		model.addAttribute("userSearchBean", new UserSearchBean());
 		model.addAttribute(new Users());
 		return "redirect:/user/search";

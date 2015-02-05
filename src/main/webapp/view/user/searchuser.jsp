@@ -51,6 +51,7 @@
 	            <th data-field="createdat"  data-sortable="true">创建日期</th>
 	            <th data-field="telephone"  data-sortable="true">电话</th>
 	            <th data-field="role"  data-sortable="true">权限</th>
+	            <th data-field="loginCount"  data-sortable="true">会员等级</th>
 	            <th data-field="department"  data-sortable="true">部门</th>
 	            <th data-sortable="false">操作</th>
 	        </tr>
@@ -63,6 +64,7 @@
    	 				<td>${item.createdat}</td>
    	 				<td>${item.telephone}</td>
    	 				<td>${item.role.description}</td>
+   	 				<td></td>
    	 				<td>${item.department.getDepartmentname()}</td>
    	 				<td>
    	 					<a href="./edit/${item.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
