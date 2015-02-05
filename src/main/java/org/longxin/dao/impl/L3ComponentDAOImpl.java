@@ -2,6 +2,7 @@ package org.longxin.dao.impl;
 
 import org.longxin.dao.L3ComponentDAO;
 import org.longxin.domains.L3Component;
+import org.longxin.domains.L3ComponentParameter;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class L3ComponentDAOImpl extends HibernateDaoSupport implements L3ComponentDAO
@@ -23,7 +24,8 @@ public class L3ComponentDAOImpl extends HibernateDaoSupport implements L3Compone
 
 	@Override
 	public void deleteL3Component(int id) {
-		this.getHibernateTemplate().delete(this.getHibernateTemplate().get(L3Component.class, id));
+		L3Component l3 = this.getHibernateTemplate().get(L3Component.class,id);
+		this.getHibernateTemplate().delete(l3);
 	}
 
 }

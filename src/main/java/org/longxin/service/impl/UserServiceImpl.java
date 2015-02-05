@@ -43,8 +43,6 @@ public class UserServiceImpl implements UserService{
 	}
 
 	public void editUser(Users user) {
-		Date date=new Date();
-		user.setCreatedat(date);
 		userDAO.editUser(user);
 	}
 
@@ -55,6 +53,7 @@ public class UserServiceImpl implements UserService{
 	public void increaseLoginCount(Users user)
 	{
 		user.setLoginCount(user.getLoginCount()+1);
+		user.setLastLogin(new Date());
 		userDAO.saveUser(user);
 	}
 }

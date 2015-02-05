@@ -33,7 +33,7 @@ public class L1ComponentDAOImpl extends HibernateDaoSupport implements L1Compone
 
 	@Override
 	public void deleteL1Component(int id) {
-		this.getHibernateTemplate().delete(this.getHibernateTemplate().get(L1Component.class, id));
+		L1Component l1 = this.getHibernateTemplate().get(L1Component.class,id);
+		this.getHibernateTemplate().delete(l1);
 	}
-
 }

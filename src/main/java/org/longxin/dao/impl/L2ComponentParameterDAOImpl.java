@@ -29,7 +29,8 @@ public class L2ComponentParameterDAOImpl extends HibernateDaoSupport implements 
 
 	@Override
 	public void deleteParameter(int id) {
-		this.getHibernateTemplate().delete(this.getHibernateTemplate().get(L2Component.class, id));
+		L2ComponentParameter l2 = this.getHibernateTemplate().get(L2ComponentParameter.class,id);
+		this.getHibernateTemplate().delete(l2);
 	}
 
 	@Override

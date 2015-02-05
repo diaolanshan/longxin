@@ -12,8 +12,7 @@ public class L1ComponentParameterDAOImpl extends HibernateDaoSupport implements 
 
 	public L1ComponentParameter getL1ComponentByID(Integer ID)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this.getHibernateTemplate().get(L1ComponentParameter.class,ID);
 	}
 
 	public List<L1ComponentParameter> getL1Parameters(L1Component component)

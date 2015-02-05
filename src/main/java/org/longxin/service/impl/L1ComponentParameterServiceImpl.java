@@ -37,9 +37,7 @@ public class L1ComponentParameterServiceImpl implements
 	}
 
 	@Override
-	public L1ComponentParameter getL1ComponentParamtersByID(Integer ID)
-	{
-		// TODO Auto-generated method stub
-		return null;
+	public L1ComponentParameter getL1ComponentParamtersByID(Integer ID) {
+		return this.l1ComponentParameterDAO.getL1ComponentByID(ID);
 	}
 }

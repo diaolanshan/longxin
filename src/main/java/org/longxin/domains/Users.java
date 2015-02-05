@@ -41,6 +41,7 @@ public class Users implements java.io.Serializable {
 	private String telephone;
 	private String passwordAgain;
 	private int loginCount; 
+	private Date lastLogin;
 
 	public Users() {
 	}
@@ -92,6 +93,8 @@ public class Users implements java.io.Serializable {
 	public Date getCreatedat() {
 		return this.createdat;
 	}
+	
+	
 
 	public void setCreatedat(Date createdat) {
 		this.createdat = createdat;
@@ -149,5 +152,16 @@ public class Users implements java.io.Serializable {
 	public void setLoginCount(int loginCount)
 	{
 		this.loginCount = loginCount;
+	}
+
+	@Column(name = "LAST_LOGIN")
+	public Date getLastLogin()
+	{
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin)
+	{
+		this.lastLogin = lastLogin;
 	}
 }

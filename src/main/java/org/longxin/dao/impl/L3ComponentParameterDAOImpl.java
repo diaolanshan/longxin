@@ -3,6 +3,7 @@ package org.longxin.dao.impl;
 import java.util.List;
 
 import org.longxin.dao.L3ComponentParameterDAO;
+import org.longxin.domains.L1ComponentParameter;
 import org.longxin.domains.L3Component;
 import org.longxin.domains.L3ComponentParameter;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -29,7 +30,8 @@ public class L3ComponentParameterDAOImpl extends HibernateDaoSupport implements 
 
 	@Override
 	public void deleteParameter(int id) {
-		this.getHibernateTemplate().delete(this.getHibernateTemplate().get(L3Component.class, id));
+		L3ComponentParameter l3 = this.getHibernateTemplate().get(L3ComponentParameter.class,id);
+		this.getHibernateTemplate().delete(l3);
 	}
 
 	@Override
