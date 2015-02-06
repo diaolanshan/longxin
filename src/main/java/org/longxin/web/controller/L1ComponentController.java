@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping("/l1component")
-@SessionAttributes("l1component")
+@SessionAttributes("component")
 public class L1ComponentController
 {
 	@Autowired
