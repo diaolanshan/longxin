@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping("/l3component")
-@SessionAttributes("l3component")
+@SessionAttributes("component")
 public class L3ComponentController
 {
 
@@ -45,12 +45,13 @@ public class L3ComponentController
 		model.addAttribute("component", component);
 		return "/l3component/diagram";
 	}
-	
+
 	@RequestMapping(value = "/update/{l3id}", method = RequestMethod.POST)
-	public String viewModule(@PathVariable int l3Id , @ModelAttribute("l3Component") L3Component l3component)
+	public String updateComponent(@PathVariable int l3id, @ModelAttribute("component") L3Component component ,Model model)
 	{
-		l3ComponentService.updateL3Component(l3component);
-		return "redirect:/l1component/view/"+l3Id;
+		l3ComponentService.updateL3Component(component);
+		model.addAttribute("component", component);
+		return "redirect:/l3component/view/"+l3id;
 	}
 	
 	@RequestMapping(value = "/view/{l3id}/add/parameter", method = RequestMethod.POST)
