@@ -30,7 +30,7 @@
     
 </script>
 
-<form:form method="POST" modelAttribute="product" role="form"
+<form:form method="POST" modelAttribute="module" role="form"
 	class="form-horizontal" id="viewProductForm">
 
 	<fieldset>
@@ -47,7 +47,7 @@
 		<div class="form-group" align="right">
 				<div class="col-sm-offset-2 col-sm-10">
 					<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
-					<input type="button" onclick="addComponent()" class="btn btn-primary start-example" value="添加新模块" />&nbsp;&nbsp;
+					<input type="button" onclick="addComponent()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
 				</div>
 			</div>
 	</fieldset>
@@ -97,7 +97,7 @@
 </div>
 
 <div class="entry-form" id="updateForm">
-	<form name="updateModule" id="updateModule" method="POST" modelAttribute="module" action="../update/${module.id}">
+	<form method="POST" action="../update/${module.id}">
 		<table width="100%" border="0" cellpadding="4" cellspacing="0">
 			<tr>
 			<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>

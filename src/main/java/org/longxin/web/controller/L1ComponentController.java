@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping("/l1component")
-@SessionAttributes("l1component")
+@SessionAttributes("component")
 public class L1ComponentController
 {
 	@Autowired
@@ -53,11 +53,11 @@ public class L1ComponentController
 	}
 
 	@RequestMapping(value = "/update/{l1id}", method = RequestMethod.POST)
-	public String viewModule(@PathVariable int l1id,
-			@ModelAttribute("l1Component") L1Component l1component)
+	public String updateComponent(@PathVariable int l1id, @ModelAttribute("component") L1Component component ,Model model)
 	{
-		l1ComponentService.updateL1Component(l1component);
-		return "redirect:/l1component/view/" + l1id;
+		l1ComponentService.updateL1Component(component);
+		model.addAttribute("component", component);
+		return "redirect:/l1component/view/"+l1id;
 	}
 
 	@RequestMapping(value = "/view/{l1id}/add/parameter", method = RequestMethod.POST)

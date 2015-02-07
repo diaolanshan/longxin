@@ -32,6 +32,10 @@
     	$.post(url);
     	location.reload();
     }
+
+    function update(){
+    	$("#updateForm").fadeIn("fast");
+    }
     
     function showUpdateParameter(parameterId){
     	$("#updateParameterinfo"+parameterId).fadeIn("fast");
@@ -95,6 +99,7 @@
 		
 		<div class="form-group">
 			<div class="col-sm-offset-7 col-sm-5" style="align: right">
+				<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
 				<input type="button" id="add_new" class="btn btn-primary" value="增加属性"></input>
 			</div>
 		</div>
@@ -156,13 +161,36 @@
 			<tr>
 				<td align="right"></td>
 				<td><input type="button" value="保存" onclick="updateParameter(${parameter.id})" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;<input
-					type="button" value="取消" class="closeForm" class="btn btn-primary"></td>
+					type="button" value="取消" class="btn btn-primary closeForm"></td>
 			</tr>
 		</table>
 	</form>
 </div>
 </c:forEach>
 
+<!-- update 当前name and description -->
+<div class="entry-form" id="updateForm">
+	<form method="POST" action="../update/${component.id}">
+		<table width="100%" border="0" cellpadding="4" cellspacing="0">
+			<tr>
+			<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
+			</tr>
+			<tr>
+				<td>模块名称：</td>
+				<td><input type="text" name="name" value="${component.name}"></td>
+			</tr>
+			<tr>
+				<td>描述：</td>
+				<td><input type="text" name="description" value="${component.description}"></td>
+			</tr>
+			<tr>
+				<td align="right"></td>
+				<td><input type="submit" value="保存" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="button" value="取消" class="btn btn-primary closeForm"></td>
+			</tr>
+		</table>
+	</form>
+</div>
 <!-- 添加parameter细节form -->
 <div class="entry-form" id="parameterinfoForm">
 	<form name="parameterinfo" id="parameterinfo">
@@ -200,7 +228,7 @@
 			<tr>
 				<td align="right"></td>
 				<td><input type="button" value="保存" id="saveparameter" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;<input
-					type="button" value="取消" class="closeForm" id="cancel" class="btn btn-primary"></td>
+					type="button" value="取消" id="cancel" class="btn btn-primary closeForm"></td>
 			</tr>
 		</table>
 	</form>
