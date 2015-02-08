@@ -79,26 +79,6 @@ $(document).ready(function(){
 			success: function(response){
 				if(response.success == "1"){
 					window.location.reload();
-					//$(".entry-form").fadeOut("fast");
-					//alert(1);
-					/*if(action == "save"){
-						$(".entry-form").fadeOut("fast",function(){
-							$(".table-list").append("<tr><td>"+response.fname+"</td><td>"+response.lname+"</td><td>"+response.email+"</td><td>"+response.phone+"</td><td><a href='#' id='"+response.row_id+"' class='del'>Delete</a></a></td></tr>");	
-							if ( ! $.browser.msie ) {
-								$(".table-list tr:last").effect("highlight", {
-									color: '#4BADF5'
-								}, 1000);
-							}
-						});	
-					}else if(action == "delete"){
-						var row_id = response.item_id;
-						if ( ! $.browser.msie ) {
-							$("a[id='"+row_id+"']").closest("tr").effect("highlight", {
-								color: '#4BADF5'
-							}, 1000);
-						}
-						$("a[id='"+row_id+"']").closest("tr").fadeOut();
-					}*/
 				}
 			},
 			error: function(res){
@@ -106,4 +86,34 @@ $(document).ready(function(){
 			}
 		});
 	}
+	
+	//file upload
+	$('#fileupload').fileupload({
+        dataType: 'json',
+        
+        done: function (e, data) {
+        	$("tr:has(td)").remove();
+            $.each(data.result, function (index, file) {
+            	
+            	
+                $("#uploaded-files").append(
+                		$('<tr/>')
+                		.append($('<td/>').text(file.fileName))
+                		.append($('<td/>').text(file.fileSize))
+                		.append($('<td/>').text(file.fileType))
+                		.append($('<td/>').html("<a href='http://localhost:8080/longxin/controller/get/"+index+"'>Click</a>"))
+                		)//end $("#uploaded-files").append()
+            }); 
+        },
+        
+        progressall: function (e, data) {
+          var progress = parseInt(data.loaded / data.total * 100, 10);
+          $('#progress .bar').css(
+              'width',
+              progress + '%'
+          );
+   		},
+   		
+    dropZone: $('#dropzone')
+    });
 });

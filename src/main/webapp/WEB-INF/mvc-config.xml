@@ -14,6 +14,8 @@
 	<mvc:annotation-driven />
 	
 	<context:component-scan base-package="org.longxin"></context:component-scan> 
+	
+	<bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
 	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
 		<property name="viewClass">

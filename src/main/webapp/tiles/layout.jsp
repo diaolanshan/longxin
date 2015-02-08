@@ -22,12 +22,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="<%=path%>/js/jquery-1.11.2.min.js"></script>
 <script src="<%=path%>/js/jquery-ui.min.js"></script>
 <script src="<%=path%>/js/button.js"></script>
-<script src="<%=path%>/js/bootstrap-table.min.js"></script>
 <script src="<%=path%>/js/bootstrap.min.js"></script>
+<script src="<%=path%>/js/bootstrap-table.min.js"></script>
 <script src="<%=path%>/js/jquery.validate.js"></script>
-<script src="<%=path%>/js/longxin.js"></script>
 <script src="<%=path%>/js/jquery.jOrgChart.js"></script>
-<!-- <script src="<%=path%>/js/prettify.js"></script> -->
+<script src="<%=path%>/js/jquery.ui.widget.js"></script>
+<script src="<%=path%>/js/jquery.fileupload.js"></script>
+<script src="<%=path%>/js/jquery.iframe-transport.js"></script>
+<script src="<%=path%>/js/longxin.js"></script>
 </head>
 <body>
 	<div style="display:none" id="meanItem"><tiles:getAsString name="menuItem"></tiles:getAsString></div>
