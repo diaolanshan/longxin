@@ -3,11 +3,15 @@ package org.longxin.web.controller;
 import java.io.File;
 import java.io.IOException;
 import java.io.FileOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.longxin.web.controller.bean.FileMeta;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -22,24 +26,25 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @RequestMapping("/filecontroller")
 public class FileController
 {
-
+	protected static Logger logger = Logger.getLogger(FileController.class);
+	
+	public static final String FILE_ROOT = "D:/temp/files";
+	
 	LinkedList<FileMeta> files = new LinkedList<FileMeta>();
 	FileMeta fileMeta = null;
 
 	/***************************************************
-	 * URL: /rest/controller/upload upload(): receives files
-	 * 
 	 * @param request
 	 *            : MultipartHttpServletRequest auto passed
 	 * @param response
 	 *            : HttpServletResponse auto passed
 	 * @return LinkedList<FileMeta> as json format
 	 ****************************************************/
-	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	@RequestMapping(value = "/upload/{folderName}/{componentId}", method = RequestMethod.POST)
 	public @ResponseBody LinkedList<FileMeta> upload(
-			MultipartHttpServletRequest request, HttpServletResponse response)
+			MultipartHttpServletRequest request, HttpServletResponse response,
+			@PathVariable int componentId, @PathVariable String folderName)
 	{
-
 		// 1. build an iterator
 		Iterator<String> itr = request.getFileNames();
 		MultipartFile mpf = null;
@@ -47,11 +52,8 @@ public class FileController
 		// 2. get each file
 		while (itr.hasNext())
 		{
-
 			// 2.1 get next MultipartFile
 			mpf = request.getFile(itr.next());
-			System.out.println(mpf.getOriginalFilename() + " uploaded! "
-					+ files.size());
 
 			// 2.2 if files > 10 remove the first from the list
 			if (files.size() >= 10)
@@ -65,18 +67,19 @@ public class FileController
 
 			try
 			{
-				fileMeta.setBytes(mpf.getBytes());
-				File folder = new File("D:/temp/files");
-				if(!folder.exists())
+				File folder = new File(FILE_ROOT + File.separator + folderName + File.separator + componentId);
+				if (!folder.exists())
 				{
 					folder.mkdirs();
 				}
-				FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream("D:/temp/files/"+mpf.getOriginalFilename()));
-				
+				FileCopyUtils.copy(
+						mpf.getBytes(),
+						new FileOutputStream(folder.getAbsolutePath() + File.separator
+								+ mpf.getOriginalFilename()));
+
 			} catch (IOException e)
 			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error("Error while upload the attachment, detail information are : " + e.getMessage());
 			}
 			// 2.4 add to files
 			files.add(fileMeta);
@@ -85,30 +88,54 @@ public class FileController
 		// [{"fileName":"app_engine-85x77.png","fileSize":"8 Kb","fileType":"image/png"},...]
 		return files;
 	}
+	
+	@RequestMapping(value = "/get/{folderName}/{componentId}", method = RequestMethod.GET)
+	public @ResponseBody LinkedList<FileMeta> listAttachments(@PathVariable int componentId, @PathVariable String folderName)
+	{
+		LinkedList<FileMeta> attachments = new LinkedList<FileMeta>();
+		
+		File folder = new File(FILE_ROOT + File.separator + folderName + File.separator + componentId);
+		if (!folder.exists())
+		{
+			folder.mkdirs();
+		}
+		
+		for(File file : folder.listFiles())
+		{
+			FileMeta meta = new FileMeta();
+			meta.setFileName(file.getName());
+			attachments.add(meta);
+		}
+		
+		return attachments;
+	}
 
 	/***************************************************
-	 * URL: /rest/controller/get/{value} get(): get file as an attachment
-	 * 
 	 * @param response
 	 *            : passed by the server
 	 * @param value
 	 *            : value from the URL
 	 * @return void
 	 ****************************************************/
-	@RequestMapping(value = "/get/{value}", method = RequestMethod.GET)
-	public void get(HttpServletResponse response, @PathVariable String value)
+	@RequestMapping(value = "/download/{folderName}/{componentId}/{fileName}", method = RequestMethod.GET)
+	public void get(HttpServletResponse response,
+			@PathVariable int componentId, @PathVariable String folderName,
+			@PathVariable String fileName)
 	{
-		FileMeta getFile = files.get(Integer.parseInt(value));
+		Path attachment = Paths.get(FILE_ROOT + File.separator + folderName
+				+ File.separator + componentId + File.separator + fileName);
+
 		try
 		{
-			response.setContentType(getFile.getFileType());
+			response.setContentType(Files.probeContentType(attachment));
 			response.setHeader("Content-disposition", "attachment; filename=\""
-					+ getFile.getFileName() + "\"");
-			FileCopyUtils.copy(getFile.getBytes(), response.getOutputStream());
+					+ fileName + "\"");
+			FileCopyUtils.copy(Files.readAllBytes(attachment),
+					response.getOutputStream());
 		} catch (IOException e)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while download the attachment, detail information are : "
+					+ e.getMessage());
 		}
 	}
 }

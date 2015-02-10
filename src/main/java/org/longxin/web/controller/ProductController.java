@@ -1,12 +1,15 @@
 package org.longxin.web.controller;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.longxin.domains.Product;
 import org.longxin.service.FeatureService;
 import org.longxin.service.ProductService;
+import org.longxin.web.controller.bean.FileMeta;
 import org.longxin.web.controller.bean.ProductSearchBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,15 +59,6 @@ public class ProductController {
 		model.addAttribute("product", product);
 		return "/product/diagram";
 	}
-	
-//	@RequestMapping(value = "/diagram/template", method = RequestMethod.GET)
-//	public String showProductDiagram(Model model)
-//	{
-//		//product
-//		Product product = productService.getTemplate();
-//		model.addAttribute("product", product);
-//		return "/product/template";
-//	}
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String searchProduct(Model model)
@@ -148,8 +142,26 @@ public class ProductController {
 	{
 		productService.deleteProduct(productId);
 	}
-  
-
+	
+	@RequestMapping(value = "/attachments/{productId}", method = RequestMethod.POST)
+	public @ResponseBody LinkedList<FileMeta> listAttachments(@PathVariable int productId)
+	{
+		String fileRoot = "d:\temp\files";
+		LinkedList<FileMeta> files = new LinkedList<FileMeta>();
+		File directory = new File(fileRoot + File.separator + "product"
+				+ File.separator + productId);
+		if (directory.exists())
+		{
+			for (File file : directory.listFiles())
+			{
+				FileMeta meta = new FileMeta();
+				meta.setFileName(file.getName());
+				files.add(meta);
+			}
+		}
+		return files;
+	}
+	
 	public FeatureService getFeatureService() {
 		return featureService;
 	}

@@ -4,17 +4,15 @@
 
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding-top: 50px;
+	padding-top: 50px;
 }
-
 
 /*
  * Global add-ons
  */
-
 .sub-header {
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
 }
 
 /*
@@ -22,7 +20,7 @@ body {
  * Hide default border to remove 1px line.
  */
 .navbar-fixed-top {
-  border: 0;
+	border: 0;
 }
 
 /*
@@ -31,77 +29,81 @@ body {
 
 /* Hide for mobile, show later */
 .sidebar {
-  display: none;
+	display: none;
 }
-@media (min-width: 768px) {
-  .sidebar {
-    position: fixed;
-    top: 51px;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    display: block;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
-    border-right: 1px solid #eee;
-  }
+
+@media ( min-width : 768px) {
+	.sidebar {
+		position: fixed;
+		top: 51px;
+		bottom: 0;
+		left: 0;
+		z-index: 1000;
+		display: block;
+		padding: 20px;
+		overflow-x: hidden;
+		overflow-y: auto;
+		/* Scrollable contents if viewport is shorter than content. */
+		background-color: #f5f5f5;
+		border-right: 1px solid #eee;
+	}
 }
 
 /* Sidebar navigation */
 .nav-sidebar {
-  margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
-  margin-left: -20px;
-}
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
-}
-.nav-sidebar > .active > a,
-.nav-sidebar > .active > a:hover,
-.nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #428bca;
+	margin-right: -21px; /* 20px padding + 1px border */
+	margin-bottom: 20px;
+	margin-left: -20px;
 }
 
+.nav-sidebar>li>a {
+	padding-right: 20px;
+	padding-left: 20px;
+}
+
+.nav-sidebar>.active>a, .nav-sidebar>.active>a:hover, .nav-sidebar>.active>a:focus
+	{
+	color: #fff;
+	background-color: #428bca;
+}
 
 /*
  * Main content
  */
-
 .main {
-  padding: 20px;
-}
-@media (min-width: 768px) {
-  .main {
-    padding-right: 40px;
-    padding-left: 40px;
-  }
-}
-.main .page-header {
-  margin-top: 0;
+	padding: 20px;
 }
 
+@media ( min-width : 768px) {
+	.main {
+		padding-right: 40px;
+		padding-left: 40px;
+	}
+}
+
+.main .page-header {
+	margin-top: 0;
+}
 
 /*
  * Placeholder dashboard ideas
  */
-
 .placeholders {
-  margin-bottom: 30px;
-  text-align: center;
+	margin-bottom: 30px;
+	text-align: center;
 }
+
 .placeholders h4 {
-  margin-bottom: 0;
+	margin-bottom: 0;
 }
+
 .placeholder {
-  margin-bottom: 20px;
+	margin-bottom: 20px;
 }
+
 .placeholder img {
-  display: inline-block;
-  border-radius: 50%;
+	display: inline-block;
+	border-radius: 50%;
 }
 
 label.error {
@@ -119,25 +121,23 @@ label.valid {
 	text-indent: -9999px;
 }
 
-.form-control 
-{
+.form-control {
 	width: 40%;
 }
 
-.form-group
-{
+.form-group {
 	margin-bottom: 5px;
 }
 
 .node {
-    border: 2px solid #808040;
+	border: 2px solid #808040;
 }
 
-.control-label
-{
+.control-label {
 	text-align: left;
 }
-.entry-form{
+
+.entry-form {
 	background: #EDF2F6;
 	width: 350px;
 	padding: 10px;
@@ -149,56 +149,65 @@ label.valid {
 	display: none;
 	border-radius: 5px;
 }
-.entry-form table td{
+
+.entry-form table td {
 	padding: 5px;
 }
-.entry-form input[type='text']{
+
+.entry-form input[type='text'] {
 	border: 1px solid #BBBBBB;
 	box-shadow: 2px 2px 4px #C5D7E2 inset;
 	height: 25px;
 	width: 200px;
 }
-.entry-form input[type='text']:focus{
+
+.entry-form input[type='text']:focus {
 	border: 1px solid #C5D7E2;
 }
-.ulactive
-{
-	background-color:#408080;
+
+.ulactive {
+	background-color: #408080;
 	height: 25px;
-	margin-left:25px;
+	margin-left: 25px;
 }
 
-.ulactive a
-{
-	color:#fff;
+.ulactive a {
+	color: #fff;
 }
-
 
 #dropzone {
-    background: #ccccc;
-    width: 150px;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    font-weight: bold;
+	background: #ccccc;
+	width: 250px;
+	height: 250px;
+	line-height: 50px;
+	text-align: center;
+	font-weight: bold;
+	border: 1px dashed;
 }
+
 #dropzone.in {
-    width: 600px;
-    height: 200px;
-    line-height: 200px;
-    font-size: larger;
+	width: 600px;
+	height: 200px;
+	line-height: 200px;
+	font-size: larger;
 }
+
 #dropzone.hover {
-    background: lawngreen;
+	background: lawngreen;
 }
+
 #dropzone.fade {
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-    opacity: 1;
-    padding-left: 18px;
-    padding-top: 0;
+	-webkit-transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-ms-transition: all 0.3s ease-out;
+	-o-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
+	opacity: 1;
+	padding-left: 18px;
+	padding-top: 110px;
+}
+
+.well {
+	margin-bottom: 2px;
 }
 

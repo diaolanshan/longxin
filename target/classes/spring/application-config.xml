@@ -148,6 +148,13 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
+	<bean id="propertyConfigurer"
+	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<property name="location">
+		<value>/WEB-INF/classes/longxin.properties</value>
+	</property>
+</bean>
+	
 	<bean id="userService" class="org.longxin.service.impl.UserServiceImpl"></bean>
 	
 	<bean id="productService" class="org.longxin.service.impl.ProductServiceImpl"></bean>

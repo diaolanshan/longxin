@@ -23,27 +23,26 @@
 		</div>
 	</div>
 
-</form:form>
-
+<br/>
+<br/>
 <body>
-<h1>Spring MVC - jQuery File Upload</h1>
-<div style="width:500px;padding:20px">
-
-	<div id="dropzone" class="fade well">拖拽文件到此处</div>
-	<input id="fileupload" type="file" name="files[]" data-url="http://localhost:8080/longxin/filecontroller/upload" multiple>
-	
-	<div id="progress" class="progress">
-    	<div class="bar" style="width: 0%;"></div>
+	<div style="display: inline; width: 39%;float:left">
+		<div id="dropzone" class="fade well">拖拽文件到此处</div>
+		<input id="fileupload" type="file" name="files[]" 
+			data-url="../../filecontroller/upload/product/${product.id}"
+			multiple>
 	</div>
 
-	<table id="uploaded-files" class="table">
-		<tr>
-			<th>File Name</th>
-			<th>File Size</th>
-			<th>File Type</th>
-			<th>Download</th>
-		</tr>
-	</table>
-	
-</div>
+	<div style="display: inline; width: 59%;float:left">
+		<table id="uploaded-files" class="table">
+			<tr>
+				<th>File Name</th>
+				<th>File Size</th>
+				<th>File Type</th>
+				<th>Download</th>
+			</tr>
+		</table>
+	</div>
 </body> 
+</form:form>
+

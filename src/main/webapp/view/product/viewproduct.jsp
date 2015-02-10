@@ -11,10 +11,28 @@
 			//location.href="./edit/"+row.id;
         });
 	});
-    function showDailog(productId){
-    	//deleteProductId = productId;
-    	//$('#myModal').modal('show');
-    }
+    $(function () {
+    	$.ajax({
+    		type: "GET", 
+    		url: "../../filecontroller/get/product/" + $("#idvalue").text(), 
+    		dataType: "json",
+    		contentType: "application/json; charset=utf-8",
+    		success: function(data){
+    			$.each(data, function(idx,item)
+    			{
+    				var downloadlink = "../../filecontroller/download/product/1/" + item.fileName;
+    				var attachment = "<div style='display: inline; width: 15%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
+    				$("#attachments").append(attachment);
+    				
+    			}
+    			)
+    		},
+    		error: function(res){
+    			alert("Unexpected error! Try again.");
+    		}
+    	})
+	});
+    
     function deleteProduct(){
     	$.post('./delete/'+deleteProductId);
     	location.href="./search";
@@ -35,8 +53,7 @@
 				<td style="vertical-align: top">
 					<div class="form-group">
 						<label for="id" class="col-sm-3 control-label">产品ID：</label>
-						<div class="col-sm-5 control-label">${product.id}</div>
-
+						<div class="col-sm-5 control-label" id="idvalue">${product.id}</div>
 					</div>
 					<div class="form-group">
 						<label for="name" class="col-sm-3 control-label">产品名称：</label>
@@ -61,6 +78,11 @@
 				</td>
 			</tr>
 		</table>
+		
+		<br/>
+		<div id="attachments" style="display:block;width:100%">
+		</div>
+		
 		</fieldset>
 		<br/>
 		<br/>
