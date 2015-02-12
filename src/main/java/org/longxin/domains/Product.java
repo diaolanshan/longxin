@@ -35,6 +35,7 @@ public class Product implements java.io.Serializable, Cloneable
 	private Date createdat;
 	private Boolean template;
 	private String description;
+	private String functionName;
 	private Set<Feature> features = new HashSet<Feature>(0);
 
 	public Product()
@@ -112,6 +113,17 @@ public class Product implements java.io.Serializable, Cloneable
 	public void setDescription(String description)
 	{
 		this.description = description;
+	}
+	
+	@Column(name = "FUNCTION_NAME")
+	public String getFunctionName()
+	{
+		return functionName;
+	}
+
+	public void setFunctionName(String functionName)
+	{
+		this.functionName = functionName;
 	}
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade= CascadeType.ALL)
