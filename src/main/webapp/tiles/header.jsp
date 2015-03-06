@@ -1,3 +1,6 @@
+<%  
+String path = request.getContextPath(); 
+%>  
 <%@ page language="java" pageEncoding="UTF-8"%>
 <div class="navbar-header">
 	<button type="button" class="navbar-toggle collapsed"
@@ -10,7 +13,7 @@
 </div>
 <div id="navbar" class="navbar-collapse collapse">
 	<ul class="nav navbar-nav navbar-right">
-		<li><a href="#"><img style="width:23px" src="../../images/star.png"/></a></li>
+		<li><a href="#"><img style="width:23px" src="<%=path%>/images/star.png"/></a></li>
 		<li><a href="#">Profile</a></li>
 		<li><a href="/longxin/view/login.jsp">退出</a></li>
 	</ul>

@@ -88,7 +88,7 @@ $(document).ready(function(){
 	}
 	
 	//file upload
-	$('#fileupload').fileupload({
+	/*$('#fileupload').fileupload({
         dataType: 'json',
         
         done: function (e, data) {
@@ -101,7 +101,7 @@ $(document).ready(function(){
                 		.append($('<td/>').text(file.fileName))
                 		.append($('<td/>').text(file.fileSize))
                 		.append($('<td/>').text(file.fileType))
-                		.append($('<td/>').html("<a href='http://localhost:8080/longxin/controller/get/"+index+"'>Click</a>"))
+                		.append($('<td/>').html("<a href='http://localhost:8080/longxin/filecontroller/get/"+index+"'>Click</a>"))
                 		)//end $("#uploaded-files").append()
             }); 
         },
@@ -115,5 +115,5 @@ $(document).ready(function(){
    		},
    		
     dropZone: $('#dropzone')
-    });
+    });*/
 });

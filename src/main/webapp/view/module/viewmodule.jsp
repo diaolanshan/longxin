@@ -10,6 +10,39 @@
 		}).on('dbl-click-row.bs.table', function (e, row, $element) {
 			//location.href="./edit/"+row.id;
         });
+		//file upload
+		$('#fileupload').fileupload({
+		    dataType: 'json',
+		    done: function (e, data) {
+		    	window.location.reload();
+		    },
+		    progressall: function (e, data) {
+		      var progress = parseInt(data.loaded / data.total * 100, 10);
+		      $('#progress .bar').css(
+		          'width',
+		          progress + '%'
+		      );
+			}
+		});
+    	$.ajax({
+    		type: "GET", 
+    		url: "../../filecontroller/get/module/" + $("#idvalue").val(), 
+    		dataType: "json",
+    		contentType: "application/json; charset=utf-8",
+    		success: function(data){
+    			$.each(data, function(idx,item)
+    			{
+    				var downloadlink = "../../filecontroller/download/module/" + $("#idvalue").val() + "/" + item.fileName;
+    				var attachment = "<div style='display: inline; width: 15%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
+    				$("#attachments").append(attachment);
+    				
+    			}
+    			)
+    		},
+    		error: function(res){
+    			alert("Unexpected error! Try again.");
+    		}
+    	})
 	});
     function showDailog(id){
     	deleteId = id;
@@ -37,6 +70,7 @@
 		<legend>${module.moduleName} &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${module.id}"><span class="glyphicon glyphicon-indent-left"></span></a></legend>
 		
 		<div class="form-group">
+			<input type="text" id="idvalue" style="display:none" value="${module.id}">
 			<label for="name" class="col-sm-2 control-label">模块名称：</label>
 			<div class="col-sm-5 control-label">${module.moduleName}</div>
 		</div>
@@ -45,11 +79,19 @@
 			<div class="col-sm-5 control-label">${module.description}</div>
 		</div>
 		<div class="form-group" align="right">
-				<div class="col-sm-offset-2 col-sm-10">
-					<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
-					<input type="button" onclick="addComponent()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
-				</div>
+			<div class="col-sm-offset-2 col-sm-10">
+				<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
+				<input type="button" onclick="addComponent()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
 			</div>
+		</div>
+		<div style="display: inline; width: 39%;float:left">
+			<input id="fileupload" type="file" name="files[]" 
+				data-url="../../filecontroller/upload/module/${module.id}"
+				multiple>
+		</div>
+		<br/><br/>
+		<div id="attachments" style="display:block;width:100%">
+		</div>
 	</fieldset>
 	<br>
 	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1">

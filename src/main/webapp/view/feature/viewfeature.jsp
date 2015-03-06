@@ -10,6 +10,39 @@
 		}).on('dbl-click-row.bs.table', function (e, row, $element) {
 			//location.href="./edit/"+row.id;
         });
+		//file upload
+		$('#fileupload').fileupload({
+		    dataType: 'json',
+		    done: function (e, data) {
+		    	window.location.reload();
+		    },
+		    progressall: function (e, data) {
+		      var progress = parseInt(data.loaded / data.total * 100, 10);
+		      $('#progress .bar').css(
+		          'width',
+		          progress + '%'
+		      );
+			}
+		});
+    	$.ajax({
+    		type: "GET", 
+    		url: "../../filecontroller/get/feature/" + $("#idvalue").val(), 
+    		dataType: "json",
+    		contentType: "application/json; charset=utf-8",
+    		success: function(data){
+    			$.each(data, function(idx,item)
+    			{
+    				var downloadlink = "../../filecontroller/download/feature/" + $("#idvalue").val() + "/" + item.fileName;
+    				var attachment = "<div style='display: inline; width: 15%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
+    				$("#attachments").append(attachment);
+    				
+    			}
+    			)
+    		},
+    		error: function(res){
+    			alert("Unexpected error! Try again.");
+    		}
+    	})
 	});
     function showDailog(productId){
     	//deleteProductId = productId;
@@ -22,12 +55,13 @@
     
 </script>
 
-<form:form method="POST" modelAttribute="product" role="form"
+<form:form method="POST" modelAttribute="feature" role="form"
 	class="form-horizontal" id="viewProductForm">
 
 	<fieldset>
 		<legend>${feature.featureName} &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${feature.id}"><span class="glyphicon glyphicon-indent-left"></span></a> </legend>
 		<div class="form-group">
+			<input type="text" id="idvalue" style="display:none" value="${feature.id}">
 			<label for="name" class="col-sm-2 control-label">功能名称：</label>
 			<div class="col-sm-5 control-label">${feature.featureName}</div>
 		</div>
@@ -36,6 +70,14 @@
 			<div class="col-sm-5 control-label">${feature.description}</div>
 		</div>
 	</fieldset>
+	<div style="display: inline; width: 39%;float:left">
+		<input id="fileupload" type="file" name="files[]" 
+			data-url="../../filecontroller/upload/feature/${feature.id}"
+			multiple>
+	</div>
+	<br/><br/>
+	<div id="attachments" style="display:block;width:100%">
+	</div>
 	<br>
 	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1">
 		<thead>
