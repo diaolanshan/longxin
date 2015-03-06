@@ -1,5 +1,38 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<script type="text/javascript">
+$(function(){
+	//file upload
+	$('#fileupload').fileupload({
+	    dataType: 'json',
+	    
+	    done: function (e, data) {
+	    	$("tr:has(td)").remove();
+	        $.each(data.result, function (index, file) {
+	        	
+	        	
+	            $("#uploaded-files").append(
+	            		$('<tr/>')
+	            		.append($('<td/>').text(file.fileName))
+	            		.append($('<td/>').text(file.fileSize))
+	            		.append($('<td/>').text(file.fileType))
+	            		.append($('<td/>').html("<a href='../../filecontroller/download/product/" + $('#id').val() + "/" + file.fileName+"'>Click</a>"))
+	            		)//end $("#uploaded-files").append()
+	        }); 
+	    },
+	    
+	    progressall: function (e, data) {
+	      var progress = parseInt(data.loaded / data.total * 100, 10);
+	      $('#progress .bar').css(
+	          'width',
+	          progress + '%'
+	      );
+			},
+			
+	dropZone: $('#dropzone')
+	});
+})
+</script>
 <form:form method="POST" modelAttribute="product" role="form"
 	class="form-horizontal" id="editProductForm">
 	<div class="form-group">

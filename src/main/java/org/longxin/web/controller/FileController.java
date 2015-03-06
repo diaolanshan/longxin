@@ -45,6 +45,7 @@ public class FileController
 			MultipartHttpServletRequest request, HttpServletResponse response,
 			@PathVariable int componentId, @PathVariable String folderName)
 	{
+		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 		// 1. build an iterator
 		Iterator<String> itr = request.getFileNames();
 		MultipartFile mpf = null;

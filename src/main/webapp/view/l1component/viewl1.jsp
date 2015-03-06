@@ -17,6 +17,39 @@
 		}).on('dbl-click-row.bs.table', function (e, row, $element) {
 			//location.href="../../l2component/view/"+row.id;
         });
+		//file upload
+		$('#fileupload').fileupload({
+		    dataType: 'json',
+		    done: function (e, data) {
+		    	window.location.reload();
+		    },
+		    progressall: function (e, data) {
+		      var progress = parseInt(data.loaded / data.total * 100, 10);
+		      $('#progress .bar').css(
+		          'width',
+		          progress + '%'
+		      );
+			}
+		});
+    	$.ajax({
+    		type: "GET", 
+    		url: "../../filecontroller/get/l1component/" + $("#idvalue").val(), 
+    		dataType: "json",
+    		contentType: "application/json; charset=utf-8",
+    		success: function(data){
+    			$.each(data, function(idx,item)
+    			{
+    				var downloadlink = "../../filecontroller/download/l1component/" + $("#idvalue").val() + "/" + item.fileName;
+    				var attachment = "<div style='display: inline; width: 15%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
+    				$("#attachments").append(attachment);
+    				
+    			}
+    			)
+    		},
+    		error: function(res){
+    			alert("Unexpected error! Try again.");
+    		}
+    	})
 	});
     function showDailog(id, type){
     	deleteId = id;
@@ -73,6 +106,7 @@
 				class="glyphicon glyphicon-indent-left"></span></a>
 		</legend>
 		<div class="form-group">
+			<input type="text" id="idvalue" style="display:none" value="${component.id}">
 			<label for="id" class="col-sm-3 control-label">组件描述：</label>
 			<div class="control-label">${component.description}</div>
 		</div>
@@ -103,6 +137,14 @@
 				<input type="button" id="add_new" class="btn btn-primary" value="增加属性"></input>
 				<input type="button" onclick="addL2Component()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
 			</div>
+		</div>
+		<div style="display: inline; width: 39%;float:left">
+			<input id="fileupload" type="file" name="files[]" 
+				data-url="../../filecontroller/upload/l1component/${component.id}"
+				multiple>
+		</div>
+		<br/><br/>
+		<div id="attachments" style="display:block;width:100%">
 		</div>
 	</fieldset>
 	<br>
