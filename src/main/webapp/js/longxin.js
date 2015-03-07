@@ -7,7 +7,7 @@ $(document).ready(function(){
 		success: function(data){
 			$.each(data, function(idx,item)
 			{
-				var newMenu = "<ul id=" + item.id + "><a href='/longxin/product/diagram/" + item.id + "'>" + item.name + "<span class='sr-only'></span></a></ul>";
+				var newMenu = "<ul id=" + item.id + "><a href='/longxin/product/list/" + item.id + "'>" + item.name + "<span class='sr-only'></span></a></ul>";
 				$("#productmanagement").append(newMenu);
 			}
 			)

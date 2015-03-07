@@ -38,7 +38,7 @@ $(function(){
 	<div class="form-group">
 		<label for="id" class="col-sm-2 control-label">产品ID：</label>
 		<div class="col-sm-10">
-			<form:input type="text" class="form-control" id="id" path="id" />
+			<form:input type="text" class="form-control" id="id" path="id" disabled="true"/>
 		</div>
 	</div>
 	<div class="form-group">
@@ -49,9 +49,23 @@ $(function(){
 		</div>
 	</div>
 	<div class="form-group">
+		<label for="functionname" class="col-sm-2 control-label">功能名称：</label>
+		<div class="col-sm-10">
+			<form:input type="text" class="form-control" id="functionName"
+				placeholder="输入特性名称" path="functionName" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="description" class="col-sm-2 control-label">描述：</label>
+		<div class="col-sm-10">
+			<form:input type="text" class="form-control" id="description"
+				placeholder="输入特性名称" path="description" />
+		</div>
+	</div>
+	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<button type="button" class="btn btn-primary"
-				onclick="location='../search'">关闭</button>
+				onclick="location='../list/'+${product.id}">关闭</button>
 			<button type="submit" class="btn btn-primary">保存修改</button>
 		</div>
 	</div>

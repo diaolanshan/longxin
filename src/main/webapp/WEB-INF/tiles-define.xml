@@ -54,6 +54,11 @@
 		<put-attribute name="body" value="/view/product/viewdiagram.jsp" />
 	</definition>
 	
+	<definition name="/product/functiondiagram" extends="base.definition">
+		<put-attribute name="title" value="产品功能名称结构" />
+		<put-attribute name="body" value="/view/product/viewfunctiondiagram.jsp" />
+	</definition>
+	
 	<!-- 
 	<definition name="/product/template" extends="base.definition">
 		<put-attribute name="title" value="产品模板" />
@@ -72,6 +77,11 @@
 		<put-attribute name="body" value="/view/feature/featurediagram.jsp" />
 	</definition>
 	
+	<definition name="/feature/functiondiagram" extends="base.definition">
+		<put-attribute name="title" value="产品功能名称结构" />
+		<put-attribute name="body" value="/view/feature/featurefunctiondiagram.jsp" />
+	</definition>
+	
 	<definition name="/module/view" extends="base.definition">
 		<put-attribute name="title" value="结构模块" />
 		<put-attribute name="body" value="/view/module/viewmodule.jsp" />
@@ -80,6 +90,11 @@
 	<definition name="/module/diagram" extends="base.definition">
 		<put-attribute name="title" value="功能结构" />
 		<put-attribute name="body" value="/view/module/modulediagram.jsp" />
+	</definition>
+	
+	<definition name="/module/functiondiagram" extends="base.definition">
+		<put-attribute name="title" value="产品功能名称结构" />
+		<put-attribute name="body" value="/view/module/modulefunctiondiagram.jsp" />
 	</definition>
 
 	<definition name="/l1/view" extends="base.definition">
@@ -91,6 +106,11 @@
 		<put-attribute name="title" value="结构模块" />
 		<put-attribute name="body" value="/view/l1component/l1diagram.jsp" />
 	</definition>
+	
+	<definition name="/l1component/functiondiagram" extends="base.definition">
+		<put-attribute name="title" value="产品功能名称结构" />
+		<put-attribute name="body" value="/view/l1component/l1functiondiagram.jsp" />
+	</definition>
 
 	<definition name="/l2/view" extends="base.definition">
 		<put-attribute name="title" value="结构模块" />
@@ -100,6 +120,11 @@
 	<definition name="/l2component/diagram" extends="base.definition">
 		<put-attribute name="title" value="结构模块" />
 		<put-attribute name="body" value="/view/l2component/l2diagram.jsp" />
+	</definition>
+	
+	<definition name="/l2component/functiondiagram" extends="base.definition">
+		<put-attribute name="title" value="产品功能名称结构" />
+		<put-attribute name="body" value="/view/l2component/l2functiondiagram.jsp" />
 	</definition>
 
 	<definition name="/l3/view" extends="base.definition">

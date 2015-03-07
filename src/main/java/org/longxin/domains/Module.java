@@ -33,6 +33,7 @@ public class Module implements java.io.Serializable, Cloneable
 	private String moduleName;
 	private Boolean template;
 	private String description;
+	private String functionName;
 	private Set<L1Component> l1Components = new HashSet<L1Component>(0);
 
 	public Module()
@@ -118,6 +119,17 @@ public class Module implements java.io.Serializable, Cloneable
 	public void setDescription(String description)
 	{
 		this.description = description;
+	}
+	
+	@Column(name = "FUNCTION_NAME")
+	public String getFunctionName()
+	{
+		return functionName;
+	}
+
+	public void setFunctionName(String functionName)
+	{
+		this.functionName = functionName;
 	}
 
 	@Override

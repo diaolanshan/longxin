@@ -102,9 +102,15 @@
 	class="form-horizontal" id="editProductForm">
 	<fieldset>
 		<legend>
-			${component.name}细节 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${component.id}"><span
-				class="glyphicon glyphicon-indent-left"></span></a>
+			${component.name}细节 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${component.id}">
+				<span title="物理名称树" class="glyphicon glyphicon-indent-left"></span></a> 
+			&nbsp;&nbsp;&nbsp;&nbsp;<a href="../functiondiagram/${component.id}">
+			<span title="功能名称树" class="glyphicon glyphicon-indent-left"></span></a>
 		</legend>
+		<div class="form-group">
+			<label for="functionName" class="col-sm-3 control-label">功能名称：</label>
+			<div class="control-label">${component.functionName}</div>
+		</div>
 		<div class="form-group">
 			<input type="text" id="idvalue" style="display:none" value="${component.id}">
 			<label for="id" class="col-sm-3 control-label">组件描述：</label>
@@ -243,6 +249,10 @@
 			<tr>
 				<td>模块名称：</td>
 				<td><input type="text" name="name" value="${component.name}"></td>
+			</tr>
+			<tr>
+				<td>功能名称：</td>
+				<td><input type="text" name="functionName" value="${component.functionName}"></td>
 			</tr>
 			<tr>
 				<td>描述：</td>

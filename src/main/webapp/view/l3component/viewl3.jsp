@@ -105,6 +105,10 @@
 			${component.name}细节 &nbsp;&nbsp;&nbsp;&nbsp;
 		</legend>
 		<div class="form-group">
+			<label for="functionName" class="col-sm-3 control-label">功能名称：</label>
+			<div class="control-label">${component.functionName}</div>
+		</div>
+		<div class="form-group">
 			<input type="text" id="idvalue" style="display:none" value="${component.id}">
 			<label for="id" class="col-sm-3 control-label">组件描述：</label>
 			<div class="control-label">${component.description}</div>
@@ -220,6 +224,10 @@
 			<tr>
 				<td>模块名称：</td>
 				<td><input type="text" name="name" value="${component.name}"></td>
+			</tr>
+			<tr>
+				<td>功能名称：</td>
+				<td><input type="text" name="functionName" value="${component.functionName}"></td>
 			</tr>
 			<tr>
 				<td>描述：</td>

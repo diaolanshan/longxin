@@ -35,6 +35,7 @@ public class L3Component implements java.io.Serializable, Cloneable
 	private L2Component l2Component;
 	private String name;
 	private String description;
+	private String functionName;
 	private Set<L3ComponentParameter> l3ComponentParameters = new HashSet<L3ComponentParameter>(
 			0);
 
@@ -108,6 +109,17 @@ public class L3Component implements java.io.Serializable, Cloneable
 			Set<L3ComponentParameter> l3ComponentParameters)
 	{
 		this.l3ComponentParameters = l3ComponentParameters;
+	}
+	
+	@Column(name = "FUNCTION_NAME")
+	public String getFunctionName()
+	{
+		return functionName;
+	}
+
+	public void setFunctionName(String functionName)
+	{
+		this.functionName = functionName;
 	}
 	
 	protected Object clone() throws CloneNotSupportedException{

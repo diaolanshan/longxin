@@ -59,17 +59,26 @@
 	class="form-horizontal" id="viewProductForm">
 
 	<fieldset>
-		<legend>${feature.featureName} &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${feature.id}"><span class="glyphicon glyphicon-indent-left"></span></a> </legend>
+		<legend>${feature.featureName} &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${feature.id}">
+				<span title="物理名称树" class="glyphicon glyphicon-indent-left"></span></a> 
+			&nbsp;&nbsp;&nbsp;&nbsp;<a href="../functiondiagram/${feature.id}">
+			<span title="功能名称树" class="glyphicon glyphicon-indent-left"></span></a>
+		 </legend>
 		<div class="form-group">
 			<input type="text" id="idvalue" style="display:none" value="${feature.id}">
-			<label for="name" class="col-sm-2 control-label">功能名称：</label>
+			<label for="name" class="col-sm-2 control-label">特性名称：</label>
 			<div class="col-sm-5 control-label">${feature.featureName}</div>
+		</div>
+		<div class="form-group">
+			<label for="name" class="col-sm-2 control-label">功能名称：</label>
+			<div class="col-sm-5 control-label">${feature.functionName}</div>
 		</div>
 		<div class="form-group">
 			<label for="description" class="col-sm-2 control-label">描述：</label>
 			<div class="col-sm-5 control-label">${feature.description}</div>
 		</div>
 	</fieldset>
+	<br/>
 	<div style="display: inline; width: 39%;float:left">
 		<input id="fileupload" type="file" name="files[]" 
 			data-url="../../filecontroller/upload/feature/${feature.id}"

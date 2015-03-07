@@ -40,6 +40,14 @@ public class ModuleController
 		return "/module/diagram";
 	}
 
+	@RequestMapping(value = "/functiondiagram/{moduleId}", method = RequestMethod.GET)
+	public String showModuleFunctionDiagram(@PathVariable int moduleId, Model model)
+	{
+		Module module = moduleService.getModuleByID(moduleId);
+		model.addAttribute("module", module);
+		return "/module/functiondiagram";
+	}
+
 	@RequestMapping(value = "/update/{moduleId}", method = RequestMethod.POST)
 	public String updateModuleDescription(
 			@ModelAttribute("module") Module module, Model model)
