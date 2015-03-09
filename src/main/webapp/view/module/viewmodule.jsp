@@ -67,12 +67,22 @@
 	class="form-horizontal" id="viewProductForm">
 
 	<fieldset>
-		<legend>${module.moduleName} &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${module.id}"><span class="glyphicon glyphicon-indent-left"></span></a></legend>
+		<legend>${module.moduleName} 
+			&nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${module.id}">
+				<span title="物理名称树" class="glyphicon glyphicon-indent-left"></span>
+			</a> 
+			&nbsp;&nbsp;&nbsp;&nbsp;<a href="../functiondiagram/${module.id}">
+			<span title="功能名称树" class="glyphicon glyphicon-indent-left"></span></a>
+		</legend>
 		
 		<div class="form-group">
 			<input type="text" id="idvalue" style="display:none" value="${module.id}">
 			<label for="name" class="col-sm-2 control-label">模块名称：</label>
 			<div class="col-sm-5 control-label">${module.moduleName}</div>
+		</div>
+		<div class="form-group">
+			<label for="name" class="col-sm-2 control-label">功能名称：</label>
+			<div class="col-sm-5 control-label">${module.functionName}</div>
 		</div>
 		<div class="form-group">
 			<label for="description" class="col-sm-2 control-label">描述：</label>
@@ -147,6 +157,10 @@
 			<tr>
 				<td>模块名称：</td>
 				<td><input type="text" name="moduleName" value="${module.moduleName}"></td>
+			</tr>
+			<tr>
+				<td>功能名称：</td>
+				<td><input type="text" name="functionName" value="${module.functionName}"></td>
 			</tr>
 			<tr>
 				<td>描述：</td>

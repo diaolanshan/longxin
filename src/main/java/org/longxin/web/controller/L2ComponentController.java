@@ -52,6 +52,15 @@ public class L2ComponentController
 		return "/l2component/diagram";
 	}
 
+	@RequestMapping(value = "/functiondiagram/{componentId}", method = RequestMethod.GET)
+	public String showFunctionDiagram(@PathVariable int componentId, Model model)
+	{
+		L2Component component = l2ComponentService
+				.getL2ComponentByID(componentId);
+		model.addAttribute("component", component);
+		return "/l2component/functiondiagram";
+	}
+
 	@RequestMapping(value = "/update/{l2id}", method = RequestMethod.POST)
 	public String updateComponent(@PathVariable int l2id, @ModelAttribute("component") L2Component component ,Model model)
 	{

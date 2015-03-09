@@ -60,6 +60,15 @@ public class ProductController {
 		return "/product/diagram";
 	}
 	
+	@RequestMapping(value = "/functiondiagram/{productId}", method = RequestMethod.GET)
+	public String showProductFunctionDiagram(@PathVariable int productId,Model model)
+	{
+		//product
+		Product product = productService.getProjectByID(productId);
+		model.addAttribute("product", product);
+		return "/product/functiondiagram";
+	}
+	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String searchProduct(Model model)
 	{
@@ -131,10 +140,10 @@ public class ProductController {
 	@RequestMapping(value = "/edit/{productId}", method = RequestMethod.POST)
 	public String editProduct(Model model, @ModelAttribute("product") Product product)
 	{
-		//productService.editProduct(product);
-		//model.addAttribute("userSearchBean", new UserSearchBean());
-		//model.addAttribute(new Users());
-		return "redirect:/user/search";
+		productService.saveProduct(product);
+		model.addAttribute("product", product);
+		model.addAttribute("features", featureService.getFeatureByProduct(product));
+		return "redirect:/product/list/"+product.getId();
 	}
 	
 	@RequestMapping(value = "/delete/{productId}", method = RequestMethod.POST)

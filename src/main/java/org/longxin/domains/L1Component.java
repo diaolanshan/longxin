@@ -35,6 +35,7 @@ public class L1Component implements java.io.Serializable, Cloneable
 	private Module module;
 	private String name;
 	private String description;
+	private String functionName;
 	private Set<L1ComponentParameter> l1ComponentParameters = new HashSet<L1ComponentParameter>(
 			0);
 	private Set<L2Component> l2Components = new HashSet<L2Component>(0);
@@ -127,6 +128,17 @@ public class L1Component implements java.io.Serializable, Cloneable
 	public void setL2Components(Set<L2Component> l2Components)
 	{
 		this.l2Components = l2Components;
+	}
+	
+	@Column(name = "FUNCTION_NAME")
+	public String getFunctionName()
+	{
+		return functionName;
+	}
+
+	public void setFunctionName(String functionName)
+	{
+		this.functionName = functionName;
 	}
 
 	@Override

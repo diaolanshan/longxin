@@ -44,6 +44,15 @@ public class FeatureController
 		return "/feature/diagram";
 	}
 
+	@RequestMapping(value = "/functiondiagram/{featureId}", method = RequestMethod.GET)
+	public String showFeatureFunctionDiagram(@PathVariable int featureId,Model model)
+	{
+		//product
+		Feature feature = featureService.getFeatureByID(featureId);
+		model.addAttribute("feature", feature);
+		return "/feature/functiondiagram";
+	}
+
 	public FeatureService getFeatureService()
 	{
 		return featureService;

@@ -118,8 +118,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<fieldset>
 		<legend>
-			产品细节 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${product.id}"><span
-				class="glyphicon glyphicon-indent-left"></span></a>
+			产品细节&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="../diagram/${product.id}">
+				<span title="物理名称树" class="glyphicon glyphicon-indent-left"></span>
+			</a> 
+			&nbsp;&nbsp;&nbsp;&nbsp;<a href="../functiondiagram/${product.id}">
+			<span title="功能名称树" class="glyphicon glyphicon-indent-left"></span></a>
 		</legend>
 		<table style="width: 100%">
 			<tr>
@@ -184,6 +188,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div class="col-sm-5 control-label">${product.name}</div>
 					</div>
 					<div class="form-group">
+						<label for="name" class="col-sm-3 control-label">功能名称：</label>
+						<div class="col-sm-5 control-label">${product.functionName}</div>
+					</div>
+					<div class="form-group">
 						<label for="name" class="col-sm-3 control-label">创建时间：</label>
 						<div class="col-sm-5 control-label">${product.createdat}</div>
 					</div>
@@ -191,6 +199,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<label for="description" class="col-sm-3 control-label">描述：</label>
 						<div class="col-sm-5 control-label">${product.description}</div>
 					</div>
+					<br/>
 					<div class="form-group">
 						<div class="col-sm-offset-7 col-sm-5" style="align: right">
 							<button type="button" class="btn btn-primary"

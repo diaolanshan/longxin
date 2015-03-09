@@ -35,6 +35,7 @@ public class Feature implements java.io.Serializable, Cloneable
 	private Integer template;
 	private String description;
 	private String iconName;
+	private String functionName;
 	private Set<Module> modules = new HashSet<Module>(0);
 
 	public Feature()
@@ -138,6 +139,17 @@ public class Feature implements java.io.Serializable, Cloneable
 	public void setModules(Set<Module> modules)
 	{
 		this.modules = modules;
+	}
+	
+	@Column(name = "FUNCTION_NAME")
+	public String getFunctionName()
+	{
+		return functionName;
+	}
+
+	public void setFunctionName(String functionName)
+	{
+		this.functionName = functionName;
 	}
 	
 	public Object clone() throws CloneNotSupportedException 
