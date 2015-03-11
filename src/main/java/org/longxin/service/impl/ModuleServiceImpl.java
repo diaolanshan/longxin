@@ -16,7 +16,6 @@ public class ModuleServiceImpl implements ModuleService
 	
 	public void saveFunctions(List<Module> modules)
 	{
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -33,6 +32,11 @@ public class ModuleServiceImpl implements ModuleService
 	@Override
 	public void updateModule(Module module) {
 		moduleDAO.updateModule(module);
+	}
+
+	@Override
+	public void deleteModule(int id) {
+		moduleDAO.deleteModuleByID(id);
 	}
 	
 }

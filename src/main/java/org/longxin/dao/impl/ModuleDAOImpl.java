@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.longxin.dao.ModuleDAO;
 import org.longxin.domains.Feature;
+import org.longxin.domains.L1Component;
 import org.longxin.domains.Module;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -29,6 +30,12 @@ public class ModuleDAOImpl extends HibernateDaoSupport implements ModuleDAO
 
 	@Override
 	public void updateModule(Module module) {
-		this.getHibernateTemplate().update(module);
+		this.getHibernateTemplate().saveOrUpdate(module);
+	}
+
+	@Override
+	public void deleteModuleByID(Integer moduleID) {
+		Module module = this.getHibernateTemplate().get(Module.class,moduleID);
+		this.getHibernateTemplate().delete(module);
 	}
 }

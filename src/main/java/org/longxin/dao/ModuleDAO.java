@@ -14,4 +14,6 @@ public interface ModuleDAO
 	public Module getModuleByID(Integer moduleID);
 	
 	public void updateModule(Module module);
+	
+	public void deleteModuleByID(Integer moduleID);
 }

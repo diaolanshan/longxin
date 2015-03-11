@@ -15,4 +15,5 @@ public interface ModuleService
 	
 	public void updateModule(Module module);
 	
+	public void deleteModule(int id);
 }

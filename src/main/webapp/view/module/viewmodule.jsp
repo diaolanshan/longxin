@@ -77,16 +77,16 @@
 		
 		<div class="form-group">
 			<input type="text" id="idvalue" style="display:none" value="${module.id}">
-			<label for="name" class="col-sm-2 control-label">模块名称：</label>
-			<div class="col-sm-5 control-label">${module.moduleName}</div>
+			<label for="name" class="col-sm-3 control-label">模块名称：</label>
+			<div class="col-sm-8 control-label">${module.moduleName}</div>
 		</div>
 		<div class="form-group">
-			<label for="name" class="col-sm-2 control-label">功能名称：</label>
-			<div class="col-sm-5 control-label">${module.functionName}</div>
+			<label for="name" class="col-sm-3 control-label">功能名称：</label>
+			<div class="col-sm-8 control-label">${module.functionName}</div>
 		</div>
 		<div class="form-group">
-			<label for="description" class="col-sm-2 control-label">描述：</label>
-			<div class="col-sm-5 control-label">${module.description}</div>
+			<label for="description" class="col-sm-3 control-label">描述：</label>
+			<div class="col-sm-8 control-label">${module.description}</div>
 		</div>
 		<div class="form-group" align="right">
 			<div class="col-sm-offset-2 col-sm-10">
@@ -120,7 +120,7 @@
                 <td>
                 <a href="../../l1component/view/${l1component.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
                 &nbsp;&nbsp;
-                <a href="javascript:void(0);" onclick="showDailog(${l1component.id})"  data-toggle="popover" title="删除该组件"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                <a href="javascript:void(0);" onclick="showDailog(${l1component.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
    	 			&nbsp;&nbsp;
             </tr>  
        		</c:forEach>

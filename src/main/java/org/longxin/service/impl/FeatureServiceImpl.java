@@ -23,7 +23,6 @@ public class FeatureServiceImpl implements FeatureService
 	
 	public List<Feature> cloneFeatures(List<Feature> features)
 	{
-		//TODO
 		return null;
 	}
 
@@ -40,4 +39,5 @@ public class FeatureServiceImpl implements FeatureService
 	{
 		return featureDAO.getFeatureByID(featureID);
 	}
+
 }
