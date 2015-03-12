@@ -16,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="container">
 		${SPRING_SECURITY_LAST_EXCEPTION.message} 
 		<form class="form-signin" action="<%=path %>/j_spring_security_check" method="post">
-			<h2 class="form-signin-heading">请登录</h2>
+			<div><img alt="" src="../images/lego.png" style="display:inline;margin-left:-60px"><div style="display:inline;font-size: 30;margin-left:-60px;vertical-align: bottom;">请登录</div></div>
 			<label for="inputUserName" class="sr-only">用户名</label> 
 			<input type="text" id="inputUserName" name="j_username" class="form-control" value="${sessionScope['SPRING_SECURITY_LAST_USERNAME']}" placeholder="用户名" required autofocus/>
 			<label

@@ -33,15 +33,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 	<div style="display:none" id="meanItem"><tiles:getAsString name="menuItem"></tiles:getAsString></div>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
-		<div class="container-fluid">
+	<nav class="navbar navbar-inverse navbar-fixed-top" style="background-image:url(../images/header.png);background-repeat:no-repeat;height:99px;margin-top:1px;margin-left:3px;margin-right:3px">
+		<div class="container-fluid" >
 			<tiles:insertAttribute name="header" />
 		</div>
 	</nav>
 
-	<div class="container-fluid">
+	<div class="container-fluid" style="padding-top:40px">
 		<div class="row">
-			<div class="col-sm-3 col-md-2 sidebar">
+			<div class="col-sm-3 col-md-2 sidebar" style="padding-top:50px">
 				<tiles:insertAttribute name="menu" />
 			</div>
 

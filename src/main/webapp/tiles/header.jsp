@@ -9,10 +9,9 @@ String path = request.getContextPath();
 		<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
 		<span class="icon-bar"></span> <span class="icon-bar"></span>
 	</button>
-	<a class="navbar-brand" href="#">Project name</a>
 </div>
 <div id="navbar" class="navbar-collapse collapse">
-	<ul class="nav navbar-nav navbar-right">
+	<ul class="nav navbar-nav navbar-right" style="margin-top:20px;">
 		<li><a href="#"><img style="width:23px" src="<%=path%>/images/star.png"/></a></li>
 		<li><a href="#">Profile</a></li>
 		<li><a href="/longxin/view/login.jsp">退出</a></li>
