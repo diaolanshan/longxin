@@ -11,28 +11,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class ModuleServiceImpl implements ModuleService
 {
 
-	@Autowired
-	ModuleDAO moduleDAO;
-	
-	public void saveFunctions(List<Module> modules)
-	{
-		// TODO Auto-generated method stub
-		
-	}
+    @Autowired
+    ModuleDAO moduleDAO;
+    
+    public void saveFunctions(List<Module> modules)
+    {
+        
+    }
 
-	public List<Module> getModulesByFeature(Feature feature)
-	{
-		return moduleDAO.getModulesByFeature(feature);
-	}
+    public List<Module> getModulesByFeature(Feature feature)
+    {
+        return moduleDAO.getModulesByFeature(feature);
+    }
 
-	public Module getModuleByID(Integer moduleID)
-	{
-		return moduleDAO.getModuleByID(moduleID);
-	}
+    public Module getModuleByID(Integer moduleID)
+    {
+        return moduleDAO.getModuleByID(moduleID);
+    }
 
-	@Override
-	public void updateModule(Module module) {
-		moduleDAO.updateModule(module);
-	}
-	
+    @Override
+    public void updateModule(Module module) {
+        moduleDAO.updateModule(module);
+    }
+
+    @Override
+    public void deleteModule(int id) {
+        moduleDAO.deleteModuleByID(id);
+    }
+    
 }

@@ -10,34 +10,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class FeatureServiceImpl implements FeatureService
 {
-	@Autowired
-	FeatureDAO featureDAO;
-	
-	public void saveFeatures(List<Feature> features)
-	{
-		for(Feature feature : features)
-		{
-			this.saveFeature(feature);
-		}
-	}
-	
-	public List<Feature> cloneFeatures(List<Feature> features)
-	{
-		//TODO
-		return null;
-	}
+    @Autowired
+    FeatureDAO featureDAO;
+    
+    public void saveFeatures(List<Feature> features)
+    {
+        for(Feature feature : features)
+        {
+            this.saveFeature(feature);
+        }
+    }
+    
+    public List<Feature> cloneFeatures(List<Feature> features)
+    {
+        return null;
+    }
 
-	public void saveFeature(Feature features)
-	{
-		featureDAO.saveFeature(features);
-	}
+    public void saveFeature(Feature features)
+    {
+        featureDAO.saveFeature(features);
+    }
 
-	public List<Feature> getFeatureByProduct(Product product) {
-		return featureDAO.getFeatureByProduct(product);
-	}
+    public List<Feature> getFeatureByProduct(Product product) {
+        return featureDAO.getFeatureByProduct(product);
+    }
 
-	public Feature getFeatureByID(Integer featureID)
-	{
-		return featureDAO.getFeatureByID(featureID);
-	}
+    public Feature getFeatureByID(Integer featureID)
+    {
+        return featureDAO.getFeatureByID(featureID);
+    }
+
 }

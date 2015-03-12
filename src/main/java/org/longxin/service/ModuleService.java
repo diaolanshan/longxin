@@ -7,12 +7,13 @@ import org.longxin.domains.Module;
 
 public interface ModuleService
 {
-	public void saveFunctions(List<Module> modules);
-	
-	public List<Module> getModulesByFeature(Feature feature);
-	
-	public Module getModuleByID(Integer moduleID);
-	
-	public void updateModule(Module module);
-	
+    public void saveFunctions(List<Module> modules);
+    
+    public List<Module> getModulesByFeature(Feature feature);
+    
+    public Module getModuleByID(Integer moduleID);
+    
+    public void updateModule(Module module);
+    
+    public void deleteModule(int id);
 }

@@ -120,10 +120,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<legend>
 			产品细节&nbsp;&nbsp;&nbsp;&nbsp;
 			<a href="../diagram/${product.id}">
-				<span title="物理名称树" class="glyphicon glyphicon-indent-left"></span>
+				<span title="物理结构" class="glyphicon glyphicon-indent-left"></span>
 			</a> 
-			&nbsp;&nbsp;&nbsp;&nbsp;<a href="../functiondiagram/${product.id}">
-			<span title="功能名称树" class="glyphicon glyphicon-indent-left"></span></a>
+			&nbsp;&nbsp;<a href="../functiondiagram/${product.id}">
+			<span title="功能结构" class="glyphicon glyphicon-indent-left"></span></a>
 		</legend>
 		<table style="width: 100%">
 			<tr>

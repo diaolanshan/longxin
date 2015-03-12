@@ -7,11 +7,13 @@ import org.longxin.domains.Module;
 
 public interface ModuleDAO
 {
-	public void saveFunction(Module module);
-	
-	public List<Module> getModulesByFeature(Feature feature);
-	
-	public Module getModuleByID(Integer moduleID);
-	
-	public void updateModule(Module module);
+    public void saveFunction(Module module);
+    
+    public List<Module> getModulesByFeature(Feature feature);
+    
+    public Module getModuleByID(Integer moduleID);
+    
+    public void updateModule(Module module);
+    
+    public void deleteModuleByID(Integer moduleID);
 }
