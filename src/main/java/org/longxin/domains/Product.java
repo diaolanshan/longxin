@@ -141,8 +141,8 @@ public class Product implements java.io.Serializable, Cloneable
 		this.features = features;
 	}
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "owner", nullable = false)
+	@ManyToOne(fetch = FetchType.EAGER, cascade= CascadeType.ALL)
+    @JoinColumn(name = "owner")
 	public Users getOwner()
     {
         return owner;

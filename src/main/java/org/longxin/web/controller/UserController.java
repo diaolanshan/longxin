@@ -10,6 +10,8 @@ import org.longxin.service.UserService;
 import org.longxin.util.Roles;
 import org.longxin.web.controller.bean.UserSearchBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -116,5 +118,27 @@ public class UserController
 	public void deleteUsers(@PathVariable String userId,Model model)
 	{
 		userService.deleteUser(Integer.valueOf(userId));
+	}
+	
+	@RequestMapping(value = "/profile", method = RequestMethod.GET)
+	public String editUser( Model model)
+	{
+		UserDetails  userDetails  = (UserDetails ) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		Users user = userService.findUserByUserName(userDetails .getUsername());
+		user.setPasswordAgain(user.getPassword());
+		model.addAttribute("user",user);
+		model.addAttribute("departments", departmentService.getAllDepartments());
+		model.addAttribute("roles", Roles.values());
+		return "/user/profile";
+	}
+	
+	@RequestMapping(value = "/profile", method = RequestMethod.POST)
+	public String editUser(@ModelAttribute("user") Users user,Model model)
+	{
+		userService.editUser(user);
+		model.addAttribute(new Users());
+		return "redirect:/user/profile";
 	}
 }
