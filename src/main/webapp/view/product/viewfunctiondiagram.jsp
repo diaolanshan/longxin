@@ -1,10 +1,10 @@
-feature<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <body onload="prettyPrint();">
 	<ul id="org" style="display: none">
-		<li><a href="./../list/${product.id}">${product.functionName}</a>
+		<li><a href="./../list/${product.id}">${product.name}</a>
 			<ul>
 				<c:forEach items="${product.features}" var="feature">
 					<li id="${feature.id}"><a href="../../feature/view/${feature.id}">${feature.functionName}</a>

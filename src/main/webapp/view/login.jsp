@@ -1,5 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %> 
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>  
+<%@ page language="java" pageEncoding="UTF-8"%>
 <%  
 String path = request.getContextPath();  
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";  

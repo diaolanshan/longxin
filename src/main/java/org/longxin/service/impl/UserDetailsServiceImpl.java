@@ -49,22 +49,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			authList.add(new GrantedAuthorityImpl(Roles.ROLE_ADMIN.toString()));
 			authList.add(new GrantedAuthorityImpl(Roles.ROLE_SUPERTECHNICALSUPPORT.toString()));
 			authList.add(new GrantedAuthorityImpl(Roles.ROLE_TECHNICALSUPPORT.toString()));
-			authList.add(new GrantedAuthorityImpl(Roles.ROLE_VISITOR.toString()));
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_USER.toString()));
 		}
 		else if(Roles.ROLE_SUPERTECHNICALSUPPORT.equals(role))
 		{
 			authList.add(new GrantedAuthorityImpl(Roles.ROLE_SUPERTECHNICALSUPPORT.toString()));
 			authList.add(new GrantedAuthorityImpl(Roles.ROLE_TECHNICALSUPPORT.toString()));
-			authList.add(new GrantedAuthorityImpl(Roles.ROLE_VISITOR.toString()));
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_USER.toString()));
 		}
 		else if(Roles.ROLE_TECHNICALSUPPORT.equals(role))
 		{
 			authList.add(new GrantedAuthorityImpl(Roles.ROLE_TECHNICALSUPPORT.toString()));
-			authList.add(new GrantedAuthorityImpl(Roles.ROLE_VISITOR.toString()));
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_USER.toString()));
 		}
-		else if(Roles.ROLE_VISITOR.equals(role))
+		else if(Roles.ROLE_USER.equals(role))
 		{
-			authList.add(new GrantedAuthorityImpl(Roles.ROLE_VISITOR.toString()));
+			authList.add(new GrantedAuthorityImpl(Roles.ROLE_USER.toString()));
 		}
 		
 		return authList;

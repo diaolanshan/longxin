@@ -14,5 +14,7 @@ public interface ProductDAO {
 	
 	public Product getProductByID(int id);
 	
+	public List<Product> searchProductByKeyWords(String keyword);
+	
 	public Product getTemplate();
 }

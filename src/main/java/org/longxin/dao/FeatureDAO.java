@@ -12,4 +12,6 @@ public interface FeatureDAO
 	public List<Feature> getFeatureByProduct(Product product);
 	
 	public Feature getFeatureByID(Integer featureID);
+	
+	public void deleteFeatureByID(Integer featureID);
 }

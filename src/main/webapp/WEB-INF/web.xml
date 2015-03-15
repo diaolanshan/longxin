@@ -7,9 +7,28 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 
 	<display-name>longxin</display-name>
 
+	<filter>  
+  		<filter-name>encodingFilter</filter-name>  
+  		<filter-class>  
+  			 org.springframework.web.filter.CharacterEncodingFilter  
+  		</filter-class>  
+  		<init-param>  
+   			<param-name>encoding</param-name>  
+   			<param-value>UTF-8</param-value>  
+  		</init-param>  
+  		<init-param>  
+   			<param-name>forceEncoding</param-name>  
+  			 <param-value>true</param-value>  
+ 		 </init-param>  
+ 	</filter>  
+ 	<filter-mapping>  
+  		<filter-name>encodingFilter</filter-name>  
+  		<url-pattern>/*</url-pattern>  
+ 	</filter-mapping>  
+
 	<listener>
 		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
-	</listener> 
+	</listener>
 
 	<!-- - Location of the XML file that defines the root application context. 
 		- Applied by ContextLoaderListener. -->
@@ -49,25 +68,6 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<filter>  
-  		<filter-name>encodingFilter</filter-name>  
-  		<filter-class>  
-  			 org.springframework.web.filter.CharacterEncodingFilter  
-  		</filter-class>  
-  		<init-param>  
-   			<param-name>encoding</param-name>  
-   			<param-value>UTF-8</param-value>  
-  		</init-param>  
-  		<init-param>  
-   			<param-name>forceEncoding</param-name>  
-  			 <param-value>true</param-value>  
- 		 </init-param>  
- 	</filter>  
- 	<filter-mapping>  
-  		<filter-name>encodingFilter</filter-name>  
-  		<url-pattern>/*</url-pattern>  
- 	</filter-mapping>  
-
 	<resource-ref>
 		<res-ref-name>jdbc/longxin</res-ref-name>
 		<res-type>javax.sql.DataSource</res-type>

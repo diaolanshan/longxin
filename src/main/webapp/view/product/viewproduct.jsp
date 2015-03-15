@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <%  
 String path = request.getContextPath();  
@@ -8,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 <script src="<%=path%>/js/jssor.slider.mini.js"></script>
 <script>
-	var deleteProductId;
+	var deleteId;
     $(function () {
 		$('#searchTable1').bootstrapTable({
 			
@@ -38,10 +39,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	})
 	});
     
-    function deleteProduct(){
-    	$.post('./delete/'+deleteProductId);
-    	location.href="./search";
-    }
+ //   function deleteProduct(){
+ //   	$.post('./delete/'+deleteProductId);
+ //   	location.href="./search";
+ //   }
     
     jQuery(document).ready(function ($) {
         var options = {
@@ -106,6 +107,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         //responsive code end
     });
     
+    function showDailog(id){
+    	deleteId = id;
+    	$('#myModal').modal('show');
+    }
+    
+    function deleteThis(){
+    	$.post('../../delete/feature/'+deleteId);
+    	location.reload();
+    }
+    
 </script>
 <style>
 .container
@@ -118,12 +129,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<fieldset>
 		<legend>
-			产品细节&nbsp;&nbsp;&nbsp;&nbsp;
+			产品细节&nbsp;&nbsp;&nbsp;
 			<a href="../diagram/${product.id}">
-				<span title="物理结构" class="glyphicon glyphicon-indent-left"></span>
-			</a> 
-			&nbsp;&nbsp;<a href="../functiondiagram/${product.id}">
-			<span title="功能结构" class="glyphicon glyphicon-indent-left"></span></a>
+				<span title="物理结构图" class="glyphicon glyphicon-indent-left"></span>
+			</a> &nbsp;&nbsp;
+			<a href="../functiondiagram/${product.id}">
+			<span title="功能结构图" class="glyphicon glyphicon-indent-right"></span></a>
 		</legend>
 		<table style="width: 100%">
 			<tr>
@@ -137,14 +148,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<div
 									style="filter: alpha(opacity = 70); opacity: 0.7; position: absolute; display: block; background-color: #000; top: 0px; left: 0px; width: 100%; height: 100%;">
 								</div>
-								<div
-									style="position: absolute; display: block; background: url(../img/loading.gif) no-repeat center center; top: 0px; left: 0px; width: 100%; height: 100%;">
-								</div>
 							</div>
 
 							<!-- Slides Container -->
 							<div u="slides"
-								style="cursor: move; position: absolute; left: 0px; top: 0px; width: 380px; height: 250px; overflow: hidden;">
+								style="cursor: move; position: absolute; left: 0px; top: 0px; width: 380px; height: 248px; overflow: hidden;">
 								<div>
 									<img u="image" src2="../../images/01.jpg" />
 								</div>
@@ -196,10 +204,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<div class="col-sm-5 control-label">${product.createdat}</div>
 					</div>
 					<div class="form-group">
+						<label for="name" class="col-sm-3 control-label">创建人：</label>
+						<div class="col-sm-5 control-label">${product.owner.username}</div>
+					</div>
+					<div class="form-group">
 						<label for="description" class="col-sm-3 control-label">描述：</label>
 						<div class="col-sm-5 control-label">${product.description}</div>
 					</div>
 					<br/>
+					<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
 					<div class="form-group">
 						<div class="col-sm-offset-7 col-sm-5" style="align: right">
 							<button type="button" class="btn btn-primary"
@@ -210,6 +223,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							</c:if>
 						</div>
 					</div>
+					</sec:authorize>
 				</td>
 			</tr>
 		</table>
@@ -220,6 +234,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	</fieldset>
 	<br />
 	<br />
+	<!-- 
 	<div class="row placeholders">
 		<c:forEach items="${features}" var="feature">
 			<div class="col-xs-6 col-sm-3 placeholder">
@@ -230,7 +245,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<span class="text-muted">${feature.description}</span>
 			</div>
 		</c:forEach>
-	</div>
+	</div> -->
+	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1">
+		<thead>
+	        <tr class="success">
+				<th data-field="name"  data-sortable="true">特性名称</th>
+				<th data-field="functionName"  data-sortable="true">功能描述</th>
+				<th data-field="description"  data-sortable="true">特性描述</th>
+	            <th data-sortable="false">操作</th>
+	        </tr>
+   	 	</thead>
+   	 	<tbody>
+   	 		<c:forEach items="${features}" var="feature">  
+            <tr>  
+                <td>${feature.featureName}</td>  
+                <td>${feature.functionName}</td>  
+                <td>${feature.description}</td>  
+                <td>
+                <a href="../../feature/view/${feature.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
+                &nbsp;&nbsp;
+               <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"> <a href="javascript:void(0);" onclick="showDailog(${feature.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+   	 			&nbsp;&nbsp;</sec:authorize>
+            </tr>  
+       		</c:forEach>
+   	 	</tbody>
+	</table>
 </form:form>
 
 
@@ -245,10 +284,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</button>
 				<h4 class="modal-title" id="myModalLabel">确认框</h4>
 			</div>
-			<div class="modal-body">确认要删除该产品？</div>
+			<div class="modal-body">确认要删除该特性？</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-primary"
-					onclick="deleteProduct()">确定</button>
+					onclick="deleteThis()">确定</button>
 				<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
 			</div>
 		</div>

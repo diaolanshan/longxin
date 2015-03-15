@@ -30,6 +30,11 @@ public class FeatureServiceImpl implements FeatureService
     {
         featureDAO.saveFeature(features);
     }
+    
+    public void deleteFeatureById(Integer featureID)
+    {
+        featureDAO.deleteFeatureByID(featureID);
+    }
 
     public List<Feature> getFeatureByProduct(Product product) {
         return featureDAO.getFeatureByProduct(product);

@@ -10,7 +10,7 @@
 					<li><a href="./../../module/view/${module.id}">${module.functionName}</a>
 						<ul>
 							<c:forEach items="${module.l1Components}" var="l1">
-								<li><a href="./../../l1component/view/${l1.id}"
+								<li> <a href="./../../l1component/view/${l1.id}"
 									target="_blank">${l1.functionName}</a>
 									<ul>
 										<c:forEach items="${l1.l2Components}" var="l2">

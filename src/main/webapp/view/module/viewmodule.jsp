@@ -68,11 +68,11 @@
 
 	<fieldset>
 		<legend>${module.moduleName} 
-			&nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${module.id}">
-				<span title="物理名称树" class="glyphicon glyphicon-indent-left"></span>
+			&nbsp;&nbsp;&nbsp;<a href="../diagram/${module.id}">
+				<span title="物理结构图" class="glyphicon glyphicon-indent-left"></span>
 			</a> 
 			&nbsp;&nbsp;&nbsp;&nbsp;<a href="../functiondiagram/${module.id}">
-			<span title="功能名称树" class="glyphicon glyphicon-indent-left"></span></a>
+			<span title="功能结构图" class="glyphicon glyphicon-indent-right"></span></a>
 		</legend>
 		
 		<div class="form-group">
@@ -108,6 +108,7 @@
 		<thead>
 	        <tr class="success">
 				<th data-field="name"  data-sortable="true">模块名称</th>
+				<th data-field="function"  data-sortable="true">功能描述</th>
 				<th data-field="description"  data-sortable="true">模块描述</th>
 	            <th data-sortable="false">操作</th>
 	        </tr>
@@ -116,6 +117,7 @@
    	 		<c:forEach items="${l1components}" var="l1component">  
             <tr>  
                 <td>${l1component.name}</td> 
+                <td>${l1component.functionName}</td>  
                 <td>${l1component.description}</td>  
                 <td>
                 <a href="../../l1component/view/${l1component.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>

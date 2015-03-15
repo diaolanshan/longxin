@@ -1,5 +1,6 @@
 package org.longxin.web.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
@@ -68,7 +69,7 @@ public class UserController
 		} else
 		{
 			model.addAttribute("users",
-					userService.searchUsers(searchForm.getKeyword()));
+					userService.searchUsers(StringUtils.trim(searchForm.getKeyword())));
 		}
 		return "/user/usersearch";
 	}
@@ -85,6 +86,7 @@ public class UserController
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String updateUsers(Model model, Users user)
 	{
+	    user.setCreatedat(new Date());
 		userService.editUser(user);
 		model.addAttribute("userSearchBean", new UserSearchBean());
 		model.addAttribute(new Users());
@@ -95,6 +97,7 @@ public class UserController
 	public String editUsers(@PathVariable String userId, Model model)
 	{
 		Users user = userService.findUserByID(Integer.valueOf(userId));
+		user.setPasswordAgain(user.getPassword());
 		model.addAttribute("user",user);
 		model.addAttribute("departments", departmentService.getAllDepartments());
 		model.addAttribute("roles", Roles.values());

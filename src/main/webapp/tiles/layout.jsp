@@ -1,4 +1,3 @@
-<%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
@@ -21,7 +20,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link href="<%=path%>/css/layout.css" rel="stylesheet">
 <script src="<%=path%>/js/jquery-1.11.2.min.js"></script>
 <script src="<%=path%>/js/jquery-ui.min.js"></script>
-<script src="<%=path%>/js/button.js"></script>
 <script src="<%=path%>/js/bootstrap.min.js"></script>
 <script src="<%=path%>/js/bootstrap-table.min.js"></script>
 <script src="<%=path%>/js/jquery.validate.js"></script>
@@ -33,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 	<div style="display:none" id="meanItem"><tiles:getAsString name="menuItem"></tiles:getAsString></div>
-	<nav class="navbar navbar-inverse navbar-fixed-top" style="background-image:url(../images/header.png);background-repeat:no-repeat;height:99px;margin-top:1px;margin-left:3px;margin-right:3px">
+	<nav class="navbar navbar-inverse navbar-fixed-top" style="background-image:url(<%=path%>/images/header.png);background-repeat:no-repeat;height:80px;margin-top:1px;margin-left:3px;margin-right:3px">
 		<div class="container-fluid" >
 			<tiles:insertAttribute name="header" />
 		</div>
@@ -46,11 +44,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<ol class="breadcrumb">
-					<li><a href="#">Home</a></li>
-					<li><a href="#">2013</a></li>
-					<li class="active">十一月</li>
-				</ol>
 				<tiles:insertAttribute name="body" />
 			</div>
 		</div>

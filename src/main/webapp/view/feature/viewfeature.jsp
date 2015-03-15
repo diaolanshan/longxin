@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <script>
 	var deleteId;
@@ -66,10 +67,10 @@
 	class="form-horizontal" id="viewProductForm">
 
 	<fieldset>
-		<legend>${feature.featureName} &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${feature.id}">
-				<span title="物理名称树" class="glyphicon glyphicon-indent-left"></span></a> 
-			&nbsp;&nbsp;&nbsp;&nbsp;<a href="../functiondiagram/${feature.id}">
-			<span title="功能名称树" class="glyphicon glyphicon-indent-left"></span></a>
+		<legend>${feature.featureName} &nbsp;&nbsp;&nbsp;<a href="../diagram/${feature.id}">
+				<span title="物理结构图" class="glyphicon glyphicon-indent-left"></span></a> 
+			&nbsp;&nbsp;<a href="../functiondiagram/${feature.id}">
+			<span title="功能结构图" class="glyphicon glyphicon-indent-right"></span></a>
 		 </legend>
 		<div class="form-group">
 			<input type="text" id="idvalue" style="display:none" value="${feature.id}">
@@ -85,26 +86,32 @@
 			<div class="col-sm-8 control-label">${feature.description}</div>
 		</div>
 	</fieldset>
-	<div class="form-group">
-		<div class="col-sm-offset-8 col-sm-4" style="align: right">
-			<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
-			<input type="button" onclick="addModule()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
+	<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+		<div class="form-group">
+			<div class="col-sm-offset-8 col-sm-4" style="align: right">
+				<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
+				<input type="button" onclick="addModule()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
+			</div>
 		</div>
-	</div>
+	</sec:authorize>
 	<br/>
-	<div style="display: inline; width: 39%;float:left">
-		<input id="fileupload" type="file" name="files[]" 
-			data-url="../../filecontroller/upload/feature/${feature.id}"
-			multiple>
-	</div>
-	<br/><br/>
 	<div id="attachments" style="display:block;width:100%">
 	</div>
+	
+	<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+		<div style="display: inline; width: 39%;float:left">
+			<input id="fileupload" type="file" name="files[]" 
+				data-url="../../filecontroller/upload/feature/${feature.id}"
+				multiple>
+		</div>
+	</sec:authorize>
+	<br>
 	<br>
 	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1">
 		<thead>
 	        <tr class="success">
 				<th data-field="name"  data-sortable="true">模块名称</th>
+				<th data-field="function"  data-sortable="true">功能描述</th>
 				<th data-field="description"  data-sortable="true">模块描述</th>
 	            <th data-sortable="false">操作</th>
 	        </tr>
@@ -113,12 +120,13 @@
    	 		<c:forEach items="${modules}" var="module">  
             <tr>  
                 <td>${module.moduleName}</td>  
+                <td>${module.functionName}</td> 
                 <td>${module.description}</td>  
                 <td>
                 <a href="../../module/view/${module.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
                 &nbsp;&nbsp;
-                <a href="javascript:void(0);" onclick="showDailog(${module.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-   	 			&nbsp;&nbsp;
+               <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"> <a href="javascript:void(0);" onclick="showDailog(${module.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+   	 			&nbsp;&nbsp;</sec:authorize>
             </tr>  
        		</c:forEach>
    	 	</tbody>

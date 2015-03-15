@@ -1,6 +1,7 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <script>
 	var deleteProductId;
@@ -49,6 +50,7 @@
 				<th data-field="id"  data-sortable="true" >ID</th>
 				<th data-field="name"  data-sortable="true">产品名称</th>
 				<th data-field="createdat"  data-sortable="true">创建日期</th>
+				<th data-field="owner"  data-sortable="true">创建人</th>
 	            <th data-sortable="false">操作</th>
 	        </tr>
    	 	</thead>
@@ -57,13 +59,16 @@
             <tr>  
                 <td>${product.id}</td>  
                 <td>${product.name}</td>  
-                <td>${product.createdat}</td>  
+                <td>${product.createdat}</td>
+                <td>${product.owner.username}</td>  
                 <td>
                 <a href="./list/${product.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
                 &nbsp;&nbsp;
+                <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
                 <a href="./edit/${product.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
    	 			&nbsp;&nbsp;
    	 			<a href="javascript:void(0);" onclick="showDailog(${product.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+   	 			</sec:authorize>
             </tr>  
        		</c:forEach>
    	 	</tbody>

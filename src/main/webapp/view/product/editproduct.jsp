@@ -10,7 +10,6 @@ $(function(){
 	    	$("tr:has(td)").remove();
 	        $.each(data.result, function (index, file) {
 	        	
-	        	
 	            $("#uploaded-files").append(
 	            		$('<tr/>')
 	            		.append($('<td/>').text(file.fileName))
@@ -75,7 +74,7 @@ $(function(){
 <body>
 	<div style="display: inline; width: 39%;float:left">
 		<div id="dropzone" class="fade well">拖拽文件到此处</div>
-		<input id="fileupload" type="file" name="files[]" 
+		<input id="fileupload" type="file" name="files[]" style="display:none"
 			data-url="../../filecontroller/upload/product/${product.id}"
 			multiple>
 	</div>

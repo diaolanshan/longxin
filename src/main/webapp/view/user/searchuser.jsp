@@ -1,7 +1,9 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
-
+<%  
+String path = request.getContextPath(); 
+%>  
 <script>
 	var deleteUserId;
     $(function () {
@@ -46,7 +48,7 @@
 	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable" data-row-style="rowStyle">
 		<thead>
 	        <tr class="success">
-	            <th data-field="id" style="display:none" data-sortable="true">用户ID</th>
+	            <!-- <th data-field="id" style="display:none" data-sortable="true">用户ID</th> -->
 	            <th data-field="username"  data-sortable="true" >用户名</th>
 	            <th data-field="createdat"  data-sortable="true">创建日期</th>
 	            <th data-field="telephone"  data-sortable="true">电话</th>
@@ -59,12 +61,15 @@
    	 	<tbody>
    	 		<c:forEach var="item" items="${users}">
    	 			<tr>
-   	 				<td style="display:none">${item.id}</td>
+   	 				<!-- <td style="display:none">${item.id}</td> -->
    	 				<td>${item.username}</td>
    	 				<td>${item.createdat}</td>
    	 				<td>${item.telephone}</td>
    	 				<td>${item.role.description}</td>
-   	 				<td></td>
+   	 				<td>
+   	 				<c:forEach begin="0" end="${item.grade}" step="1">
+						<img src="<%=path%>/images/grade.png" style="width:17px"/>
+	   	 			</c:forEach></td>
    	 				<td>${item.department.getDepartmentname()}</td>
    	 				<td>
    	 					<a href="./edit/${item.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>

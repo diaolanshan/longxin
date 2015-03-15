@@ -23,4 +23,10 @@ public class FeatureDAOImpl extends HibernateDaoSupport implements FeatureDAO
 	{
 		return this.getHibernateTemplate().get(Feature.class, featureID);
 	}
+	
+	public void deleteFeatureByID(Integer featureID)
+	{
+	    Feature feature = getFeatureByID(featureID);
+	    this.getHibernateTemplate().delete(feature);
+	}
 }

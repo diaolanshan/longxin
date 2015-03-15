@@ -1,7 +1,6 @@
 package org.longxin.web.controller;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -87,8 +86,7 @@ public class ProductController {
 			model.addAttribute("products", productService.getAllProducts());
 		} else
 		{
-			List<Product> products = new ArrayList<Product>();
-			products.add(productService.getProjectByID(Integer.valueOf(searchForm.getKeyword())));
+			List<Product> products = productService.searchProductByKeyWords(StringUtils.trim(searchForm.getKeyword()));
 			model.addAttribute("products", products);
 		}
 		return "/product/listproducts";
@@ -106,8 +104,8 @@ public class ProductController {
 	@RequestMapping(value = "/clone/{productId}", method = RequestMethod.GET)
 	public String cloneProduct(@PathVariable int productId, Model model) throws CloneNotSupportedException
 	{
-		productService.cloneProduct(productId);
-		return "";
+	    int clonedProductId = productService.cloneProduct(productId);
+		return "redirect:/product/list/" + clonedProductId;
 	}
     
     /**
@@ -151,6 +149,12 @@ public class ProductController {
 	{
 		productService.deleteProduct(productId);
 	}
+	
+	@RequestMapping(value = "/delete/feature/{featureId}", method = RequestMethod.POST)
+    public void deleteFeature(@PathVariable int featureId,Model model)
+    {
+        featureService.deleteFeatureById(featureId);
+    }
 	
 	@RequestMapping(value = "/attachments/{productId}", method = RequestMethod.POST)
 	public @ResponseBody LinkedList<FileMeta> listAttachments(@PathVariable int productId)

@@ -14,4 +14,6 @@ public interface FeatureService
     public Feature getFeatureByID(Integer featureID);
     
     public void saveFeature(Feature feature);
+    
+    public void deleteFeatureById(Integer featureID);
 }

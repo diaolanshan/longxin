@@ -14,6 +14,8 @@ public interface ProductService {
 	
 	public Product getProjectByID(int prodcutID);
 	
+	public List<Product> searchProductByKeyWords(String keyword);
+	
 	public void deleteProduct(int productID);
 	
 	public int cloneProduct(Product product) throws CloneNotSupportedException;

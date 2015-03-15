@@ -47,6 +47,11 @@ public class ProductServiceImpl implements ProductService
 		return product;
 	}
 	
+	public List<Product> searchProductByKeyWords(String keyword)
+	{
+	    return productDAO.searchProductByKeyWords(keyword);
+	}
+	
 	public Product getTemplate()
 	{
 		Product product = productDAO.getTemplate();

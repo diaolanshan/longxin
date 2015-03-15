@@ -102,10 +102,10 @@
 	class="form-horizontal" id="editProductForm">
 	<fieldset>
 		<legend>
-			${component.name}细节 &nbsp;&nbsp;&nbsp;&nbsp;<a href="../diagram/${component.id}">
-				<span title="物理名称树" class="glyphicon glyphicon-indent-left"></span></a> 
-			&nbsp;&nbsp;&nbsp;&nbsp;<a href="../functiondiagram/${component.id}">
-			<span title="功能名称树" class="glyphicon glyphicon-indent-left"></span></a>
+			${component.name}细节 &nbsp;&nbsp;&nbsp;<a href="../diagram/${component.id}">
+				<span title="物理结构图" class="glyphicon glyphicon-indent-left"></span></a> 
+			&nbsp;&nbsp;<a href="../functiondiagram/${component.id}">
+			<span title="功能结构图" class="glyphicon glyphicon-indent-right"></span></a>
 		</legend>
 		<div class="form-group">
 			<label for="functionName" class="col-sm-3 control-label">功能名称：</label>
@@ -158,6 +158,7 @@
 		<thead>
 	        <tr class="success">
 				<th data-field="name"  data-sortable="true">模块名称</th>
+				<th data-field="function"  data-sortable="true">功能描述</th>
 				<th data-field="description"  data-sortable="true">模块描述</th>
 	            <th data-sortable="false">操作</th>
 	        </tr>
@@ -165,7 +166,8 @@
    	 	<tbody>
    	 		<c:forEach items="${l2components}" var="l2component">  
             <tr>  
-                <td>${l2component.name}</td> 
+                <td>${l2component.name}</td>  
+                <td>${l2component.functionName}</td> 
                 <td>${l2component.description}</td>  
                 <td>
                 <a href="../../l2component/view/${l2component.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>

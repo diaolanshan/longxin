@@ -1,9 +1,7 @@
 package org.longxin.web.controller;
 
 import org.longxin.domains.Feature;
-import org.longxin.domains.L1Component;
 import org.longxin.domains.Module;
-import org.longxin.domains.Product;
 import org.longxin.service.FeatureService;
 import org.longxin.service.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;

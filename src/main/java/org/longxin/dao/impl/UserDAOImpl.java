@@ -2,8 +2,6 @@ package org.longxin.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.longxin.dao.UserDAO;
 import org.longxin.domains.Users;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -62,6 +60,6 @@ public class UserDAOImpl extends HibernateDaoSupport implements UserDAO
 				user.getDepartment()+", role="+user.getRole()+", TELEPHONE="+user.getTelephone()+", USERNAME="+user.getUsername()+" where ID="+user.getId()); 
 		query.executeUpdate(); 
 		session.getTransaction().commit(); */
-		this.getHibernateTemplate().update(user);
+		this.getHibernateTemplate().saveOrUpdate(user);
 	}
 }

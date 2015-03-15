@@ -1,7 +1,7 @@
 package org.longxin.util;
 
 public enum Roles {
-	ROLE_VISITOR("普通用户"),
+	ROLE_USER("普通用户"),
 	ROLE_TECHNICALSUPPORT("技术人员"),
 	ROLE_SUPERTECHNICALSUPPORT("高级技术人员"),
 	ROLE_ADMIN("管理员");

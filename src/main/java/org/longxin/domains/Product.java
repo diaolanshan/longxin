@@ -14,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import javax.persistence.Table;
@@ -36,6 +38,7 @@ public class Product implements java.io.Serializable, Cloneable
 	private Boolean template;
 	private String description;
 	private String functionName;
+	private Users owner;
 	private Set<Feature> features = new HashSet<Feature>(0);
 
 	public Product()
@@ -137,8 +140,20 @@ public class Product implements java.io.Serializable, Cloneable
 	{
 		this.features = features;
 	}
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner", nullable = false)
+	public Users getOwner()
+    {
+        return owner;
+    }
 
-	public Object clone() throws CloneNotSupportedException
+    public void setOwner(Users owner)
+    {
+        this.owner = owner;
+    }
+
+    public Object clone() throws CloneNotSupportedException
 	{
 		Product cloned = (Product) super.clone();
 		cloned.setId(null);

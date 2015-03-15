@@ -3,6 +3,8 @@ package org.longxin.domains;
 // Generated 2014-12-18 21:55:02 by Hibernate Tools 3.4.0.CR1
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,17 +12,20 @@ import javax.persistence.GeneratedValue;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import javax.persistence.CascadeType;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.longxin.util.Roles;
 
 /**
@@ -42,6 +47,8 @@ public class Users implements java.io.Serializable {
 	private String passwordAgain;
 	private int loginCount; 
 	private Date lastLogin;
+	private int grade;
+	private Set<Product> products = new HashSet<Product>(0);
 
 	public Users() {
 	}
@@ -131,8 +138,19 @@ public class Users implements java.io.Serializable {
 	{
 		this.telephone = telephone;
 	}
-
+	
 	@Transient
+	public int getGrade()
+    {
+        return loginCount/100;
+    }
+
+    public void setGrade(int grade)
+    {
+        this.grade =  loginCount/100;
+    }
+
+    @Transient
 	public String getPasswordAgain()
 	{
 		return passwordAgain;
@@ -164,4 +182,17 @@ public class Users implements java.io.Serializable {
 	{
 		this.lastLogin = lastLogin;
 	}
+
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner", cascade= CascadeType.ALL)
+    @JsonIgnore
+    public Set<Product> getProducts()
+    {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products)
+    {
+        this.products = products;
+    }
 }
