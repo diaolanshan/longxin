@@ -14,7 +14,7 @@ String path = request.getContextPath();
 <div id="navbar" class="navbar-collapse collapse">
 	<ul class="nav navbar-nav navbar-right" style="margin-top:20px;">
 		<li><a href="#" id="userinformation"><img style="width:23px" src="<%=path%>/images/grade.png"/></a></li>
-		<li><a href="#">个人信息</a></li>
+		<li><a href="<%=path%>/user/profile">个人信息</a></li>
 		<li><a href="/longxin/view/login.jsp">退出</a></li>
 	</ul>
 </div>

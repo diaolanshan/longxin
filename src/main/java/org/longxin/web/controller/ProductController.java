@@ -147,6 +147,9 @@ public class ProductController {
 	@RequestMapping(value = "/delete/{productId}", method = RequestMethod.POST)
 	public void deleteProduct(@PathVariable int productId,Model model)
 	{
+		Product p = productService.getProjectByID(productId);
+		p.setOwner(null);
+		productService.saveProduct(p);
 		productService.deleteProduct(productId);
 	}
 	
