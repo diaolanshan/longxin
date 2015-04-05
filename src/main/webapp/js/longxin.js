@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$.ajax({
 		type: "GET", 
-		url: "http://localhost:8080/longxin/product/menu", 
+		url: "/longxin/product/menu", 
 		dataType: "json",
 		contentType: "application/json; charset=utf-8",
 		success: function(data){
@@ -87,33 +87,85 @@ $(document).ready(function(){
 		});
 	}
 	
-	//file upload
-	/*$('#fileupload').fileupload({
-        dataType: 'json',
-        
-        done: function (e, data) {
-        	$("tr:has(td)").remove();
-            $.each(data.result, function (index, file) {
-            	
-            	
-                $("#uploaded-files").append(
-                		$('<tr/>')
-                		.append($('<td/>').text(file.fileName))
-                		.append($('<td/>').text(file.fileSize))
-                		.append($('<td/>').text(file.fileType))
-                		.append($('<td/>').html("<a href='http://localhost:8080/longxin/filecontroller/get/"+index+"'>Click</a>"))
-                		)//end $("#uploaded-files").append()
-            }); 
-        },
-        
-        progressall: function (e, data) {
-          var progress = parseInt(data.loaded / data.total * 100, 10);
-          $('#progress .bar').css(
-              'width',
-              progress + '%'
-          );
-   		},
-   		
-    dropZone: $('#dropzone')
-    });*/
 });
+
+
+function updateParameter(parameterId){
+		componentId  = $("#componentId").val();
+		$.ajax({
+			type: "POST", 
+			url: "./"+componentId+"/update/parameter", 
+			data : JSON.stringify($("#updateParameterForm"+parameterId).serializeObject()),
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			success: function(response){
+				if(response.success == "1"){
+					window.location.reload();
+				}
+			},
+			error: function(res){
+				alert(res);
+				alert("Unexpected error! Try again.");
+			}
+		});
+  }
+  
+  function approveParameter(parameterId){
+		$.ajax({
+			type: "GET", 
+			url: "./approve/parameter/" + parameterId, 
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			success: function(response){
+				if(response.success == "1"){
+					window.location.reload();
+				}
+			},
+			error: function(res){
+				alert(res);
+				alert("Unexpected error! Try again.");
+			}
+		});
+  }
+  
+  function declineParameter(parameterId){
+  	$.ajax({
+			type: "GET", 
+			url: "./decline/parameter/" + parameterId, 
+			dataType: "json",
+			contentType: "application/json; charset=utf-8",
+			success: function(response){
+				if(response.success == "1"){
+					window.location.reload();
+				}
+			},
+			error: function(res){
+				alert(res);
+				alert("Unexpected error! Try again.");
+			}
+		});
+  }
+  
+  function showParameterAttachments(parameterId, category){
+  	$("#parameterAttachments").fadeIn("fast");
+  	
+  	$.ajax({
+  		type: "GET", 
+  		url: "../../filecontroller/get/" + category + "/" + parameterId, 
+  		dataType: "json",
+  		contentType: "application/json; charset=utf-8",
+  		success: function(data){
+  			$("#parameterAttachmentsDiv").empty();
+  			$.each(data, function(idx,item)
+  			{
+  				var downloadlink = "../../filecontroller/download/" + item.id;
+  				var attachment = "<div style='display: inline;float:left;padding-left:10px; width:70px; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
+  				$("#parameterAttachmentsDiv").append(attachment);
+  			}
+  			)
+  		},
+  		error: function(res){
+  			alert("Unexpected error! Try again.");
+  		}
+  	})
+  }

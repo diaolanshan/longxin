@@ -3,7 +3,6 @@ package org.longxin.dao.impl;
 import java.util.List;
 
 import org.longxin.dao.L3ComponentParameterDAO;
-import org.longxin.domains.L1ComponentParameter;
 import org.longxin.domains.L3Component;
 import org.longxin.domains.L3ComponentParameter;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;

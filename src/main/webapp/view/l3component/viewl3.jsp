@@ -1,13 +1,16 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <style>
 .form-control {
     width: 70%;
 }
 </style>
-
+<%  
+String path = request.getContextPath();  
+%>
 <script>
 	var deleteId;
 	var url ;
@@ -18,7 +21,7 @@
 			//location.href="../../l2component/view/"+row.id;
         });
 		//file upload
-		$('#fileupload').fileupload({
+		$("div input").fileupload({
 		    dataType: 'json',
 		    done: function (e, data) {
 		    	window.location.reload();
@@ -39,7 +42,7 @@
     		success: function(data){
     			$.each(data, function(idx,item)
     			{
-    				var downloadlink = "../../filecontroller/download/l3component/" + $("#idvalue").val() + "/" + item.fileName;
+    				var downloadlink = "../../filecontroller/download/" + item.fileName;
     				var attachment = "<div style='display: inline; width: 15%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
     				$("#attachments").append(attachment);
     				
@@ -96,6 +99,30 @@
     function addComponent(){
     	$("#addComponentForm").fadeIn("fast");
     }
+    
+    function showParameterAttachments(parameterId){
+    	$("#parameterAttachments").fadeIn("fast");
+    	
+    	$.ajax({
+    		type: "GET", 
+    		url: "../../filecontroller/get/L3COMPONENTPARAMETER/" + parameterId, 
+    		dataType: "json",
+    		contentType: "application/json; charset=utf-8",
+    		success: function(data){
+    			$("#parameterAttachmentsDiv").empty();
+    			$.each(data, function(idx,item)
+    			{
+    				var downloadlink = "../../filecontroller/download/" + item.id;
+    				var attachment = "<div style='display: inline;float:left;padding-left:10px; width:70px; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
+    				$("#parameterAttachmentsDiv").append(attachment);
+    			}
+    			)
+    		},
+    		error: function(res){
+    			alert("Unexpected error! Try again.");
+    		}
+    	})
+    }
 </script>
 
 <form:form method="POST" modelAttribute="component" role="form"
@@ -126,32 +153,53 @@
 							<div style="width: 300px; hefloat: left; display: inline;font-size:11px;color:gray">可选值(${parameter.options})</div>
 						</c:otherwise>
 					</c:choose>
+					&nbsp;&nbsp;<a href="#" data-toggle="popover"><label for="fileupload${parameter.id}" class="glyphicon glyphicon-upload" aria-hidden="true" title="上传文件"></label>
+					<input id="fileupload${parameter.id}" type="file" name="files[]" style="display:none" data-url="../../filecontroller/upload/L3COMPONENTPARAMETER/${parameter.id}"></input></a>
+					&nbsp;&nbsp;
+					<a href="javascript:void(0);" onclick="showParameterAttachments(${parameter.id})" data-toggle="popover" title="下载文件"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a>
 					&nbsp;&nbsp;
 					&nbsp;&nbsp;
-						<a href="javascript:void(0);" onclick="showUpdateParameter(${parameter.id})" data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-						<a href="javascript:void(0);" onclick="showDailog(${parameter.id},'parameter')" data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-				
+					<a href="javascript:void(0);" onclick="showUpdateParameter(${parameter.id})" data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+					<a href="javascript:void(0);" onclick="showDailog(${parameter.id},'parameter')" data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 				</div>
 			</div>
 		</c:forEach>
 		
-		<div class="form-group">
-			<div class="col-sm-offset-7 col-sm-5" style="align: right">
-				<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
-				<input type="button" id="add_new" class="btn btn-primary" value="增加属性"></input>
+		<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+			<div class="form-group">
+				<div class="col-sm-offset-7 col-sm-5" style="align: right">
+					<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
+					<input type="button" id="add_new" class="btn btn-primary" value="增加属性"></input>
+				</div>
 			</div>
-		</div>
-		<div style="display: inline; width: 39%;float:left">
-			<input id="fileupload" type="file" name="files[]" 
-				data-url="../../filecontroller/upload/l3component/${component.id}"
-				multiple>
-		</div>
-		<br/><br/>
+		</sec:authorize>
+		
 		<div id="attachments" style="display:block;width:100%">
 		</div>
+		
+		<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+			<div style="display: inline; width: 39%;float:left">
+				<label for="fileupload" title="上传文件"><img alt="" src="<%=path%>/images/upload.png"> </label>
+				<input id="fileupload" type="file" name="files[]" style="display:none"
+					data-url="../../filecontroller/upload/l3component/${component.id}"
+					multiple>
+			</div>
+		</sec:authorize>
+		<br/>
 	</fieldset>
 </form:form>
-
+<div class="entry-form" id="parameterAttachments">
+	<form method="POST" action="../update/${component.id}">
+		<table width="100%" border="0" cellpadding="4" cellspacing="0">
+			<tr>
+				<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
+			</tr>
+			<tr>
+				<td><div id="parameterAttachmentsDiv"></div></td>
+			</tr>
+		</table>
+	</form>
+</div>
 <!-- 确认框  -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -190,19 +238,59 @@
 			</tr>
 			<tr>
 				<td>最小值：</td>
-				<td><input type="text" name="minValue" value="${parameter.minValue}"></td>
+				<td>
+					<c:choose>
+						<c:when test="${parameter.l3Component.template}">
+							<input type="text" name="minValue" value="${parameter.minValue}">
+						</c:when>
+						<c:otherwise>
+							<input type="text" name="minValue" value="${parameter.minValue}" style="display:none">
+							<input type="text" name="minValue" value="${parameter.minValue}" disabled="disabled">
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 			<tr>
 				<td>最大值：</td>
-				<td><input type="text" name="maxValue" value="${parameter.maxValue}"></td>
+				<td>
+					<c:choose>
+						<c:when test="${parameter.l3Component.template}">
+							<input type="text" name="maxValue" value="${parameter.maxValue}">
+						</c:when>
+						<c:otherwise>
+							<input type="text" name="maxValue" value="${parameter.maxValue}" style="display:none">
+							<input type="text" name="maxValue" value="${parameter.maxValue}" disabled="disabled">
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 			<tr>
 				<td>单位：</td>
-				<td><input type="text" name="unitName" value="${parameter.unitName}"></td>
+				<td>
+					<c:choose>
+						<c:when test="${parameter.l3Component.template}">
+							<input type="text" name="unitName" value="${parameter.unitName}">
+						</c:when>
+						<c:otherwise>
+							<input type="text" name="unitName" value="${parameter.unitName}" style="display:none">
+							<input type="text" name="unitName" value="${parameter.unitName}" disabled="disabled">
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 			<tr>
 				<td>可选项：</td>
-				<td><input type="text" name="options" value="${parameter.options}"></td>
+				<td>
+					<c:choose>
+						<c:when test="${parameter.l3Component.template}">
+							<input type="text" name="options" value="${parameter.options}">
+						</c:when>
+						<c:otherwise>
+							<input type="text" name="options" value="${parameter.options}" style="display:none">
+							<input type="text" name="options" value="${parameter.options}" disabled="disabled">
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 			<tr>
 				<td align="right"></td>

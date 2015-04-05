@@ -135,11 +135,12 @@ label.valid {
 
 .control-label {
 	text-align: left;
+	font-size: 14px;
 }
 
 .entry-form {
 	background: #EDF2F6;
-	width: 350px;
+	width: 400px;
 	padding: 10px;
 	border: 5px solid #C5D7E2;
 	box-shadow: 3px 3px 5px #888;
@@ -263,4 +264,11 @@ label.valid {
 
 .jssorb05 .dn, .jssorb05 .dn:hover {
 	background-position: -97px -7px;
+}
+
+label > img
+{
+	width:50px;
+	height:50px;
+	margin-top:10px
 }

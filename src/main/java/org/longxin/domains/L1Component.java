@@ -36,6 +36,7 @@ public class L1Component implements java.io.Serializable, Cloneable
 	private String name;
 	private String description;
 	private String functionName;
+	private Boolean template;
 	private Set<L1ComponentParameter> l1ComponentParameters = new HashSet<L1ComponentParameter>(
 			0);
 	private Set<L2Component> l2Components = new HashSet<L2Component>(0);
@@ -140,13 +141,24 @@ public class L1Component implements java.io.Serializable, Cloneable
 	{
 		this.functionName = functionName;
 	}
+	
+	@Column(name = "TEMPLATE")
+    public Boolean getTemplate()
+    {
+        return this.template;
+    }
+
+    public void setTemplate(Boolean template)
+    {
+        this.template = template;
+    }
 
 	@Override
 	protected Object clone() throws CloneNotSupportedException
 	{
-		L1Component l1Compoennt = (L1Component)super.clone();
-		l1Compoennt.setId(null);
-		
+		L1Component l1Component = (L1Component)super.clone();
+		l1Component.setId(null);
+		l1Component.setTemplate(Boolean.FALSE);
 		if (this.l1ComponentParameters != null)
 		{
 			Set<L1ComponentParameter> clonedL1ComponentsParameters = new HashSet<L1ComponentParameter>();
@@ -154,11 +166,11 @@ public class L1Component implements java.io.Serializable, Cloneable
 			for (L1ComponentParameter l1ComponentParameter : l1ComponentParameters)
 			{
 				L1ComponentParameter clonedL1ComponentsParameter = (L1ComponentParameter) l1ComponentParameter.clone();
-				clonedL1ComponentsParameter.setL1Component(l1Compoennt);
+				clonedL1ComponentsParameter.setL1Component(l1Component);
 				clonedL1ComponentsParameters.add(clonedL1ComponentsParameter);
 			}
 
-			l1Compoennt.setL1ComponentParameters(clonedL1ComponentsParameters);
+			l1Component.setL1ComponentParameters(clonedL1ComponentsParameters);
 		}
 
 		if (this.l2Components != null)
@@ -167,12 +179,12 @@ public class L1Component implements java.io.Serializable, Cloneable
 			
 			for(L2Component l2Component : l2Components){
 				L2Component clonedl2Component = (L2Component) l2Component.clone();
-				clonedl2Component.setL1Component(l1Compoennt);
+				clonedl2Component.setL1Component(l1Component);
 				clonedl2Components.add(clonedl2Component);
 			}
 			
-			l1Compoennt.setL2Components(clonedl2Components);
+			l1Component.setL2Components(clonedl2Components);
 		}
-		return l1Compoennt;
+		return l1Component;
 	}
 }

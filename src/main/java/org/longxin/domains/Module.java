@@ -137,6 +137,7 @@ public class Module implements java.io.Serializable, Cloneable
 	{
 		Module cloned = (Module)super.clone();
 		cloned.setId(null);
+		cloned.setTemplate(Boolean.FALSE);
 		if (this.l1Components != null)
 		{
 			Set<L1Component> clonedL1Components = new HashSet<L1Component>();

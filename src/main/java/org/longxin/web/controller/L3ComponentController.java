@@ -56,11 +56,12 @@ public class L3ComponentController
 
 	@RequestMapping(value = "/view/{l3id}/add/parameter", method = RequestMethod.POST)
 	public @ResponseBody ModelMap addComponentParameter(@PathVariable int l3id,
-			@RequestBody L3ComponentParameter json)
+			@RequestBody L3ComponentParameter l3Parameter)
 	{
 		L3Component component = l3ComponentService.getL3ComponentByID(l3id);
-		json.setL3Component(component);
-		l3ComponentParameterService.addParameter(json);
+		l3Parameter.setIsDraft(!component.getTemplate());
+		l3Parameter.setL3Component(component);
+		l3ComponentParameterService.addParameter(l3Parameter);
 		return new ModelMap("success", 1);
 	}
 

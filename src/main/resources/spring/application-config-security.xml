@@ -19,7 +19,11 @@
 		<security:intercept-url pattern="/product/**"
 			access="hasRole('ROLE_USER')" />
 		<!--允许ROLE_ADMIN权限访问 -->
-		<security:intercept-url pattern="/user/**"
+		<security:intercept-url pattern="/user/searchuser.jsp"
+			access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/user/edituser.jsp"
+			access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/user/adduser.jsp"
 			access="hasRole('ROLE_ADMIN')" />
 		<!--允许ROLE_USER权限访问 -->
 		<security:intercept-url pattern="/success.jsp"

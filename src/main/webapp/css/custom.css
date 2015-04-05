@@ -8,8 +8,6 @@ body, html{
 }
 
 body{
-	
-	font-family 		: tahoma;
 	font-weight 		: lighter;
 	padding-top 		: 40px;
 }
@@ -90,3 +88,143 @@ a:hover{
 		line-height 	: 11px;
 		padding 		: 2px;
 	}
+	.boxed-group {
+    border-radius: 3px;
+    margin-bottom: 30px;
+    position: relative;
+}
+.boxed-group .counter {
+    background-color: #babec0;
+    color: #fff;
+}
+.boxed-group.flush .boxed-group-inner {
+    padding: 0;
+}
+.boxed-group.condensed .boxed-group-inner {
+    font-size: 12px;
+    padding: 0;
+}
+.boxed-group > h3, .boxed-group .heading {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #f5f5f5;
+    border-color: #d8d8d8 #d8d8d8 -moz-use-text-color;
+    border-image: none;
+    border-radius: 3px 3px 0 0;
+    border-style: solid solid none;
+    border-width: 1px 1px 0;
+    display: block;
+    font-size: 18px;
+    line-height: 17px;
+    margin: 0;
+    padding: 9px 10px 10px;
+    font-weight: 700;
+}
+.boxed-group > h3 a, .boxed-group .heading a {
+    color: inherit;
+}
+.boxed-group > h3 a.boxed-group-breadcrumb, .boxed-group .heading a.boxed-group-breadcrumb {
+    color: #666;
+    font-weight: 700;
+    text-decoration: none;
+}
+.boxed-group > h3 .avatar, .boxed-group .heading .avatar {
+    margin-top: -4px;
+}
+.boxed-group .tabnav.heading {
+    padding: 0;
+}
+.boxed-group .tabnav.heading .tabnav-tab.selected {
+    border-top: 0 none;
+}
+.boxed-group .tabnav.heading li:first-child .selected {
+    border-left-color: #fff;
+    border-top-left-radius: 3px;
+}
+.boxed-group .tabnav-tabs a {
+    border-radius: 0;
+    border-top: 0 none;
+}
+.boxed-group code.heading {
+    font-size: 12px;
+}
+.boxed-group.dangerzone > h3 {
+    background-color: #df3e3e;
+    border: 1px solid #a00;
+    color: #fff;
+    text-shadow: 0 -1px 0 #900;
+}
+.boxed-group.dangerzone .boxed-group-inner {
+    border-top: 0 none;
+}
+.boxed-group.condensed > h3 {
+    font-size: 12px;
+    padding: 6px 6px 7px;
+}
+.boxed-group.condensed > h3 .octicon {
+    padding: 0 6px 0 2px;
+}
+.one-half .boxed-group, .dashboard-sidebar .boxed-group {
+    margin-bottom: 20px;
+}
+.boxed-group .bleed-flush {
+    margin-left: -10px;
+    padding: 0 10px;
+    width: 100%;
+}
+.boxed-group .compact {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+.boxed-group-inner {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #d8d8d8;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    color: #666;
+    font-size: 13px;
+    padding: 1px 10px;
+}
+.boxed-group-inner .markdown-body {
+    font-size: 13px;
+    padding: 20px 10px 10px;
+}
+.boxed-group-inner.markdown-body {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.boxed-group-inner.seamless {
+    padding: 0;
+}
+.boxed-group-inner h4 {
+    color: #000;
+    font-size: 14px;
+    margin: 15px 0 -5px;
+}
+.boxed-group-inner .tabnav {
+    margin-left: -10px;
+    margin-right: -10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.boxed-group-inner .tabnav-tab.selected {
+    border-top: 1px solid #ddd;
+}
+.boxed-group-inner .help {
+    border-top: 1px solid #ddd;
+    clear: both;
+    color: #999;
+    margin: 1em -10px 0;
+    padding: 1em 10px 1em 35px;
+}
+.boxed-group-inner .help .octicon {
+    margin-left: -25px;
+    margin-right: 5px;
+}
+.boxed-group-inner .flash-global {
+    border-top: 0 none;
+    margin-left: -10px;
+    margin-right: -10px;
+}

@@ -114,6 +114,25 @@ public class UserController
 		return "redirect:/user/search";
 	}
 	
+    @RequestMapping(value = "/profile/{userId}", method = RequestMethod.GET)
+    public String editProfile(@PathVariable String userId, Model model)
+    {
+        Users user = userService.findUserByID(Integer.valueOf(userId));
+        user.setPasswordAgain(user.getPassword());
+        model.addAttribute("user",user);
+        model.addAttribute("departments", departmentService.getAllDepartments());
+        model.addAttribute("roles", Roles.values());
+        return "/edit/profile";
+    }
+    
+    @RequestMapping(value = "/profile/{userId}", method = RequestMethod.POST)
+    public String editProfile(Model model,@ModelAttribute("user") Users user)
+    {
+        userService.editUser(user);
+        model.addAttribute(new Users());
+        return "/view/profile";
+    }
+	
 	@RequestMapping(value = "/delete/{userId}", method = RequestMethod.POST)
 	public void deleteUsers(@PathVariable String userId,Model model)
 	{
@@ -126,7 +145,7 @@ public class UserController
 		UserDetails  userDetails  = (UserDetails ) SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();
-		Users user = userService.findUserByUserName(userDetails .getUsername());
+		Users user = userService.findUserByUserName(userDetails.getUsername());
 		user.setPasswordAgain(user.getPassword());
 		model.addAttribute("user",user);
 		model.addAttribute("departments", departmentService.getAllDepartments());

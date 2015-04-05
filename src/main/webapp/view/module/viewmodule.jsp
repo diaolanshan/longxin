@@ -1,7 +1,10 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%  
+String path = request.getContextPath();  
+%>
 <script>
 	var deleteId;
     $(function () {
@@ -26,13 +29,13 @@
 		});
     	$.ajax({
     		type: "GET", 
-    		url: "../../filecontroller/get/module/" + $("#idvalue").val(), 
+    		url: "../../filecontroller/get/MODULE/" + $("#idvalue").val(), 
     		dataType: "json",
     		contentType: "application/json; charset=utf-8",
     		success: function(data){
     			$.each(data, function(idx,item)
     			{
-    				var downloadlink = "../../filecontroller/download/module/" + $("#idvalue").val() + "/" + item.fileName;
+    				var downloadlink = "../../filecontroller/download/" + item.id;
     				var attachment = "<div style='display: inline; width: 15%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
     				$("#attachments").append(attachment);
     				
@@ -90,18 +93,24 @@
 		</div>
 		<div class="form-group" align="right">
 			<div class="col-sm-offset-2 col-sm-10">
-				<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
-				<input type="button" onclick="addComponent()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
+				<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;</sec:authorize>
+				<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><input type="button" onclick="addComponent()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;</sec:authorize>
 			</div>
 		</div>
-		<div style="display: inline; width: 39%;float:left">
-			<input id="fileupload" type="file" name="files[]" 
-				data-url="../../filecontroller/upload/module/${module.id}"
-				multiple>
-		</div>
-		<br/><br/>
+		
 		<div id="attachments" style="display:block;width:100%">
 		</div>
+
+		<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+			<div style="display: inline; width: 39%;float:left">
+			<label for="fileupload" title="上传文件"><img alt="" src="<%=path%>/images/upload.png"> </label>
+			<input id="fileupload" type="file" name="files[]" style="display:none"
+					data-url="../../filecontroller/upload/MODULE/${module.id}"
+					multiple>
+			</div>
+		</sec:authorize>
+		<br/><br/>
+		
 	</fieldset>
 	<br>
 	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1">
@@ -122,8 +131,7 @@
                 <td>
                 <a href="../../l1component/view/${l1component.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
                 &nbsp;&nbsp;
-                <a href="javascript:void(0);" onclick="showDailog(${l1component.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-   	 			&nbsp;&nbsp;
+                <sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="showDailog(${l1component.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></sec:authorize>
             </tr>  
        		</c:forEach>
    	 	</tbody>

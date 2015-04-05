@@ -48,7 +48,7 @@ String path = request.getContextPath();
 	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable" data-row-style="rowStyle">
 		<thead>
 	        <tr class="success">
-	            <!-- <th data-field="id" style="display:none" data-sortable="true">用户ID</th> -->
+	            <th data-field="id" data-visible="false" data-sortable="true">用户ID</th>
 	            <th data-field="username"  data-sortable="true" >用户名</th>
 	            <th data-field="createdat"  data-sortable="true">创建日期</th>
 	            <th data-field="telephone"  data-sortable="true">电话</th>
@@ -61,7 +61,7 @@ String path = request.getContextPath();
    	 	<tbody>
    	 		<c:forEach var="item" items="${users}">
    	 			<tr>
-   	 				<!-- <td style="display:none">${item.id}</td> -->
+   	 				<td data-visible="false">${item.id}</td>
    	 				<td>${item.username}</td>
    	 				<td>${item.createdat}</td>
    	 				<td>${item.telephone}</td>

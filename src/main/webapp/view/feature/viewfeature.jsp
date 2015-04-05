@@ -2,7 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
+<%  
+String path = request.getContextPath();  
+%>
 <script>
 	var deleteId;
     $(function () {
@@ -27,16 +29,15 @@
 		});
     	$.ajax({
     		type: "GET", 
-    		url: "../../filecontroller/get/feature/" + $("#idvalue").val(), 
+    		url: "../../filecontroller/get/FEATURE/" + $("#idvalue").val(), 
     		dataType: "json",
     		contentType: "application/json; charset=utf-8",
     		success: function(data){
     			$.each(data, function(idx,item)
     			{
-    				var downloadlink = "../../filecontroller/download/feature/" + $("#idvalue").val() + "/" + item.fileName;
+    				var downloadlink = "../../filecontroller/download/" + item.id;
     				var attachment = "<div style='display: inline; width: 15%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
     				$("#attachments").append(attachment);
-    				
     			}
     			)
     		},
@@ -89,8 +90,8 @@
 	<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
 		<div class="form-group">
 			<div class="col-sm-offset-8 col-sm-4" style="align: right">
-				<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
-				<input type="button" onclick="addModule()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
+				 <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"><input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;</sec:authorize>
+				 <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"><input type="button" onclick="addModule()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;</sec:authorize>
 			</div>
 		</div>
 	</sec:authorize>
@@ -100,9 +101,10 @@
 	
 	<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
 		<div style="display: inline; width: 39%;float:left">
-			<input id="fileupload" type="file" name="files[]" 
-				data-url="../../filecontroller/upload/feature/${feature.id}"
-				multiple>
+			<label for="fileupload" title="上传文件"><img alt="" src="<%=path%>/images/upload.png"> </label>
+			<input
+			id="fileupload" type="file" name="files[]" style="display:none"
+			data-url="../../filecontroller/upload/FEATURE/${feature.id}">
 		</div>
 	</sec:authorize>
 	<br>
@@ -125,7 +127,7 @@
                 <td>
                 <a href="../../module/view/${module.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
                 &nbsp;&nbsp;
-               <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"> <a href="javascript:void(0);" onclick="showDailog(${module.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+               <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="showDailog(${module.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
    	 			&nbsp;&nbsp;</sec:authorize>
             </tr>  
        		</c:forEach>

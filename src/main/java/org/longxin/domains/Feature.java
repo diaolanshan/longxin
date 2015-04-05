@@ -33,7 +33,7 @@ public class Feature implements java.io.Serializable, Cloneable
 	private Integer id;
 	private Product product;
 	private String featureName;
-	private Integer template;
+	private Boolean template;
 	private String description;
 	private String iconName;
 	private String functionName;
@@ -49,7 +49,7 @@ public class Feature implements java.io.Serializable, Cloneable
 		this.featureName = featureName;
 	}
 
-	public Feature(Product product, String featureName, Integer template,
+	public Feature(Product product, String featureName, Boolean template,
 			Set<Module> modules)
 	{
 		this.product = product;
@@ -95,12 +95,12 @@ public class Feature implements java.io.Serializable, Cloneable
 	}
 
 	@Column(name = "TEMPLATE")
-	public Integer getTemplate()
+	public Boolean getTemplate()
 	{
 		return this.template;
 	}
 
-	public void setTemplate(Integer template)
+	public void setTemplate(Boolean template)
 	{
 		this.template = template;
 	}
@@ -157,6 +157,7 @@ public class Feature implements java.io.Serializable, Cloneable
 	{
 		Feature cloned = (Feature) super.clone();
 		cloned.setId(null);
+		cloned.setTemplate(Boolean.FALSE);
 		if (this.modules != null)
 		{
 			Set<Module> clonedModules = new HashSet<Module>();

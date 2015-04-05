@@ -75,7 +75,7 @@ $(function(){
 	<div style="display: inline; width: 39%;float:left">
 		<div id="dropzone" class="fade well">拖拽文件到此处</div>
 		<input id="fileupload" type="file" name="files[]" style="display:none"
-			data-url="../../filecontroller/upload/product/${product.id}"
+			data-url="../../filecontroller/upload/PRODUCT/${product.id}"
 			multiple>
 	</div>
 

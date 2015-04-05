@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping("/l2component")
-@SessionAttributes("component")
+@SessionAttributes({"component"})
 public class L2ComponentController
 {
 	@Autowired
@@ -71,11 +71,12 @@ public class L2ComponentController
 
 	@RequestMapping(value = "/view/{l2id}/add/parameter", method = RequestMethod.POST)
 	public @ResponseBody ModelMap addComponentParameter(@PathVariable int l2id,
-			@RequestBody L2ComponentParameter json)
+			@RequestBody L2ComponentParameter l2Parameter)
 	{
 		L2Component component = l2ComponentService.getL2ComponentByID(l2id);
-		json.setL2Component(component);
-		l2ComponentParameterService.addParameter(json);
+        l2Parameter.setIsDraft(!component.getTemplate());
+		l2Parameter.setL2Component(component);
+		l2ComponentParameterService.addParameter(l2Parameter);
 		return new ModelMap("success", 1);
 	}
 
@@ -99,7 +100,9 @@ public class L2ComponentController
 	public String addL3Componment(@PathVariable int l2Id,
 			L3Component l3Component)
 	{
-		l3Component.setL2Component(l2ComponentService.getL2ComponentByID(l2Id));
+	    L2Component l2Component = l2ComponentService.getL2ComponentByID(l2Id);
+		l3Component.setL2Component(l2Component);
+        l3Component.setTemplate(l2Component.getTemplate());
 		l3ComponentService.addL3Component(l3Component);
 		return "redirect:/l2component/view/" + l2Id;
 	}

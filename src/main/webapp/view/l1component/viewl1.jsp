@@ -1,13 +1,16 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <style>
 .form-control {
     width: 70%;
 }
 </style>
-
+<%  
+String path = request.getContextPath();  
+%>
 <script>
 	var deleteId;
 	var url ;
@@ -18,7 +21,8 @@
 			//location.href="../../l2component/view/"+row.id;
         });
 		//file upload
-		$('#fileupload').fileupload({
+		$("div input").fileupload({
+			
 		    dataType: 'json',
 		    done: function (e, data) {
 		    	window.location.reload();
@@ -31,15 +35,16 @@
 		      );
 			}
 		});
+		
     	$.ajax({
     		type: "GET", 
-    		url: "../../filecontroller/get/l1component/" + $("#idvalue").val(), 
+    		url: "../../filecontroller/get/L1COMPONENT/" + $("#idvalue").val(), 
     		dataType: "json",
     		contentType: "application/json; charset=utf-8",
     		success: function(data){
     			$.each(data, function(idx,item)
     			{
-    				var downloadlink = "../../filecontroller/download/l1component/" + $("#idvalue").val() + "/" + item.fileName;
+    				var downloadlink = "../../filecontroller/download/" + item.id;
     				var attachment = "<div style='display: inline; width: 15%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
     				$("#attachments").append(attachment);
     				
@@ -73,26 +78,6 @@
     function showUpdateParameter(parameterId){
     	$("#updateParameterinfo"+parameterId).fadeIn("fast");
     }
-    
-    function updateParameter(parameterId){
-		componentId  = $("#componentId").val();
-		$.ajax({
-			type: "POST", 
-			url: "./"+componentId+"/update/parameter", 
-			data : JSON.stringify($("#updateParameterForm"+parameterId).serializeObject()),
-			dataType: "json",
-			contentType: "application/json; charset=utf-8",
-			success: function(response){
-				if(response.success == "1"){
-					window.location.reload();
-				}
-			},
-			error: function(res){
-				alert("Unexpected error! Try again.");
-			}
-		});
-    }
-    
     function addL2Component(){
     	$("#addComponentForm").fadeIn("fast");
     }
@@ -120,7 +105,14 @@
 			<div class="form-group">
 				<label for="id" class="col-sm-3 control-label">${parameter.parameterName}：</label>
 				<div class="control-label" style="width:100%">
-					<div style="width:150px;float:left;display:inline">${parameter.parameterValue}&nbsp;&nbsp;${parameter.unitName}</div>
+					<c:choose>
+						<c:when test="${parameter.isDraft }">
+							<div style="width:150px;float:left;display:inline;background-color:#f2dede">${parameter.parameterValue}&nbsp;&nbsp;${parameter.unitName}</div>
+						</c:when>
+						<c:otherwise>
+							<div style="width:150px;float:left;display:inline">${parameter.parameterValue}&nbsp;&nbsp;${parameter.unitName}</div>
+						</c:otherwise>
+					</c:choose>
 					<c:choose>
 						<c:when test="${parameter.options == \"\"}">
 							<div style="width: 300px; hefloat: left; display: inline;font-size:11px;color:gray">取值范围(${parameter.minValue},${parameter.maxValue})</div>
@@ -129,28 +121,35 @@
 							<div style="width: 200px; hefloat: left; display: inline;font-size:11px;color:gray">可选值(${parameter.options})</div>
 						</c:otherwise>
 					</c:choose>
+					&nbsp;&nbsp;<a href="#" data-toggle="popover"><label for="fileupload${parameter.id}" class="glyphicon glyphicon-upload" aria-hidden="true" title="上传文件"></label>
+					<input id="fileupload${parameter.id}" type="file" name="files[]" style="display:none" data-url="../../filecontroller/upload/L1COMPONENTPARAMETER/${parameter.id}"></input></a>
+					&nbsp;&nbsp;
+					<a href="javascript:void(0);" onclick="showParameterAttachments(${parameter.id}, ${parameter.category})" data-toggle="popover" title="下载文件"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a>
 					&nbsp;&nbsp;
 					&nbsp;&nbsp;
-						<a href="javascript:void(0);" onclick="showUpdateParameter(${parameter.id})" data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-						<a href="javascript:void(0);" onclick="showDailog(${parameter.id},'parameter')" data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+					<a href="javascript:void(0);" onclick="showUpdateParameter(${parameter.id})" data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+					<a href="javascript:void(0);" onclick="showDailog(${parameter.id},'parameter')" data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 				</div>
 			</div>
 		</c:forEach>
 		
-		<div class="form-group">
-			<div class="col-sm-offset-7 col-sm-5" style="align: right">
-				<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
-				<input type="button" id="add_new" class="btn btn-primary" value="增加属性"></input>
-				<input type="button" onclick="addL2Component()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
+		<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+			<div class="form-group">
+				<div class="col-sm-offset-7 col-sm-5" style="align: right">
+					<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
+					<input type="button" id="add_new" class="btn btn-primary" value="增加属性"></input>
+					<input type="button" onclick="addL2Component()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
+				</div>
 			</div>
-		</div>
+		</sec:authorize>
+		
+		<div id="attachments" style="display:block;width:100%"></div>
+		
 		<div style="display: inline; width: 39%;float:left">
-			<input id="fileupload" type="file" name="files[]" 
-				data-url="../../filecontroller/upload/l1component/${component.id}"
+			<label for="fileupload" title="上传文件"><img alt="" src="<%=path%>/images/upload.png"> </label>
+			<input id="fileupload" type="file" name="files[]" style="display:none"
+				data-url="../../filecontroller/upload/L1COMPONENT/${component.id}"
 				multiple>
-		</div>
-		<br/><br/>
-		<div id="attachments" style="display:block;width:100%">
 		</div>
 	</fieldset>
 	<br>
@@ -199,7 +198,7 @@
 
 <!-- 修改parameter细节form -->
 <c:forEach items="${parameters}" var="parameter">
-<div class="entry-form" id="updateParameterinfo${parameter.id}">
+<div class="entry-form" id="updateParameterinfo${parameter.id}" >
 	<form id="updateParameterForm${parameter.id}" >
 		<table width="100%" border="0" cellpadding="4" cellspacing="0">
 			<tr>
@@ -214,33 +213,106 @@
 			</tr>
 			<tr>
 				<td>默认值：</td>
-				<td><input type="text" name="parameterValue" value="${parameter.parameterValue}"></td>
+				<td>
+					<c:choose>
+						<c:when test="${parameter.l1Component.template}">
+							<input type="text" name="parameterValue" value="${parameter.parameterValue}">
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${parameter.isDraft}">
+									<input type="text" name="draftValue" value="${parameter.getDraftValue()}" style="background-color:#f2dede">
+								</c:when>
+								<c:otherwise>
+									<input type="text" name="draftValue" value="${parameter.getDraftValue()}">
+								</c:otherwise>
+							</c:choose>
+							<input type="text" name="parameterValue" value="${parameter.parameterValue}" style="display:none">
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 			<tr>
 				<td>最小值：</td>
-				<td><input type="text" name="minValue" value="${parameter.minValue}"></td>
+				<td>
+					<c:choose>
+						<c:when test="${parameter.l1Component.template}">
+							<input type="text" name="minValue" value="${parameter.minValue}">
+						</c:when>
+						<c:otherwise>
+							<input type="text" name="minValue" value="${parameter.minValue}" style="display:none">
+							<input type="text" name="minValue" value="${parameter.minValue}" disabled="disabled">
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 			<tr>
 				<td>最大值：</td>
-				<td><input type="text" name="maxValue" value="${parameter.maxValue}"></td>
+				<td>
+					<c:choose>
+						<c:when test="${parameter.l1Component.template}">
+							<input type="text" name="maxValue" value="${parameter.maxValue}">
+						</c:when>
+						<c:otherwise>
+							<input type="text" name="maxValue" value="${parameter.maxValue}" style="display:none">
+							<input type="text" name="maxValue" value="${parameter.maxValue}" disabled="disabled">
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 			<tr>
 				<td>单位：</td>
-				<td><input type="text" name="unitName" value="${parameter.unitName}"></td>
+				<td>
+					<c:choose>
+						<c:when test="${parameter.l1Component.template}">
+							<input type="text" name="unitName" value="${parameter.unitName}">
+						</c:when>
+						<c:otherwise>
+							<input type="text" name="unitName" value="${parameter.unitName}" style="display:none">
+							<input type="text" name="unitName" value="${parameter.unitName}" disabled="disabled">
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 			<tr>
 				<td>可选项：</td>
-				<td><input type="text" name="options" value="${parameter.options}"></td>
+				<td>
+					<c:choose>
+						<c:when test="${parameter.l1Component.template}">
+							<input type="text" name="options" value="${parameter.options}">
+						</c:when>
+						<c:otherwise>
+							<input type="text" name="options" value="${parameter.options}" style="display:none">
+							<input type="text" name="options" value="${parameter.options}" disabled="disabled">
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 			<tr>
 				<td align="right"></td>
-				<td><input type="button" value="保存" onclick="updateParameter(${parameter.id})" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;<input
-					type="button" value="取消" class="btn btn-primary closeForm"></td>
+				<td><input type="button" value="保存" onclick="updateParameter(${parameter.id})" class="btn btn-primary">&nbsp;
+					<c:if test="${parameter.isDraft}">
+						<input type="button" value="批准" onclick="approveParameter(${parameter.id})" class="btn btn-primary">&nbsp;
+						<input type="button" value="拒绝" onclick="declineParameter(${parameter.id})" class="btn btn-primary">&nbsp;
+					</c:if>
+					<input type="button" value="取消" class="btn btn-primary closeForm"></td>
 			</tr>
 		</table>
 	</form>
 </div>
 </c:forEach>
+<div class="entry-form" id="parameterAttachments">
+	<form method="POST" action="../update/${component.id}">
+		<table width="100%" border="0" cellpadding="4" cellspacing="0">
+			<tr>
+				<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
+			</tr>
+			<tr>
+				<td><div id="parameterAttachmentsDiv"></div></td>
+			</tr>
+		</table>
+	</form>
+</div>
 <!-- update 当前name and description -->
 <div class="entry-form" id="updateForm">
 	<form method="POST" action="../update/${component.id}">

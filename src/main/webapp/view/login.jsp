@@ -22,7 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<label
 				for="inputPassword" class="sr-only">密码</label>
 			<input type="password" id="inputPassword" name="j_password" value="" class="form-control"
-				placeholder="Password" required/>
+				placeholder="密码" required/>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
 		</form>
 	</div>

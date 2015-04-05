@@ -14,22 +14,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$('#searchTable1').bootstrapTable({
 			
 		}).on('dbl-click-row.bs.table', function (e, row, $element) {
-			//location.href="./edit/"+row.id;
+			location.href="../../feature/view/"+row.id;
         });
 	});
     $(function () {
     	$.ajax({
     		type: "GET", 
-    		url: "../../filecontroller/get/product/" + $("#idvalue").text(), 
+    		url: "../../filecontroller/get/PRODUCT/" + $("#idvalue").text(), 
     		dataType: "json",
     		contentType: "application/json; charset=utf-8",
     		success: function(data){
     			$.each(data, function(idx,item)
     			{
-    				var downloadlink = "../../filecontroller/download/product/" + $("#idvalue").text() + "/" + item.fileName;
+    				var downloadlink = "../../filecontroller/download/" + item.id;
     				var attachment = "<div style='display: inline; width: 15%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
     				$("#attachments").append(attachment);
-    				
     			}
     			)
     		},
@@ -38,11 +37,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		}
     	})
 	});
-    
- //   function deleteProduct(){
- //   	$.post('./delete/'+deleteProductId);
- //   	location.href="./search";
- //   }
     
     jQuery(document).ready(function ($) {
         var options = {
@@ -113,7 +107,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
     
     function deleteThis(){
-    	$.post('../../delete/feature/'+deleteId);
+    	$.post('../delete/feature/'+deleteId);
     	location.reload();
     }
     
@@ -230,25 +224,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 		<br />
 		<div id="attachments" style="display: block; width: 100%"></div>
-
 	</fieldset>
 	<br />
 	<br />
-	<!-- 
-	<div class="row placeholders">
-		<c:forEach items="${features}" var="feature">
-			<div class="col-xs-6 col-sm-3 placeholder">
-				<a href="../../feature/view/${feature.id}"> <img
-					src="../../images/${feature.iconName}.jpg" class="img-responsive"
-					alt="Generic placeholder thumbnail"></a>
-				<h4>${feature.featureName}</h4>
-				<span class="text-muted">${feature.description}</span>
-			</div>
-		</c:forEach>
-	</div> -->
 	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1">
 		<thead>
 	        <tr class="success">
+	       		<th data-field="id" data-visible="false" data-sortable="true">用户ID</th> 
 				<th data-field="name"  data-sortable="true">特性名称</th>
 				<th data-field="functionName"  data-sortable="true">功能描述</th>
 				<th data-field="description"  data-sortable="true">特性描述</th>
@@ -258,6 +240,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    	 	<tbody>
    	 		<c:forEach items="${features}" var="feature">  
             <tr>  
+                <td data-visible="false">${feature.id}</td>
                 <td>${feature.featureName}</td>  
                 <td>${feature.functionName}</td>  
                 <td>${feature.description}</td>  

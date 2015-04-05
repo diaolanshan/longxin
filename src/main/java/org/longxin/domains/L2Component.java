@@ -36,6 +36,7 @@ public class L2Component implements java.io.Serializable, Cloneable
 	private String name;
 	private String description;
 	private String functionName;
+	private Boolean template;
 	private Set<L2ComponentParameter> l2ComponentParameters = new HashSet<L2ComponentParameter>(
 			0);
 	private Set<L3Component> l3Components = new HashSet<L3Component>(0);
@@ -141,12 +142,23 @@ public class L2Component implements java.io.Serializable, Cloneable
 	{
 		this.functionName = functionName;
 	}
+	
+    @Column(name = "TEMPLATE")
+    public Boolean getTemplate()
+    {
+        return this.template;
+    }
+
+    public void setTemplate(Boolean template)
+    {
+        this.template = template;
+    }
 
 	protected Object clone() throws CloneNotSupportedException
 	{
 		L2Component l2Compoennt = (L2Component)super.clone();
 		l2Compoennt.setId(null);
-		
+		l2Compoennt.setTemplate(Boolean.FALSE);
 		if (this.l2ComponentParameters != null)
 		{
 			Set<L2ComponentParameter> clonedL2ComponentsParameters = new HashSet<L2ComponentParameter>();

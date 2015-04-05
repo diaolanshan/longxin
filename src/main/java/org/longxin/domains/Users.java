@@ -49,6 +49,7 @@ public class Users implements java.io.Serializable {
 	private Date lastLogin;
 	private int grade;
 	private Set<Product> products = new HashSet<Product>(0);
+	private Set<Attachment> attachments = new HashSet<Attachment>(0);
 
 	public Users() {
 	}
@@ -183,7 +184,6 @@ public class Users implements java.io.Serializable {
 		this.lastLogin = lastLogin;
 	}
 
-
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner", cascade= CascadeType.ALL)
     @JsonIgnore
     public Set<Product> getProducts()
@@ -194,5 +194,17 @@ public class Users implements java.io.Serializable {
     public void setProducts(Set<Product> products)
     {
         this.products = products;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner", cascade= CascadeType.ALL)
+    @JsonIgnore
+    public Set<Attachment> getAttachments()
+    {
+        return attachments;
+    }
+
+    public void setAttachments(Set<Attachment> attachments)
+    {
+        this.attachments = attachments;
     }
 }

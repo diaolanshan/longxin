@@ -1,5 +1,6 @@
 package org.longxin.web.controller;
 
+import org.apache.commons.lang.StringUtils;
 import org.longxin.domains.L1Component;
 import org.longxin.domains.L1ComponentParameter;
 import org.longxin.domains.L2Component;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping("/l1component")
-@SessionAttributes("component")
+@SessionAttributes({"component","parameter"})
 public class L1ComponentController
 {
 	@Autowired
@@ -71,11 +72,12 @@ public class L1ComponentController
 
 	@RequestMapping(value = "/view/{l1id}/add/parameter", method = RequestMethod.POST)
 	public @ResponseBody ModelMap addComponentParameter(@PathVariable int l1id,
-			@RequestBody L1ComponentParameter json)
+			@RequestBody L1ComponentParameter l1Parameter)
 	{
 		L1Component component = l1ComponentService.getL1ComponentByID(l1id);
-		json.setL1Component(component);
-		l1ComponentParameterService.addParameter(json);
+		l1Parameter.setL1Component(component);
+        l1Parameter.setIsDraft(!component.getTemplate());
+		l1ComponentParameterService.addParameter(l1Parameter);
 		return new ModelMap("success", 1);
 	}
 
@@ -84,6 +86,29 @@ public class L1ComponentController
 	{
 		l1ComponentParameterService.deleteParameter(parameterid);
 	}
+	
+	@RequestMapping(value="/view/approve/parameter/{parameterId}", method = RequestMethod.GET)
+	public @ResponseBody ModelMap approveComponentParameter(@PathVariable int parameterId)
+	{
+	   L1ComponentParameter parameter = l1ComponentParameterService.getL1ComponentParamtersByID(parameterId);
+	   parameter.setIsDraft(Boolean.FALSE);
+	   parameter.setParameterValue(parameter.getDraftValue());
+	   parameter.setDraftValue(null);
+	   
+	   l1ComponentParameterService.updateParameter(parameter);
+	   return new ModelMap("success", 1);
+	}
+	
+	@RequestMapping(value="/view/decline/parameter/{parameterId}", method = RequestMethod.GET)
+    public @ResponseBody ModelMap declineComponentParameter(@PathVariable int parameterId)
+    {
+       L1ComponentParameter parameter = l1ComponentParameterService.getL1ComponentParamtersByID(parameterId);
+       parameter.setIsDraft(Boolean.FALSE);
+       parameter.setDraftValue(null);
+       
+       l1ComponentParameterService.updateParameter(parameter);
+       return new ModelMap("success", 1);
+    }
 
 	@RequestMapping(value = "/view/{l1id}/update/parameter", method = RequestMethod.POST)
 	public @ResponseBody ModelMap updateComponentParameter(
@@ -91,6 +116,34 @@ public class L1ComponentController
 	{
 		L1Component component = l1ComponentService.getL1ComponentByID(l1id);
 		json.setL1Component(component);
+		json.setIsDraft(Boolean.TRUE); //By default, it should be true.
+		if(!component.getTemplate())
+		{
+            if (StringUtils.isBlank(json.getOptions()))
+            {
+                String [] options = StringUtils.split(json.getOptions(), ",");
+                for(String option : options)
+                {
+                    if(StringUtils.containsIgnoreCase(option, json.getDraftValue()))
+                    {
+                        json.setParameterValue(json.getDraftValue());
+                        json.setIsDraft(Boolean.FALSE);
+                    }
+                }
+            }else if (json.getMinValue() != null && json.getMaxValue() != null)
+            {
+                float minValue = Float.valueOf(json.getMinValue());
+                float maxValue = Float.valueOf(json.getMaxValue());
+                float draftValue = Float.valueOf(json.getDraftValue());
+
+                if (minValue <= draftValue && draftValue <= maxValue)
+                {
+                    json.setParameterValue(json.getDraftValue());
+                    json.setIsDraft(Boolean.FALSE);
+                }
+            }
+		}
+		
 		l1ComponentParameterService.updateParameter(json);
 		return new ModelMap("success", 1);
 	}
@@ -99,7 +152,9 @@ public class L1ComponentController
 	public String addL2Componment(@PathVariable int l1Id,
 			L2Component l2Component)
 	{
-		l2Component.setL1Component(l1ComponentService.getL1ComponentByID(l1Id));
+	    L1Component l1Component = l1ComponentService.getL1ComponentByID(l1Id);
+		l2Component.setL1Component(l1Component);
+		l2Component.setTemplate(l1Component.getTemplate());
 		l2ComponentService.addL2Component(l2Component);
 		return "redirect:/l1component/view/" + l1Id;
 	}

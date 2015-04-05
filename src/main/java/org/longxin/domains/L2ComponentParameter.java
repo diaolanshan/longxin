@@ -34,6 +34,8 @@ public class L2ComponentParameter implements java.io.Serializable, Cloneable
 	private String options;
 	private String minValue;
 	private String maxValue;
+	private Boolean isDraft;
+    private String draftValue;
 
 	public L2ComponentParameter()
 	{
@@ -63,7 +65,7 @@ public class L2ComponentParameter implements java.io.Serializable, Cloneable
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "L2_COMPONENT")
 	public L2Component getL2Component()
 	{
@@ -140,6 +142,28 @@ public class L2ComponentParameter implements java.io.Serializable, Cloneable
 	{
 		this.maxValue = maxValue;
 	}
+	
+	@Column(name = "IS_DRAFT")
+    public Boolean getIsDraft()
+    {
+        return isDraft;
+    }
+
+    public void setIsDraft(Boolean isDraft)
+    {
+        this.isDraft = isDraft;
+    }
+
+    @Column(name = "DRAFT_VALUE", length = 256)
+    public String getDraftValue()
+    {
+        return draftValue;
+    }
+
+    public void setDraftValue(String draftValue)
+    {
+        this.draftValue = draftValue;
+    }
 	
 	protected Object clone() throws CloneNotSupportedException{
 		L2ComponentParameter l2ComponentParameter = (L2ComponentParameter)super.clone();

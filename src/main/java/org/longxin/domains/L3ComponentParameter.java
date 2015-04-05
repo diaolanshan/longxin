@@ -34,6 +34,8 @@ public class L3ComponentParameter implements java.io.Serializable, Cloneable
 	private String options;
 	private String minValue;
 	private String maxValue;
+	private Boolean isDraft;
+    private String draftValue;
 
 	public L3ComponentParameter()
 	{
@@ -63,7 +65,7 @@ public class L3ComponentParameter implements java.io.Serializable, Cloneable
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "L3_COMPONENT")
 	public L3Component getL3Component()
 	{
@@ -139,6 +141,28 @@ public class L3ComponentParameter implements java.io.Serializable, Cloneable
 	{
 		this.maxValue = maxValue;
 	}
+	
+	@Column(name = "IS_DRAFT")
+    public Boolean getIsDraft()
+    {
+        return isDraft;
+    }
+
+    public void setIsDraft(Boolean isDraft)
+    {
+        this.isDraft = isDraft;
+    }
+
+    @Column(name = "DRAFT_VALUE", length = 256)
+    public String getDraftValue()
+    {
+        return draftValue;
+    }
+
+    public void setDraftValue(String draftValue)
+    {
+        this.draftValue = draftValue;
+    }
 	
 	protected Object clone() throws CloneNotSupportedException{
 		L3ComponentParameter l3ComponentParameter = (L3ComponentParameter)super.clone();

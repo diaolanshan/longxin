@@ -60,6 +60,7 @@
 				<value>org.longxin.domains.L3ComponentParameter</value>
 				<value>org.longxin.domains.Users</value>
 				<value>org.longxin.domains.Department</value>
+				<value>org.longxin.domains.Attachment</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -148,6 +149,10 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
+	<bean id="attachmentDAO" class="org.longxin.dao.impl.AttachmentDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
 	<bean id="propertyConfigurer"
 	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	<property name="location">
@@ -176,4 +181,6 @@
 	<bean id="l3ComponentParameterService" class="org.longxin.service.impl.L3ComponentParameterServiceImpl"></bean>
 	
 	<bean id="moduleService" class="org.longxin.service.impl.ModuleServiceImpl"></bean>
+	
+	<bean id="attachmentService" class="org.longxin.service.impl.AttachmentServiceImpl"></bean>
 </beans>

@@ -36,6 +36,7 @@ public class L3Component implements java.io.Serializable, Cloneable
 	private String name;
 	private String description;
 	private String functionName;
+	private Boolean template;
 	private Set<L3ComponentParameter> l3ComponentParameters = new HashSet<L3ComponentParameter>(
 			0);
 
@@ -122,9 +123,21 @@ public class L3Component implements java.io.Serializable, Cloneable
 		this.functionName = functionName;
 	}
 	
+    @Column(name = "TEMPLATE")
+    public Boolean getTemplate()
+    {
+        return this.template;
+    }
+
+    public void setTemplate(Boolean template)
+    {
+        this.template = template;
+    }
+	
 	protected Object clone() throws CloneNotSupportedException{
 		L3Component l3Component = (L3Component)super.clone();
 		l3Component.setId(null);
+		l3Component.setTemplate(Boolean.FALSE);
 		if(this.l3ComponentParameters !=null){
 			Set<L3ComponentParameter> clonedl3ComponentParameters = new HashSet<L3ComponentParameter>();
 			for(L3ComponentParameter l3ComponentParameter : l3ComponentParameters){
