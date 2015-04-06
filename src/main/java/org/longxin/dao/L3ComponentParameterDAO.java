@@ -2,7 +2,6 @@ package org.longxin.dao;
 
 import java.util.List;
 
-import org.longxin.domains.L1ComponentParameter;
 import org.longxin.domains.L3Component;
 import org.longxin.domains.L3ComponentParameter;
 
@@ -17,4 +16,6 @@ public interface L3ComponentParameterDAO
 	public void deleteParameter(int id);
 	
 	public void updateParameter(L3ComponentParameter l3parameter);
+	
+	public L3ComponentParameter getL3ComponentParamtersByID(Integer parameterId);
 }

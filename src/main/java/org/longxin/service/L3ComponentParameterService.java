@@ -14,4 +14,6 @@ public interface L3ComponentParameterService
 	public void deleteParameter(int id);
 	
 	public void updateParameter(L3ComponentParameter l3parameter);
+	
+	public L3ComponentParameter getL3ComponentParamtersByID(Integer parameterId);
 }

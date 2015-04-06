@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.log4j.Logger;
 import org.longxin.domains.Users;
 import org.longxin.service.UserService;
@@ -18,7 +20,7 @@ import org.springframework.security.core.GrantedAuthority;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	protected static Logger logger = Logger.getLogger(UserDetailsServiceImpl.class);
+	protected static Log log = LogFactory.getLog(UserDetailsServiceImpl.class);
 	
 	@Autowired
 	UserService userService;
@@ -26,7 +28,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	public UserDetails loadUserByUsername(String userName)
 			throws UsernameNotFoundException {
 
-		logger.info(String.format("User %s logged to the application", userName));
+	    log.info(String.format("User %s logged to the application", userName));
 		Users localUser = userService.findUserByUserName(userName);
 		User user = new User(localUser.getUsername(), localUser
 				.getPassword(), true, true, true, true,

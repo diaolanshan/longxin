@@ -16,7 +16,8 @@ public class L3ComponentParameterDAOImpl extends HibernateDaoSupport implements 
 		return null;
 	}
 
-	public List<L3ComponentParameter> getL3Parameters(L3Component component)
+	@SuppressWarnings("unchecked")
+    public List<L3ComponentParameter> getL3Parameters(L3Component component)
 	{
 		return this.getHibernateTemplate().find("FROM L3ComponentParameter l3 WHERE l3.l3Component= ?", component);
 	}
@@ -37,4 +38,10 @@ public class L3ComponentParameterDAOImpl extends HibernateDaoSupport implements 
 	public void updateParameter(L3ComponentParameter l3parameter) {
 		this.getHibernateTemplate().update(l3parameter);
 	}
+
+    @Override
+    public L3ComponentParameter getL3ComponentParamtersByID(Integer parameterId)
+    {
+        return this.getHibernateTemplate().get(L3ComponentParameter.class, parameterId);
+    }
 }

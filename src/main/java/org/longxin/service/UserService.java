@@ -21,4 +21,6 @@ public interface UserService {
 	public void deleteUser(int userID);
 	
 	public void increaseLoginCount(Users user);
+	
+	public boolean isApproveRequired(Users user);
 }

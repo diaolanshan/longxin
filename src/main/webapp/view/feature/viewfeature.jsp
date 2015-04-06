@@ -100,7 +100,7 @@ String path = request.getContextPath();
 	</div>
 	
 	<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
-		<div style="display: inline; width: 39%;float:left">
+		<div style="display: inline; width: 17%;float:right">
 			<label for="fileupload" title="上传文件"><img alt="" src="<%=path%>/images/upload.png"> </label>
 			<input
 			id="fileupload" type="file" name="files[]" style="display:none"

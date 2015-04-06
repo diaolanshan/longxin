@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.longxin.dao.UserDAO;
 import org.longxin.domains.Users;
 import org.longxin.service.UserService;
+import org.longxin.util.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class UserServiceImpl implements UserService{
@@ -55,5 +56,14 @@ public class UserServiceImpl implements UserService{
 		user.setLoginCount(user.getLoginCount()+1);
 		user.setLastLogin(new Date());
 		userDAO.saveUser(user);
+	}
+	
+	public boolean isApproveRequired(Users user)
+	{
+       if (user.getRole().getDegree() >= Roles.ROLE_SUPERTECHNICALSUPPORT.getDegree())
+	   {
+	       return false;
+	   }
+        return true;
 	}
 }

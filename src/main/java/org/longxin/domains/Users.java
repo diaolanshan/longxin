@@ -102,8 +102,6 @@ public class Users implements java.io.Serializable {
 		return this.createdat;
 	}
 	
-	
-
 	public void setCreatedat(Date createdat) {
 		this.createdat = createdat;
 	}

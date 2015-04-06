@@ -124,7 +124,7 @@ String path = request.getContextPath();
 					&nbsp;&nbsp;<a href="#" data-toggle="popover"><label for="fileupload${parameter.id}" class="glyphicon glyphicon-upload" aria-hidden="true" title="上传文件"></label>
 					<input id="fileupload${parameter.id}" type="file" name="files[]" style="display:none" data-url="../../filecontroller/upload/L1COMPONENTPARAMETER/${parameter.id}"></input></a>
 					&nbsp;&nbsp;
-					<a href="javascript:void(0);" onclick="showParameterAttachments(${parameter.id}, ${parameter.category})" data-toggle="popover" title="下载文件"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a>
+					<a href="javascript:void(0);" onclick="showParameterAttachments(${parameter.id}, '${parameter.category}')" data-toggle="popover" title="下载文件"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a>
 					&nbsp;&nbsp;
 					&nbsp;&nbsp;
 					<a href="javascript:void(0);" onclick="showUpdateParameter(${parameter.id})" data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
@@ -291,10 +291,12 @@ String path = request.getContextPath();
 			<tr>
 				<td align="right"></td>
 				<td><input type="button" value="保存" onclick="updateParameter(${parameter.id})" class="btn btn-primary">&nbsp;
-					<c:if test="${parameter.isDraft}">
-						<input type="button" value="批准" onclick="approveParameter(${parameter.id})" class="btn btn-primary">&nbsp;
-						<input type="button" value="拒绝" onclick="declineParameter(${parameter.id})" class="btn btn-primary">&nbsp;
-					</c:if>
+					<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+						<c:if test="${parameter.isDraft}">
+							<input type="button" value="批准" onclick="approveParameter(${parameter.id})" class="btn btn-primary">&nbsp;
+							<input type="button" value="拒绝" onclick="declineParameter(${parameter.id})" class="btn btn-primary">&nbsp;
+						</c:if>
+					</sec:authorize>
 					<input type="button" value="取消" class="btn btn-primary closeForm"></td>
 			</tr>
 		</table>

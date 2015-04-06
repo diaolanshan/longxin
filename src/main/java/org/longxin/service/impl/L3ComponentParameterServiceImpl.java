@@ -45,4 +45,10 @@ public class L3ComponentParameterServiceImpl implements L3ComponentParameterServ
             //this.deleteParameter()
         }
     }
+
+    @Override
+    public L3ComponentParameter getL3ComponentParamtersByID(Integer parameterId)
+    {
+        return l3ComponentParameterDAO.getL3ComponentParamtersByID(parameterId);
+    }
 }

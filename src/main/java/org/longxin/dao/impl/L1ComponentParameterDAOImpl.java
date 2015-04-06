@@ -10,7 +10,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 public class L1ComponentParameterDAOImpl extends HibernateDaoSupport implements L1ComponentParameterDAO
 {
 
-	public L1ComponentParameter getL1ComponentByID(Integer ID)
+	public L1ComponentParameter getL1ComponentParameterByID(Integer ID)
 	{
 		return this.getHibernateTemplate().get(L1ComponentParameter.class,ID);
 	}

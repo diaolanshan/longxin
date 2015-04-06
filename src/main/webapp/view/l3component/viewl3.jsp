@@ -234,7 +234,24 @@ String path = request.getContextPath();
 			</tr>
 			<tr>
 				<td>默认值：</td>
-				<td><input type="text" name="parameterValue" value="${parameter.parameterValue}"></td>
+				<td>
+					<c:choose>
+						<c:when test="${parameter.l3Component.template}">
+							<input type="text" name="parameterValue" value="${parameter.parameterValue}">
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${parameter.isDraft}">
+									<input type="text" name="draftValue" value="${parameter.getDraftValue()}" style="background-color:#f2dede">
+								</c:when>
+								<c:otherwise>
+									<input type="text" name="draftValue" value="${parameter.getDraftValue()}">
+								</c:otherwise>
+							</c:choose>
+							<input type="text" name="parameterValue" value="${parameter.parameterValue}" style="display:none">
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 			<tr>
 				<td>最小值：</td>
@@ -294,8 +311,14 @@ String path = request.getContextPath();
 			</tr>
 			<tr>
 				<td align="right"></td>
-				<td><input type="button" value="保存" onclick="updateParameter(${parameter.id})" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;<input
-					type="button" value="取消" class="btn btn-primary closeForm"></td>
+				<td><input type="button" value="保存" onclick="updateParameter(${parameter.id})" class="btn btn-primary">&nbsp;
+				<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+						<c:if test="${parameter.isDraft}">
+							<input type="button" value="批准" onclick="approveParameter(${parameter.id})" class="btn btn-primary">&nbsp;
+							<input type="button" value="拒绝" onclick="declineParameter(${parameter.id})" class="btn btn-primary">&nbsp;
+						</c:if>
+				</sec:authorize>
+				<input type="button" value="取消" class="btn btn-primary closeForm"></td>
 			</tr>
 		</table>
 	</form>

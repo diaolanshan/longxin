@@ -47,6 +47,6 @@ public class L1ComponentParameterServiceImpl implements L1ComponentParameterServ
     @Override
     public L1ComponentParameter getL1ComponentParamtersByID(Integer ID)
     {
-        return this.l1ComponentParameterDAO.getL1ComponentByID(ID);
+        return this.l1ComponentParameterDAO.getL1ComponentParameterByID(ID);
     }
 }

@@ -96,29 +96,6 @@ String path = request.getContextPath();
 		});
     }
     
-    function showParameterAttachments(parameterId){
-    	$("#parameterAttachments").fadeIn("fast");
-    	$.ajax({
-    		type: "GET", 
-    		url: "../../filecontroller/get/L2COMPONENTPARAMETER/" + parameterId, 
-    		dataType: "json",
-    		contentType: "application/json; charset=utf-8",
-    		success: function(data){
-    			$("#parameterAttachmentsDiv").empty();
-    			$.each(data, function(idx,item)
-    			{
-    				var downloadlink = "../../filecontroller/download/" + item.id;
-    				var attachment = "<div style='display: inline;float:left;padding-left:10px; width:70px; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
-    				$("#parameterAttachmentsDiv").append(attachment);
-    			}
-    			)
-    		},
-    		error: function(res){
-    			alert("Unexpected error! Try again.");
-    		}
-    	})
-    }
-    
     function addL3Component(){
     	$("#addComponentForm").fadeIn("fast");
     }
@@ -158,7 +135,7 @@ String path = request.getContextPath();
 					&nbsp;&nbsp;<a href="#" data-toggle="popover"><label for="fileupload${parameter.id}" class="glyphicon glyphicon-upload" aria-hidden="true" title="上传文件"></label>
 					<input id="fileupload${parameter.id}" type="file" name="files[]" style="display:none" data-url="../../filecontroller/upload/L2COMPONENTPARAMETER/${parameter.id}"></input></a>
 					&nbsp;&nbsp;
-					<a href="javascript:void(0);" onclick="showParameterAttachments(${parameter.id})" data-toggle="popover" title="下载文件"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a>
+					<a href="javascript:void(0);" onclick="showParameterAttachments(${parameter.id}, '${parameter.category}')" data-toggle="popover" title="下载文件"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a>
 					
 					&nbsp;&nbsp;
 					&nbsp;&nbsp;
@@ -183,7 +160,7 @@ String path = request.getContextPath();
 		</div>
 		
 		<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
-			<div style="display: inline; width: 39%;float:left">
+			<div style="display: inline; width: 17%;float:right">
 				<label for="fileupload" title="上传文件"><img alt="" src="<%=path%>/images/upload.png"> </label>
 				<input id="fileupload" type="file" name="files[]" style="display:none"
 					data-url="../../filecontroller/upload/l2component/${component.id}"
@@ -358,7 +335,24 @@ String path = request.getContextPath();
 			</tr>
 			<tr>
 				<td>默认值：</td>
-				<td><input type="text" name="parameterValue" value="${parameter.parameterValue}"></td>
+				<td>
+					<c:choose>
+						<c:when test="${parameter.l2Component.template}">
+							<input type="text" name="parameterValue" value="${parameter.parameterValue}">
+						</c:when>
+						<c:otherwise>
+							<c:choose>
+								<c:when test="${parameter.isDraft}">
+									<input type="text" name="draftValue" value="${parameter.getDraftValue()}" style="background-color:#f2dede">
+								</c:when>
+								<c:otherwise>
+									<input type="text" name="draftValue" value="${parameter.getDraftValue()}">
+								</c:otherwise>
+							</c:choose>
+							<input type="text" name="parameterValue" value="${parameter.parameterValue}" style="display:none">
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 			<tr>
 				<td>最小值：</td>
@@ -418,8 +412,14 @@ String path = request.getContextPath();
 			</tr>
 			<tr>
 				<td align="right"></td>
-				<td><input type="button" value="保存" onclick="updateParameter(${parameter.id})" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;<input
-					type="button" value="取消" class="btn btn-primary closeForm"></td>
+				<td><input type="button" value="保存" onclick="updateParameter(${parameter.id})" class="btn btn-primary">&nbsp;
+					<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+						<c:if test="${parameter.isDraft}">
+							<input type="button" value="批准" onclick="approveParameter(${parameter.id})" class="btn btn-primary">&nbsp;
+							<input type="button" value="拒绝" onclick="declineParameter(${parameter.id})" class="btn btn-primary">&nbsp;
+						</c:if>
+					</sec:authorize>
+				<input type="button" value="取消" class="btn btn-primary closeForm"></td>
 			</tr>
 		</table>
 	</form>

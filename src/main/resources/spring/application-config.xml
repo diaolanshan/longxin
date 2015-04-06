@@ -61,6 +61,7 @@
 				<value>org.longxin.domains.Users</value>
 				<value>org.longxin.domains.Department</value>
 				<value>org.longxin.domains.Attachment</value>
+				<value>org.longxin.domains.ChangeHistory</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -153,6 +154,10 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
+	<bean id="changeHistoryDAO" class="org.longxin.dao.impl.ChangeHistoryDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
 	<bean id="propertyConfigurer"
 	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	<property name="location">
@@ -183,4 +188,6 @@
 	<bean id="moduleService" class="org.longxin.service.impl.ModuleServiceImpl"></bean>
 	
 	<bean id="attachmentService" class="org.longxin.service.impl.AttachmentServiceImpl"></bean>
+	
+	<bean id="changeHistoryService" class="org.longxin.service.impl.ChangeHistoryServiceImpl"></bean>
 </beans>
