@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
@@ -48,6 +49,10 @@ public class ChangeHistory implements java.io.Serializable
     private String newValue;
     
     private OperationType operationType;
+    
+    private String comments;
+    
+    private String displayUpdateAt;
 
     public ChangeHistory()
     {
@@ -146,4 +151,28 @@ public class ChangeHistory implements java.io.Serializable
         this.operationType = operationType;
     }
 
+    @Column(name = "COMMENTS")
+    public String getComments()
+    {
+        return comments;
+    }
+
+    public void setComments(String comments)
+    {
+        this.comments = comments;
+    }
+
+    @Transient
+    public String getDisplayUpdateAt()
+    {
+        return displayUpdateAt;
+    }
+
+    public void setDisplayUpdateAt(String displayUpdateAt)
+    {
+        this.displayUpdateAt = displayUpdateAt;
+    }
+    
+    
+    
 }

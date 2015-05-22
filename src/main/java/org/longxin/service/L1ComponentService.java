@@ -3,17 +3,23 @@ package org.longxin.service;
 import java.util.List;
 
 import org.longxin.domains.L1Component;
-import org.longxin.domains.L2Component;
+import org.longxin.domains.Module;
 
 public interface L1ComponentService
 {
 	public L1Component getL1ComponentByID(Integer ID);
-
-	public List<L2Component> getL2ComponentsByL1(L1Component l1Component);
 	
+	public List<L1Component> getL1ComponentsByModule(Module module);
+
 	public void updateL1Component(L1Component l1Component);
 
 	public void addL1Component(L1Component l1Component);
 	
 	public void deleteL1Component(int id);
+	
+	public int getFeatureId(int l1ComponentId);
+	
+	public boolean isThereDraftParamterForComponent(int l1ComponentId);
+	
+	public void updateL1Component(int componentId, int functionModuleId);
 }

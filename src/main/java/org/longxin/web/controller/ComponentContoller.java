@@ -1,5 +1,7 @@
 package org.longxin.web.controller;
 
+import java.util.List;
+
 import org.longxin.domains.ChangeHistory;
 import org.longxin.domains.ComponentParameter;
 import org.longxin.domains.Users;
@@ -7,6 +9,10 @@ import org.longxin.service.ChangeHistoryService;
 import org.longxin.service.UserService;
 import org.longxin.util.OperationType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 public abstract class ComponentContoller
 {
@@ -26,8 +32,16 @@ public abstract class ComponentContoller
         change.setOperationType(operationType);
         change.setCategory(parameter.getCategory());
         change.setReferenceId(parameter.getId());
+        change.setComments(parameter.getChangeReason());
 
         changeHistoryService.saveChangeHistory(change);
+    }
+    
+    @RequestMapping(value = "/history/parameter/{category}/{parameterId}", method = RequestMethod.GET)
+    protected @ResponseBody
+    List<ChangeHistory> getChangeHistory(@PathVariable String category, @PathVariable int parameterId)
+    {
+        return changeHistoryService.getChangeHistoryByReferenceAndCategory(parameterId, category);
     }
 }
 

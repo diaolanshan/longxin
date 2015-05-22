@@ -1,11 +1,12 @@
 body {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  background-color: #eee;
+  width:100%; 
+  height:100%;
+  background:-moz-linear-gradient(top,#4a85bd,#b5c8da);
+  font-family:微软雅黑;
 }
 
 .form-signin {
-  max-width: 330px;
+  max-width: 380px;
   padding: 15px;
   margin: 0 auto;
 }
@@ -23,7 +24,8 @@ body {
      -moz-box-sizing: border-box;
           box-sizing: border-box;
   padding: 10px;
-  font-size: 16px;
+  font-size: 15px;
+  width:110%;
 }
 .form-signin .form-control:focus {
   z-index: 2;

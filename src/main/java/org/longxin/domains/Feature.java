@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.StringUtils;
@@ -71,7 +72,7 @@ public class Feature implements java.io.Serializable, Cloneable
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PRODUCT", nullable = false)
 	public Product getProduct()
 	{
@@ -131,7 +132,8 @@ public class Feature implements java.io.Serializable, Cloneable
 		this.iconName = iconName;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "feature", cascade= CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "feature", cascade= CascadeType.ALL)
+	@OrderBy("id ASC")
 	public Set<Module> getModules()
 	{
 		return this.modules;

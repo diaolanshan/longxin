@@ -4,13 +4,12 @@ import java.util.List;
 
 import org.longxin.dao.ModuleDAO;
 import org.longxin.domains.Feature;
-import org.longxin.domains.L1Component;
 import org.longxin.domains.Module;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 public class ModuleDAOImpl extends HibernateDaoSupport implements ModuleDAO
 {
-    public void saveFunction(Module module)
+    public void saveModule(Module module)
     {
         this.getHibernateTemplate().saveOrUpdate(module);
     }

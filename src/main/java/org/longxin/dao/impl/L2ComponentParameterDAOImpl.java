@@ -12,9 +12,10 @@ public class L2ComponentParameterDAOImpl extends HibernateDaoSupport implements 
 
     public L2ComponentParameter getL2ComponentParamtersByID(Integer id)
     {
-       return this.getHibernateTemplate().get(L2ComponentParameter.class, id);
+        return this.getHibernateTemplate().get(L2ComponentParameter.class, id);
     }
 
+    @SuppressWarnings("unchecked")
     public List<L2ComponentParameter> getL2Parameters(L2Component component)
     {
         return this.getHibernateTemplate().find("FROM L2ComponentParameter l2 WHERE l2.l2Component= ?", component);

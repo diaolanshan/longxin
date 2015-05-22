@@ -24,7 +24,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "l3_component", catalog = "longxin")
-public class L3Component implements java.io.Serializable, Cloneable
+public class L3Component extends Component implements java.io.Serializable, Cloneable
 {
 
 	/**

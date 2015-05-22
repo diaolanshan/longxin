@@ -36,7 +36,7 @@ String path = request.getContextPath();
     			$.each(data, function(idx,item)
     			{
     				var downloadlink = "../../filecontroller/download/" + item.id;
-    				var attachment = "<div style='display: inline; width: 15%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
+    				var attachment = "<div style='display: inline; width: 10%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:40px;border:2px dashed;border-color:#2bc0be'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
     				$("#attachments").append(attachment);
     				
     			}
@@ -57,11 +57,11 @@ String path = request.getContextPath();
     }
     
     function update(){
-    	$("#updateForm").fadeIn("fast");
+    	$("#updateForm").modal('show');
     }
     
     function addComponent(){
-    	$("#addComponentForm").fadeIn("fast");
+    	$("#addComponentForm").modal('show');
     }
     
 </script>
@@ -92,34 +92,55 @@ String path = request.getContextPath();
 			<div class="col-sm-8 control-label">${module.description}</div>
 		</div>
 		<div class="form-group" align="right">
-			<div class="col-sm-offset-2 col-sm-10">
-				<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;</sec:authorize>
-				<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><input type="button" onclick="addComponent()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;</sec:authorize>
+			<div class="col-sm-offset-7 col-sm-5" style="align: right">
+				<c:choose>
+					<c:when test="! ${module.template}">
+						<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+							<label for="fileupload" title="上传文件"><img alt=""
+								style="margin-top: -4px" src="<%=path%>/images/upload.png">
+							</label>
+							<input id="fileupload" type="file" name="files[]"
+								style="display: none"
+								data-url="../../filecontroller/upload/MODULE/${module.id}">&nbsp;
+						</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+							<input type="button" onclick="update()"
+								class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+							<input type="button" onclick="addComponent()"
+								class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;</sec:authorize>
+					</c:when>
+					<c:otherwise>
+						<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+							<label for="fileupload" title="上传文件"><img alt=""
+								style="margin-top: -4px;width:24px;height:18px" src="<%=path%>/images/upload.png">
+							</label>
+							<input id="fileupload" type="file" name="files[]"
+								style="display: none"
+								data-url="../../filecontroller/upload/MODULE/${module.id}">&nbsp;
+						</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+							<input type="button" onclick="update()"
+								class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;</sec:authorize>
+						<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+							<input type="button" onclick="addComponent()"
+								class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;</sec:authorize>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
 		
 		<div id="attachments" style="display:block;width:100%">
 		</div>
-
-		<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
-			<div style="display: inline; width: 39%;float:left">
-			<label for="fileupload" title="上传文件"><img alt="" src="<%=path%>/images/upload.png"> </label>
-			<input id="fileupload" type="file" name="files[]" style="display:none"
-					data-url="../../filecontroller/upload/MODULE/${module.id}"
-					multiple>
-			</div>
-		</sec:authorize>
-		<br/><br/>
-		
 	</fieldset>
 	<br>
 	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1">
 		<thead>
 	        <tr class="success">
-				<th data-field="name"  data-sortable="true">模块名称</th>
-				<th data-field="function"  data-sortable="true">功能描述</th>
-				<th data-field="description"  data-sortable="true">模块描述</th>
-	            <th data-sortable="false">操作</th>
+				<th data-field="name"  data-sortable="true" data-halign="center">模块名称</th>
+				<th data-field="function"  data-sortable="true" data-halign="center">功能描述</th>
+				<th data-field="description"  data-sortable="true" data-halign="center">模块描述</th>
+	            <th data-sortable="false" data-halign="center">操作</th>
 	        </tr>
    	 	</thead>
    	 	<tbody>
@@ -129,9 +150,9 @@ String path = request.getContextPath();
                 <td>${l1component.functionName}</td>  
                 <td>${l1component.description}</td>  
                 <td>
-                <a href="../../l1component/view/${l1component.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
+                <a href="../../l1component/view/${l1component.id}"  data-toggle="popover" title="查看"><img alt="" src="<%=path%>/images/view.png"></a>
                 &nbsp;&nbsp;
-                <sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="showDailog(${l1component.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></sec:authorize>
+                <sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="showDailog(${l1component.id})"  data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a></sec:authorize>
             </tr>  
        		</c:forEach>
    	 	</tbody>
@@ -158,52 +179,74 @@ String path = request.getContextPath();
 	</div>
 </div>
 
-<div class="entry-form" id="updateForm">
+<div class="modal fade" id="updateForm" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
 	<form method="POST" action="../update/${module.id}">
-		<table width="100%" border="0" cellpadding="4" cellspacing="0">
-			<tr>
-			<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
-			</tr>
-			<tr>
-				<td>模块名称：</td>
-				<td><input type="text" name="moduleName" value="${module.moduleName}"></td>
-			</tr>
-			<tr>
-				<td>功能名称：</td>
-				<td><input type="text" name="functionName" value="${module.functionName}"></td>
-			</tr>
-			<tr>
-				<td>描述：</td>
-				<td><input type="text" name="description" value="${module.description}"></td>
-			</tr>
-			<tr>
-				<td align="right"></td>
-				<td><input type="submit" value="保存" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="button" value="取消" class="btn btn-primary closeForm"></td>
-			</tr>
-		</table>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">确认框</h4>
+				</div>
+				<div class="modal-body">
+					<table width="100%" border="0" cellpadding="4" cellspacing="0">
+						<tr>
+							<td>模块名称：</td>
+							<td><div class="form-group"><input type="text" name="moduleName" class="form-control"
+								value="${module.moduleName}"></div></td>
+						</tr>
+						<tr>
+							<td>功能名称：</td>
+							<td><div class="form-group"><input type="text" name="functionName" class="form-control"
+								value="${module.functionName}"></div></td>
+						</tr>
+						<tr>
+							<td>描述：</td>
+							<td><div class="form-group"><input type="text" name="description" class="form-control"
+								value="${module.description}"></div></td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" value="保存" class="btn btn-primary">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
 	</form>
 </div>
 
-<div class="entry-form" id="addComponentForm">
-	<form name="addL1Component" id="addL1Component" method="POST" modelAttribute="l1Component" action="./${module.id}/add/component">
-		<table width="100%" border="0" cellpadding="4" cellspacing="0">
-			<tr>
-			<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
-			</tr>
-			<tr>
-				<td>模块名称：</td>
-				<td><input type="text" name="name"></td>
-			</tr>
-			<tr>
-				<td>描述：</td>
-				<td><input type="text" name="description"></td>
-			</tr>
-			<tr>
-				<td align="right"></td>
-				<td><input type="submit" value="保存" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="button" value="取消" class="btn btn-primary closeForm"></td>
-			</tr>
-		</table>
+<div class="modal fade" id="addComponentForm" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<form name="addL1Component" id="addL1Component" method="POST"
+		modelAttribute="l1Component" action="./${module.id}/add/component">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">确认框</h4>
+				</div>
+				<div class="modal-body">
+					<table width="100%" border="0" cellpadding="4" cellspacing="0">
+						<tr>
+							<td>模块名称：</td>
+							<td><div class="form-group"><input type="text" name="name" class="form-control"></div></td>
+						</tr>
+						<tr>
+							<td>描述：</td>
+							<td><div class="form-group"><input type="text" name="description" class="form-control"></div></td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" value="保存" class="btn btn-primary">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
 	</form>
 </div>

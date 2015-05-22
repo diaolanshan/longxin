@@ -28,6 +28,7 @@ public class UserController
 {
 	@Autowired
 	UserService userService;
+	
 	@Autowired
 	DepartmentService departmentService;
 	
@@ -51,7 +52,6 @@ public class UserController
 		}
 		return  false;
 	}
-	
 	
 	@RequestMapping(value = "/search", method = RequestMethod.GET)
 	public String searchUsers(Model model)

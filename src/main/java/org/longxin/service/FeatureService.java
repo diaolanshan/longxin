@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.longxin.domains.Feature;
 import org.longxin.domains.Product;
+import org.longxin.web.controller.bean.MatrixBean;
+import org.longxin.web.controller.bean.Surounder;
 
 public interface FeatureService
 {
@@ -16,4 +18,8 @@ public interface FeatureService
     public void saveFeature(Feature feature);
     
     public void deleteFeatureById(Integer featureID);
+    
+    public List<MatrixBean> generateFunctionMatrix(int featureId);
+    
+    public void updateFunctionMatrix(Surounder rounder ,int featureId);
 }

@@ -1,7 +1,8 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <%  
 String path = request.getContextPath();  
@@ -27,7 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			$.each(data, function(idx,item)
     			{
     				var downloadlink = "../../filecontroller/download/" + item.id;
-    				var attachment = "<div style='display: inline; width: 15%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
+    				var attachment = "<div style='display: inline; width: 10%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:40px;border:1px dashed;border-color:#2bc0be'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
     				$("#attachments").append(attachment);
     			}
     			)
@@ -113,9 +114,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
 </script>
 <style>
-.container
-{
- 	width:100%
+.container {
+	width: 100%
 }
 </style>
 <form:form method="POST" modelAttribute="product" role="form"
@@ -123,30 +123,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<fieldset>
 		<legend>
-			产品细节&nbsp;&nbsp;&nbsp;
-			<a href="../diagram/${product.id}">
-				<span title="物理结构图" class="glyphicon glyphicon-indent-left"></span>
-			</a> &nbsp;&nbsp;
-			<a href="../functiondiagram/${product.id}">
-			<span title="功能结构图" class="glyphicon glyphicon-indent-right"></span></a>
+			产品细节&nbsp;&nbsp;&nbsp; <a href="../diagram/${product.id}"> <span
+				title="物理结构图" class="glyphicon glyphicon-indent-left"></span>
+			</a> &nbsp;&nbsp; <a href="../functiondiagram/${product.id}"> <span
+				title="功能结构图" class="glyphicon glyphicon-indent-right"></span></a>
 		</legend>
 		<table style="width: 100%">
 			<tr>
 				<td style="width: 25%; vertical-align: top">
 					<div class="container">
 						<div id="slider1_container"
-							style="display: none; position: relative; margin: 0 auto; width: 400px; height: 250px; overflow: hidden;">
+							style="display: none; position: relative; margin: 0 auto; width: 300px; height: 175px; overflow: hidden;">
 
 							<!-- Loading Screen -->
 							<div u="loading" style="position: absolute; top: 0px; left: 0px;">
 								<div
-									style="filter: alpha(opacity = 70); opacity: 0.7; position: absolute; display: block; background-color: #000; top: 0px; left: 0px; width: 100%; height: 100%;">
+									style="filter: alpha(opacity =   70); opacity: 0.7; position: absolute; display: block; background-color: #000; top: 0px; left: 0px; width: 100%; height: 100%;">
 								</div>
 							</div>
 
 							<!-- Slides Container -->
 							<div u="slides"
-								style="cursor: move; position: absolute; left: 0px; top: 0px; width: 380px; height: 248px; overflow: hidden;">
+								style="cursor: move; position: absolute; left: 0px; top: 0px; width: 285px; height: 186px; overflow: hidden;">
 								<div>
 									<img u="image" src2="../../images/01.jpg" />
 								</div>
@@ -160,10 +158,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<!-- Bullet Navigator Skin Begin -->
 							<!-- bullet navigator container -->
 							<div u="navigator" class="jssorb05"
-								style="position: absolute; bottom: 16px; right: 6px;">
+								style="position: absolute; bottom: 12px; right: 6px;">
 								<!-- bullet navigator item prototype -->
 								<div u="prototype"
-									style="POSITION: absolute; WIDTH: 16px; HEIGHT: 16px;"></div>
+									style="POSITION: absolute; WIDTH: 16px; HEIGHT: 8px;"></div>
 							</div>
 							<!-- Bullet Navigator Skin End -->
 							<!-- Arrow Navigator Skin Begin -->
@@ -181,77 +179,90 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				</td>
 
 				<td style="vertical-align: top">
+					<table id="productTable" style="width:90%">
+						<tr style="background-color: #DDDDDD; height: 35px">
+							<td style="color:rgb(176,176,176)">产品ID：</td>
+							<td id="idvalue" style="width: 180px">${product.id}</td>
+							<td style="background-color: white">&nbsp;&nbsp;&nbsp;</td>
+							<td style="color:rgb(176,176,176)">产品名称：</td>
+							<td  style="width: 180px">${product.name}</td>
+						</tr>
+						<tr style="background-color: white; height: 8px">
+						</tr>
+						<tr style="background-color: #DDDDDD; height: 35px">
+							<td style="color:rgb(176,176,176)">功能名称：</td>
+							<td>${product.functionName}</td>
+							<td style="background-color: white">&nbsp;&nbsp;&nbsp;</td>
+							<td style="color:rgb(176,176,176)">创建人：</td>
+							<td>${product.owner.username}</td>
+							
+						</tr>
+						<tr style="background-color: white; height: 8px">
+						</tr>
+						<tr style="background-color: #DDDDDD; height: 35px">
+							<td style="color:rgb(176,176,176)">创建时间：</td>
+							<td colspan="4">${product.createdat}</td>
+						</tr>
+						<tr style="background-color: white; height: 8px">
+						</tr>
+						<tr style="background-color: #DDDDDD; height: 35px">
+							<td style="color:rgb(176,176,176)">描述：</td>
+							<td colspan="4">${product.description}</td>
+						</tr>
+					</table>
+					<br>
 					<div class="form-group">
-						<label for="id" class="col-sm-3 control-label">产品ID：</label>
-						<div class="col-sm-5 control-label" id="idvalue">${product.id}</div>
-					</div>
-					<div class="form-group">
-						<label for="name" class="col-sm-3 control-label">产品名称：</label>
-						<div class="col-sm-5 control-label">${product.name}</div>
-					</div>
-					<div class="form-group">
-						<label for="name" class="col-sm-3 control-label">功能名称：</label>
-						<div class="col-sm-5 control-label">${product.functionName}</div>
-					</div>
-					<div class="form-group">
-						<label for="name" class="col-sm-3 control-label">创建时间：</label>
-						<div class="col-sm-5 control-label">${product.createdat}</div>
-					</div>
-					<div class="form-group">
-						<label for="name" class="col-sm-3 control-label">创建人：</label>
-						<div class="col-sm-5 control-label">${product.owner.username}</div>
-					</div>
-					<div class="form-group">
-						<label for="description" class="col-sm-3 control-label">描述：</label>
-						<div class="col-sm-5 control-label">${product.description}</div>
-					</div>
-					<br/>
-					<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
-					<div class="form-group">
-						<div class="col-sm-offset-7 col-sm-5" style="align: right">
-							<button type="button" class="btn btn-primary"
-								onclick="location='../edit/${product.id}'">编辑</button>
-							<c:if test="${product.template}">
+						<div class="col-sm-offset-7 col-sm-5" style="align: left">
+							<sec:authorize access="hasRole('ROLE_ADMIN')">
+								<c:if test="${product.template}">
+									<button type="button" class="btn btn-primary"
+										onclick="location='../clone/${product.id}'">复制产品</button>
+								</c:if>
+							</sec:authorize>
+							<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
 								<button type="button" class="btn btn-primary"
-									onclick="location='../clone/${product.id}'">复制产品</button>
-							</c:if>
+									onclick="location='../edit/${product.id}'">编辑</button>
+							</sec:authorize>
 						</div>
 					</div>
-					</sec:authorize>
 				</td>
 			</tr>
 		</table>
-
-		<br />
 		<div id="attachments" style="display: block; width: 100%"></div>
 	</fieldset>
 	<br />
-	<br />
-	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1">
+	<table data-toggle="table" data-cache="false" data-height="350"
+		data-pagination="true" id="searchTable1">
 		<thead>
-	        <tr class="success">
-	       		<th data-field="id" data-visible="false" data-sortable="true">用户ID</th> 
-				<th data-field="name"  data-sortable="true">特性名称</th>
-				<th data-field="functionName"  data-sortable="true">功能描述</th>
-				<th data-field="description"  data-sortable="true">特性描述</th>
-	            <th data-sortable="false">操作</th>
-	        </tr>
-   	 	</thead>
-   	 	<tbody>
-   	 		<c:forEach items="${features}" var="feature">  
-            <tr>  
-                <td data-visible="false">${feature.id}</td>
-                <td>${feature.featureName}</td>  
-                <td>${feature.functionName}</td>  
-                <td>${feature.description}</td>  
-                <td>
-                <a href="../../feature/view/${feature.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
-                &nbsp;&nbsp;
-               <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"> <a href="javascript:void(0);" onclick="showDailog(${feature.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			<tr class="success">
+				<th data-field="id" data-visible="false" data-sortable="true"
+					data-halign="center">用户ID</th>
+				<th data-field="name" data-sortable="true" data-halign="center">特性名称</th>
+				<th data-field="functionName" data-sortable="true"
+					data-halign="center">功能描述</th>
+				<th data-field="description" data-sortable="true"
+					data-halign="center">特性描述</th>
+				<th data-sortable="false" data-halign="center">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${features}" var="feature">
+				<tr>
+					<td data-visible="false">${feature.id}</td>
+					<td>${feature.featureName}</td>
+					<td>${feature.functionName}</td>
+					<td>${feature.description}</td>
+					<td><a href="../../feature/view/${feature.id}"
+						data-toggle="popover" title="查看"><img alt=""
+							src="<%=path%>/images/view.png"></a> &nbsp;&nbsp; <sec:authorize
+							access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+							<a href="javascript:void(0);" onclick="showDailog(${feature.id})"
+								data-toggle="popover" title="删除"><img alt=""
+								src="<%=path%>/images/delete.png"></a>
    	 			&nbsp;&nbsp;</sec:authorize>
-            </tr>  
-       		</c:forEach>
-   	 	</tbody>
+				</tr>
+			</c:forEach>
+		</tbody>
 	</table>
 </form:form>
 
@@ -269,8 +280,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<div class="modal-body">确认要删除该特性？</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary"
-					onclick="deleteThis()">确定</button>
+				<button type="button" class="btn btn-primary" onclick="deleteThis()">确定</button>
 				<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
 			</div>
 		</div>

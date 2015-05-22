@@ -2,7 +2,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
+<%  
+String path = request.getContextPath();  
+%>
 <script>
 	var deleteProductId;
     $(function () {
@@ -31,49 +33,42 @@
 	<fieldset>
 		<legend>产品管理</legend>
 		<div class="form-group">
-			<label for="keyword" class="col-sm-2 control-label">关键字：</label>
-			<div class="col-sm-10">
-				<form:input type="text" class="form-control" id="keyword"  path="keyword" />
-			</div>
+			<form:input type="text" class="form-control" style="display:inline;margin-left:10px" id="keyword"  path="keyword" />&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="submit" class="btn btn-primary start-example" value="查询" />
 		</div>
-		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
-				<input type="submit" class="btn btn-primary start-example" value="查询" />&nbsp;&nbsp;&nbsp;&nbsp;
-			</div>
-		</div>
-	
 	</fieldset>
 	<br/>
-	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1">
-		<thead>
-	        <tr class="success">
-				<th data-field="id"  data-sortable="true" >ID</th>
-				<th data-field="name"  data-sortable="true">产品名称</th>
-				<th data-field="createdat"  data-sortable="true">创建日期</th>
-				<th data-field="owner"  data-sortable="true">创建人</th>
-	            <th data-sortable="false">操作</th>
-	        </tr>
-   	 	</thead>
-   	 	<tbody>
-   	 		<c:forEach items="${products}" var="product">  
-            <tr>  
-                <td>${product.id}</td>  
-                <td>${product.name}</td>  
-                <td>${product.createdat}</td>
-                <td>${product.owner.username}</td>  
-                <td>
-                <a href="./list/${product.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
-                &nbsp;&nbsp;
-                <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
-                <a href="./edit/${product.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-   	 			&nbsp;&nbsp;
-   	 			<a href="javascript:void(0);" onclick="showDailog(${product.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-   	 			</sec:authorize>
-            </tr>  
-       		</c:forEach>
-   	 	</tbody>
-	</table>
-	
+	<div style="margin-left:-5px">
+		<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1" >
+			<thead>
+		        <tr class="success">
+					<th data-field="id"  data-sortable="true" data-halign="center">ID</th>
+					<th data-field="name"  data-sortable="true" data-halign="center">产品名称</th>
+					<th data-field="createdat"  data-sortable="true" data-halign="center">创建日期</th>
+					<th data-field="owner"  data-sortable="true" data-halign="center">创建人</th>
+		            <th data-sortable="false" data-halign="center">操作</th>
+		        </tr>
+	   	 	</thead>
+	   	 	<tbody>
+	   	 		<c:forEach items="${products}" var="product">  
+	            <tr>  
+	                <td>${product.id}</td>  
+	                <td>${product.name}</td>  
+	                <td>${product.createdat}</td>
+	                <td>${product.owner.username}</td>  
+	                <td>
+	                <a href="./list/${product.id}"  data-toggle="popover" title="查看"><img alt="" src="<%=path%>/images/view.png"></a>
+	                &nbsp;&nbsp;
+	                <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+	                <a href="./edit/${product.id}"  data-toggle="popover" title="编辑"><img alt="" src="<%=path%>/images/edit.png"></a>
+	   	 			&nbsp;&nbsp;
+	   	 			<a href="javascript:void(0);" onclick="showDailog(${product.id})"  data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a>
+	   	 			</sec:authorize>
+	            </tr>  
+	       		</c:forEach>
+	   	 	</tbody>
+		</table>
+	</div>
 </form:form>
 
 <!-- Modal -->

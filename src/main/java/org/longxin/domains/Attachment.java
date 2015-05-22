@@ -41,6 +41,8 @@ public class Attachment implements java.io.Serializable
     private String category;
 
     private Integer referenceId;
+    
+    //private Boolean isDraft;
 
     public Attachment()
     {

@@ -6,8 +6,10 @@ import org.longxin.domains.L3ComponentParameter;
 import org.longxin.domains.Users;
 import org.longxin.service.L3ComponentParameterService;
 import org.longxin.service.L3ComponentService;
+import org.longxin.service.UserPermissionMatrixService;
 import org.longxin.service.UserService;
 import org.longxin.util.OperationType;
+import org.longxin.util.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,6 +38,9 @@ public class L3ComponentController extends ComponentContoller
 	@Autowired
     UserService userService;
 
+    @Autowired
+    UserPermissionMatrixService userPermissionMatrixService;
+
 	@RequestMapping(value = "/view/{l3id}", method = RequestMethod.GET)
 	public String viewL3Component(@PathVariable int l3id, Model model)
 	{
@@ -44,6 +49,17 @@ public class L3ComponentController extends ComponentContoller
 		model.addAttribute("parameters",
 				l3ComponentParameterService.getL3Paramters(component));
 		model.addAttribute("parameter", new L3ComponentParameter());
+		
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users user = userService.findUserByUserName(userDetails.getUsername());
+        if(user.getRole()==Roles.ROLE_ADMIN)
+        {
+            model.addAttribute("isAllowed", "true");
+        }else
+        {
+            model.addAttribute("isAllowed", userPermissionMatrixService.isUserAllowedForFeature(user.getId(), l3ComponentService.getFeatureId(component.getId())));
+        }
+        
 		return "/l3/view";
 	}
 
@@ -94,19 +110,23 @@ public class L3ComponentController extends ComponentContoller
 	@RequestMapping(value = "/delete/parameter/{parameterid}", method = RequestMethod.POST)
 	public void deleteComponentParameter(@PathVariable int parameterid)
 	{
+	    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users user = userService.findUserByUserName(userDetails.getUsername());
+        trackChange(l3ComponentParameterService.getL3ComponentParamtersByID(parameterid), user, OperationType.DELETE);
+        
 		l3ComponentParameterService.deleteParameter(parameterid);
 	}
 	
-	@RequestMapping(value = "/view/approve/parameter/{parameterId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/view/approve/parameter/{parameterId}", method = RequestMethod.POST)
     public @ResponseBody
-    ModelMap approveComponentParameter(@PathVariable int parameterId)
+    ModelMap approveComponentParameter(@PathVariable int parameterId, @RequestBody L3ComponentParameter parameter)
     {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Users user = userService.findUserByUserName(userDetails.getUsername());
 
-        L3ComponentParameter parameter = l3ComponentParameterService.getL3ComponentParamtersByID(parameterId);
-
         trackChange(parameter, user, OperationType.APPROVE);
+        
+        parameter = l3ComponentParameterService.getL3ComponentParamtersByID(parameterId);
 
         parameter.setIsDraft(Boolean.FALSE);
         parameter.setParameterValue(parameter.getDraftValue());
@@ -116,16 +136,16 @@ public class L3ComponentController extends ComponentContoller
         return new ModelMap("success", 1);
     }
 
-    @RequestMapping(value = "/view/decline/parameter/{parameterId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/view/decline/parameter/{parameterId}", method = RequestMethod.POST)
     public @ResponseBody
-    ModelMap declineComponentParameter(@PathVariable int parameterId)
+    ModelMap declineComponentParameter(@PathVariable int parameterId, @RequestBody L3ComponentParameter parameter)
     {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Users user = userService.findUserByUserName(userDetails.getUsername());
 
-        L3ComponentParameter parameter = l3ComponentParameterService.getL3ComponentParamtersByID(parameterId);
-
         trackChange(parameter, user, OperationType.DECLINE);
+        
+        parameter = l3ComponentParameterService.getL3ComponentParamtersByID(parameterId);
 
         parameter.setIsDraft(Boolean.FALSE);
         parameter.setDraftValue(null);

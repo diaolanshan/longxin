@@ -3,6 +3,7 @@ package org.longxin.dao.impl;
 import java.util.List;
 
 import org.longxin.dao.L3ComponentParameterDAO;
+import org.longxin.domains.L2Component;
 import org.longxin.domains.L3Component;
 import org.longxin.domains.L3ComponentParameter;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -16,6 +17,17 @@ public class L3ComponentParameterDAOImpl extends HibernateDaoSupport implements 
 		return null;
 	}
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<L3Component> getL3ComponentsByL2(L2Component l2Component)
+    {
+        List<L3Component> l3Components = (List<L3Component>) this.getHibernateTemplate().find(
+            "FROM L3Component WHERE l2Component = ? ORDER BY ID ASC",
+            l2Component);
+
+        return l3Components;
+    }
+	
 	@SuppressWarnings("unchecked")
     public List<L3ComponentParameter> getL3Parameters(L3Component component)
 	{

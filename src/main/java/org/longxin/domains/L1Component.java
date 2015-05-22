@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 /**
@@ -24,7 +25,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "l1_component", catalog = "longxin")
-public class L1Component implements java.io.Serializable, Cloneable
+public class L1Component extends Component implements java.io.Serializable, Cloneable
 {
 
 	/**
@@ -33,6 +34,7 @@ public class L1Component implements java.io.Serializable, Cloneable
 	private static final long serialVersionUID = -2912980312734388140L;
 	private Integer id;
 	private Module module;
+	private FunctionModule functionModule;
 	private String name;
 	private String description;
 	private String functionName;
@@ -85,6 +87,18 @@ public class L1Component implements java.io.Serializable, Cloneable
 	{
 		this.module = module;
 	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FUNCTION_MODULE")
+    public FunctionModule getFunctionModule()
+    {
+        return this.functionModule;
+    }
+
+    public void setFunctionModule(FunctionModule functionModule)
+    {
+        this.functionModule = functionModule;
+    }
 
 	@Column(name = "NAME", nullable = false, length = 45)
 	public String getName()
@@ -109,6 +123,7 @@ public class L1Component implements java.io.Serializable, Cloneable
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "l1Component", cascade= CascadeType.ALL)
+	@OrderBy("id ASC")
 	public Set<L1ComponentParameter> getL1ComponentParameters()
 	{
 		return this.l1ComponentParameters;
@@ -120,7 +135,8 @@ public class L1Component implements java.io.Serializable, Cloneable
 		this.l1ComponentParameters = l1ComponentParameters;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "l1Component", cascade= CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "l1Component", cascade= CascadeType.ALL)
+	@OrderBy("id ASC")
 	public Set<L2Component> getL2Components()
 	{
 		return this.l2Components;

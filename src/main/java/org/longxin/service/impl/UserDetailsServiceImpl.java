@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.Logger;
 import org.longxin.domains.Users;
 import org.longxin.service.UserService;
 import org.longxin.util.Roles;

@@ -23,4 +23,6 @@ public interface UserService {
 	public void increaseLoginCount(Users user);
 	
 	public boolean isApproveRequired(Users user);
+	
+	public List<Users> getUsersByIds(String [] ids);
 }

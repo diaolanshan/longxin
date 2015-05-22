@@ -155,4 +155,27 @@
 		<put-attribute name="body" value="/view/l3component/l3diagram.jsp" />
 	</definition>
 
+	<definition name="/permission/select" extends="base.definition">
+		<put-attribute name="title" value="权限管理" />
+		<put-attribute name="menuItem" value="permissionmanagement" />
+		<put-attribute name="body" value="/view/permission/select.jsp" />
+	</definition>
+	
+	<definition name="/permission/matrix" extends="base.definition">
+		<put-attribute name="title" value="权限管理" />
+		<put-attribute name="menuItem" value="permissionmanagement" />
+		<put-attribute name="body" value="/view/permission/matrix.jsp" />
+	</definition>
+	
+	<definition name="/feature/listdraft" extends="base.definition">
+		<put-attribute name="title" value="产品管理" />
+		<put-attribute name="menuItem" value="productmanagement" />
+		<put-attribute name="body" value="/view/admin/listdraft.jsp" />
+	</definition>
+	
+	<definition name="/function/show/matrix" extends="base.definition">
+		<put-attribute name="title" value="产品管理" />
+		<put-attribute name="menuItem" value="productmanagement" />
+		<put-attribute name="body" value="/view/feature/showmatrix.jsp" />
+	</definition>
 </tiles-definitions>  

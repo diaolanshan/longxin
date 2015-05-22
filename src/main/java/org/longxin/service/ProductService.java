@@ -23,4 +23,6 @@ public interface ProductService {
 	public int cloneProduct(Integer productId) throws CloneNotSupportedException;
 	
 	public Product getTemplate();
+	
+	public List<Product> getProductsByIds(String [] ids);
 }

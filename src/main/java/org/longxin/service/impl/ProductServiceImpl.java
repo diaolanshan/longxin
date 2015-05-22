@@ -3,6 +3,7 @@ package org.longxin.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.longxin.domains.Feature;
 import org.longxin.domains.Product;
 import org.apache.log4j.Logger;
 import org.longxin.dao.ProductDAO;
@@ -17,9 +18,11 @@ public class ProductServiceImpl implements ProductService
 	@Autowired
 	ProductDAO productDAO;
 
-	public List<Product> getAllProducts()
+	@SuppressWarnings("unchecked")
+    public List<Product> getAllProducts()
 	{
-		return productDAO.getAllProducts();
+		List<Product> products = productDAO.getAllProducts();
+		return products;
 	}
 
 	public void saveProduct(Product product)
@@ -70,4 +73,17 @@ public class ProductServiceImpl implements ProductService
 		this.saveProduct(cloned);
 		return cloned.getId();
 	}
+	
+	 public List<Product> getProductsByIds(String [] ids)
+	 {
+	     List<Product> products = this.productDAO.getProductsByIds(ids);
+	     for(Product product : products)
+	     {
+	        for(Feature feature : product.getFeatures())
+	        {
+	            feature.getFeatureName();
+	        }
+	     }
+	     return products;
+	 }
 }

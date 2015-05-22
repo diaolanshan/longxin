@@ -27,35 +27,28 @@ String path = request.getContextPath();
 
 <form:form method="POST" modelAttribute="userSearchBean" role="form"
 	class="form-horizontal" id="searchUserForm">
-	
 	<table id="table-javascript"></table>
 	<fieldset>
 		<legend>用户管理</legend>
 		<div class="form-group">
-			<label for="keyword" class="col-sm-2 control-label">关键字：</label>
-			<div class="col-sm-10">
-				<form:input type="text" class="form-control" id="keyword"  path="keyword" />
-			</div>
+			<form:input type="text" class="form-control" id="keyword" style="display:inline;margin-left:10px" path="keyword" />&nbsp;&nbsp;
+			<input type="submit" class="btn btn-primary start-example" value="查询" />
+			&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="http://localhost:8080/longxin/user/add" class="btn btn-primary start-example"><font style="color:#fff">添加用户</font></a>
 		</div>
-		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
-				<input type="submit" class="btn btn-primary start-example" value="查询" />&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://localhost:8080/longxin/user/add" class="btn btn-primary start-example"><font style="color:#fff">添加用户</font></a>
-			</div>
-		</div>
-	
 	</fieldset>
 	<br/>
 	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable" data-row-style="rowStyle">
 		<thead>
 	        <tr class="success">
-	            <th data-field="id" data-visible="false" data-sortable="true">用户ID</th>
-	            <th data-field="username"  data-sortable="true" >用户名</th>
-	            <th data-field="createdat"  data-sortable="true">创建日期</th>
-	            <th data-field="telephone"  data-sortable="true">电话</th>
-	            <th data-field="role"  data-sortable="true">权限</th>
-	            <th data-field="loginCount"  data-sortable="true">会员等级</th>
-	            <th data-field="department"  data-sortable="true">部门</th>
-	            <th data-sortable="false">操作</th>
+	            <th data-field="id" data-visible="false" data-sortable="true" data-halign="center">用户ID</th>
+	            <th data-field="username"  data-sortable="true" data-halign="center">用户名</th>
+	            <th data-field="createdat"  data-sortable="true" data-halign="center">创建日期</th>
+	            <th data-field="telephone"  data-sortable="true" data-halign="center">电话</th>
+	            <th data-field="role"  data-sortable="true" data-halign="center">权限</th>
+	            <th data-field="loginCount"  data-sortable="true" data-halign="center">会员等级</th>
+	            <th data-field="department"  data-sortable="true" data-halign="center">部门</th>
+	            <th data-sortable="false" data-halign="center">操作</th>
 	        </tr>
    	 	</thead>
    	 	<tbody>
@@ -72,9 +65,9 @@ String path = request.getContextPath();
 	   	 			</c:forEach></td>
    	 				<td>${item.department.getDepartmentname()}</td>
    	 				<td>
-   	 					<a href="./edit/${item.id}"  data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+   	 					<a href="./edit/${item.id}"  data-toggle="popover" title="编辑"><img alt="" src="<%=path%>/images/edit.png"></a>
    	 					&nbsp;&nbsp;
-   	 					<a href="javascript:void(0);" onclick="showDailog(${item.id})"  data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+   	 					<a href="javascript:void(0);" onclick="showDailog(${item.id})"  data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a>
    	 				</td>
    	 			</tr>
    	 		</c:forEach>

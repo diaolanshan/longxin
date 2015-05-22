@@ -41,7 +41,7 @@
 	</ul>
 
 	<div id="chart" class="orgChart"></div>
-
+	
 	<script>
         jQuery(document).ready(function() {
             
@@ -69,6 +69,8 @@
                 
                 prettyPrint();                
             });
-        });
-    </script>
+            
+			$("table table table table tbody tr td div").filter(".node").css("width","30px").css("height", "80px");
+		});
+	</script>
 </body>

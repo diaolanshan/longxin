@@ -28,7 +28,8 @@ public class ModuleController
 	{
 		Module module = moduleService.getModuleByID(moduleId);
 		model.addAttribute("module", module);
-		model.addAttribute("l1components", module.getL1Components());
+		//The result should be ordered.
+		model.addAttribute("l1components", l1ComponentService.getL1ComponentsByModule(module));
 		return "/module/view";
 	}
 
@@ -63,6 +64,8 @@ public class ModuleController
 	{
 		Module module = moduleService.getModuleByID(moduleId);
 		l1Component.setModule(module);
+		l1Component.setTemplate(module.getTemplate());
+		l1Component.setIsDraft(!module.getTemplate());
 		l1ComponentService.addL1Component(l1Component);
 		return "redirect:/module/view/" + moduleId;
 	}

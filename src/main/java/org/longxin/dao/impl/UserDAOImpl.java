@@ -62,4 +62,18 @@ public class UserDAOImpl extends HibernateDaoSupport implements UserDAO
 		session.getTransaction().commit(); */
 		this.getHibernateTemplate().saveOrUpdate(user);
 	}
+	
+    @SuppressWarnings("unchecked")
+    public List<Users> getUsersByIds(String [] ids)
+    {
+        StringBuilder queryStr = new StringBuilder("FROM Users u WHERE u.id in (");
+        for(String id : ids)
+        {
+            queryStr.append(id + ",");
+        }
+        
+        queryStr.append(" 0 ) ORDER BY ID DESC");
+        
+       return this.getHibernateTemplate().find(queryStr.toString());
+    }
 }

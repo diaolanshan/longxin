@@ -52,6 +52,7 @@
 				<value>org.longxin.domains.Product</value>
 				<value>org.longxin.domains.Feature</value>
 				<value>org.longxin.domains.Module</value>
+				<value>org.longxin.domains.FunctionModule</value>
 				<value>org.longxin.domains.L1Component</value>
 				<value>org.longxin.domains.L1ComponentParameter</value>
 				<value>org.longxin.domains.L2Component</value>
@@ -62,6 +63,7 @@
 				<value>org.longxin.domains.Department</value>
 				<value>org.longxin.domains.Attachment</value>
 				<value>org.longxin.domains.ChangeHistory</value>
+				<value>org.longxin.domains.UserPermissionMatrix</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -158,6 +160,14 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
+	<bean id="userPermissionMatrixDAO" class="org.longxin.dao.impl.UserPermissionMatrixDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="functionModuleDAO" class="org.longxin.dao.impl.FunctionModuleDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
 	<bean id="propertyConfigurer"
 	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	<property name="location">
@@ -190,4 +200,8 @@
 	<bean id="attachmentService" class="org.longxin.service.impl.AttachmentServiceImpl"></bean>
 	
 	<bean id="changeHistoryService" class="org.longxin.service.impl.ChangeHistoryServiceImpl"></bean>
+	
+	<bean id="userPermissionMatrixService" class="org.longxin.service.impl.UserPermissionMatrixServiceImpl"></bean>
+	
+	<bean id="functionModuleService" class="org.longxin.service.impl.FunctionModuleServiceImpl"></bean>
 </beans>

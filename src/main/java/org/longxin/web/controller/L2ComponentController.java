@@ -8,8 +8,10 @@ import org.longxin.domains.Users;
 import org.longxin.service.L2ComponentParameterService;
 import org.longxin.service.L2ComponentService;
 import org.longxin.service.L3ComponentService;
+import org.longxin.service.UserPermissionMatrixService;
 import org.longxin.service.UserService;
 import org.longxin.util.OperationType;
+import org.longxin.util.Roles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -40,6 +42,9 @@ public class L2ComponentController extends ComponentContoller
 
     @Autowired
     UserService userService;
+    
+    @Autowired
+    UserPermissionMatrixService userPermissionMatrixService;
 
     @RequestMapping(value = "/view/{l2id}", method = RequestMethod.GET)
     public String viewL2Component(@PathVariable int l2id, Model model)
@@ -48,7 +53,18 @@ public class L2ComponentController extends ComponentContoller
         model.addAttribute("component", component);
         model.addAttribute("parameters", l2ComponentParameterService.getL2Paramters(component));
         model.addAttribute("parameter", new L2ComponentParameter());
-        model.addAttribute("l3components", l2ComponentService.getL3ComponentsByL2(component));
+        model.addAttribute("l3components", l3ComponentService.getL3ComponentsByL2(component));
+        
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users user = userService.findUserByUserName(userDetails.getUsername());
+        if(user.getRole()==Roles.ROLE_ADMIN)
+        {
+            model.addAttribute("isAllowed", "true");
+        }else
+        {
+            model.addAttribute("isAllowed", userPermissionMatrixService.isUserAllowedForFeature(user.getId(), l2ComponentService.getFeatureId(component.getId())));
+        }
+        
         return "/l2/view";
     }
 
@@ -109,19 +125,23 @@ public class L2ComponentController extends ComponentContoller
     @RequestMapping(value = "/delete/parameter/{parameterid}", method = RequestMethod.POST)
     public void deleteComponentParameter(@PathVariable int parameterid)
     {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users user = userService.findUserByUserName(userDetails.getUsername());
+        trackChange(l2ComponentParameterService.getL2ComponentParamtersByID(parameterid), user, OperationType.DELETE);
+        
         l2ComponentParameterService.deleteParameter(parameterid);
     }
     
-    @RequestMapping(value = "/view/approve/parameter/{parameterId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/view/approve/parameter/{parameterId}", method = RequestMethod.POST)
     public @ResponseBody
-    ModelMap approveComponentParameter(@PathVariable int parameterId)
+    ModelMap approveComponentParameter(@PathVariable int parameterId, @RequestBody L2ComponentParameter parameter)
     {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Users user = userService.findUserByUserName(userDetails.getUsername());
-
-        L2ComponentParameter parameter = l2ComponentParameterService.getL2ComponentParamtersByID(parameterId);
-
+        
         trackChange(parameter, user, OperationType.APPROVE);
+        
+        parameter = l2ComponentParameterService.getL2ComponentParamtersByID(parameterId);
 
         parameter.setIsDraft(Boolean.FALSE);
         parameter.setParameterValue(parameter.getDraftValue());
@@ -131,16 +151,16 @@ public class L2ComponentController extends ComponentContoller
         return new ModelMap("success", 1);
     }
 
-    @RequestMapping(value = "/view/decline/parameter/{parameterId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/view/decline/parameter/{parameterId}", method = RequestMethod.POST)
     public @ResponseBody
-    ModelMap declineComponentParameter(@PathVariable int parameterId)
+    ModelMap declineComponentParameter(@PathVariable int parameterId, @RequestBody L2ComponentParameter parameter)
     {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Users user = userService.findUserByUserName(userDetails.getUsername());
 
-        L2ComponentParameter parameter = l2ComponentParameterService.getL2ComponentParamtersByID(parameterId);
-
         trackChange(parameter, user, OperationType.DECLINE);
+        
+        parameter = l2ComponentParameterService.getL2ComponentParamtersByID(parameterId);
 
         parameter.setIsDraft(Boolean.FALSE);
         parameter.setDraftValue(null);
@@ -206,6 +226,7 @@ public class L2ComponentController extends ComponentContoller
         L2Component l2Component = l2ComponentService.getL2ComponentByID(l2Id);
         l3Component.setL2Component(l2Component);
         l3Component.setTemplate(l2Component.getTemplate());
+        l3Component.setIsDraft(!l3Component.getTemplate());
         l3ComponentService.addL3Component(l3Component);
         return "redirect:/l2component/view/" + l2Id;
     }

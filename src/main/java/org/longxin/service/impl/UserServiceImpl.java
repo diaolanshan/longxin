@@ -66,4 +66,9 @@ public class UserServiceImpl implements UserService{
 	   }
         return true;
 	}
+	
+	public List<Users> getUsersByIds(String [] ids)
+	{
+	    return this.userDAO.getUsersByIds(ids);
+	}
 }

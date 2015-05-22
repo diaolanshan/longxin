@@ -29,7 +29,8 @@ public class ProductDAOImpl extends HibernateDaoSupport implements ProductDAO {
 		return this.getHibernateTemplate().get(Product.class, id);
 	}
 	
-	public List<Product> searchProductByKeyWords(String keyword)
+	@SuppressWarnings("unchecked")
+    public List<Product> searchProductByKeyWords(String keyword)
 	{
 	    String wildcardKeyword = "%" + keyword +"%";
         List<Product> products = (List<Product>) this.getHibernateTemplate().find(
@@ -42,5 +43,19 @@ public class ProductDAOImpl extends HibernateDaoSupport implements ProductDAO {
 	{
 		List<Product> products = this.getHibernateTemplate().find("FROM Product WHERE template = ?", Boolean.TRUE);
 		return products.get(0);
+	}
+	
+	@SuppressWarnings("unchecked")
+    public List<Product> getProductsByIds(String [] ids)
+	{
+	    StringBuilder queryStr = new StringBuilder("FROM Product p WHERE p.id in (");
+	    for(String id : ids)
+	    {
+	        queryStr.append(id + ",");
+	    }
+	    
+	    queryStr.append(" 0 ) ORDER BY ID DESC");
+	    
+	   return this.getHibernateTemplate().find(queryStr.toString());
 	}
 }

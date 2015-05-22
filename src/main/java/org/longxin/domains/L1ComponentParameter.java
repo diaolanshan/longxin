@@ -16,41 +16,48 @@ import javax.persistence.Transient;
 @Table(name = "l1_component_parameter", catalog = "longxin")
 public class L1ComponentParameter extends ComponentParameter implements java.io.Serializable, Cloneable
 {
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = -8558339055272345772L;
-	public String CATEGORY = "L1COMPONENTPARAMETER";
-	private L1Component l1Component;
+    private static final long serialVersionUID = -8558339055272345772L;
 
-	public L1ComponentParameter()
-	{
-	}
+    public String CATEGORY = "L1COMPONENTPARAMETER";
 
-	public L1ComponentParameter(L1Component l1Component, String parameterName,
-			String parameterValue, String valueScope, String unitName,
-			String options)
-	{
-		this.l1Component = l1Component;
-	}
+    private L1Component l1Component;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "L1_COMPONENT")
-	public L1Component getL1Component()
-	{
-		return this.l1Component;
-	}
+    public L1ComponentParameter()
+    {
+    }
 
-	public void setL1Component(L1Component l1Component)
-	{
-		this.l1Component = l1Component;
-	}
+    public L1ComponentParameter(
+        L1Component l1Component,
+        String parameterName,
+        String parameterValue,
+        String valueScope,
+        String unitName,
+        String options)
+    {
+        this.l1Component = l1Component;
+    }
 
-    protected Object clone() throws CloneNotSupportedException{
-		L1ComponentParameter l1ComponentParameter = (L1ComponentParameter)super.clone();
-		l1ComponentParameter.setId(null);
-		return l1ComponentParameter;
-	}
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "L1_COMPONENT")
+    public L1Component getL1Component()
+    {
+        return this.l1Component;
+    }
+
+    public void setL1Component(L1Component l1Component)
+    {
+        this.l1Component = l1Component;
+    }
+
+    protected Object clone() throws CloneNotSupportedException
+    {
+        L1ComponentParameter l1ComponentParameter = (L1ComponentParameter) super.clone();
+        l1ComponentParameter.setId(null);
+        return l1ComponentParameter;
+    }
 
     @Override
     @Transient

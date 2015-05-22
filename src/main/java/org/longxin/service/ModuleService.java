@@ -16,4 +16,6 @@ public interface ModuleService
     public void updateModule(Module module);
     
     public void deleteModule(int id);
+    
+    public List<Module> getModulesByFeatureWithChild(Feature feature);
 }

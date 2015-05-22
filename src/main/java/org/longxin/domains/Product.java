@@ -16,6 +16,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OrderBy;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
 import javax.persistence.Table;
@@ -129,7 +130,8 @@ public class Product implements java.io.Serializable, Cloneable
 		this.functionName = functionName;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "product", cascade= CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade= CascadeType.ALL)
+	@OrderBy("id ASC")
 	@JsonIgnore
 	public Set<Feature> getFeatures()
 	{

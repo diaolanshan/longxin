@@ -5,8 +5,10 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
+@MappedSuperclass
 public abstract class ComponentParameter
 {
     private Integer id;
@@ -18,6 +20,7 @@ public abstract class ComponentParameter
     private String maxValue;
     private Boolean isDraft;
     private String draftValue;
+    private String changeReason;
     
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -126,5 +129,18 @@ public abstract class ComponentParameter
     
     @Transient
     public abstract String getCategory();
+
+    @Transient
+    public String getChangeReason()
+    {
+        return changeReason;
+    }
+
+    public void setChangeReason(String changeReason)
+    {
+        this.changeReason = changeReason;
+    }
+    
+    
 }
 

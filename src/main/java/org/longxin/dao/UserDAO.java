@@ -19,4 +19,6 @@ public interface UserDAO {
 	public List<Users> searchUsers(String keyword);
 	
 	public void editUser(Users user);
+	
+	public List<Users> getUsersByIds(String [] ids);
 }

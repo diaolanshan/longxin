@@ -43,7 +43,7 @@ String path = request.getContextPath();
     			$.each(data, function(idx,item)
     			{
     				var downloadlink = "../../filecontroller/download/" + item.id;
-    				var attachment = "<div style='display: inline; width: 15%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
+    				var attachment = "<div style='display: inline; width: 10%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:40px;border:2px dashed;border-color:#2bc0be'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
     				$("#attachments").append(attachment);
     				
     			}
@@ -70,11 +70,11 @@ String path = request.getContextPath();
     }
 
     function update(){
-    	$("#updateForm").fadeIn("fast");
+    	$("#updateForm").modal('show');
     }
     
     function showUpdateParameter(parameterId){
-    	$("#updateParameterinfo"+parameterId).fadeIn("fast");
+    	$("#updateParameterinfo"+parameterId).modal('show');
     }
     
     function updateParameter(parameterId){
@@ -97,7 +97,7 @@ String path = request.getContextPath();
     }
     
     function addL3Component(){
-    	$("#addComponentForm").fadeIn("fast");
+    	$("#addComponentForm").modal('show');
     }
 </script>
 
@@ -112,71 +112,107 @@ String path = request.getContextPath();
 		</legend>
 		<div class="form-group">
 			<label for="functionName" class="col-sm-3 control-label">功能名称：</label>
-			<div class="control-label">${component.functionName}</div>
+			<div class="col-sm-8 control-label">${component.functionName}</div>
 		</div>
 		<div class="form-group">
 			<input type="text" id="idvalue" style="display:none" value="${component.id}">
 			<label for="id" class="col-sm-3 control-label">组件描述：</label>
-			<div class="control-label">${component.description}</div>
+			<div class="col-sm-8 control-label">${component.description}</div>
 		</div>
 		<c:forEach items="${parameters}" var="parameter">
 			<div class="form-group">
 				<label for="id" class="col-sm-3 control-label">${parameter.parameterName}：</label>
-				<div class="control-label" style="width:800px">
-					<div style="width:150px;float:left;display:inline">${parameter.parameterValue}&nbsp;&nbsp;${parameter.unitName}</div>
+				<div class="col-sm-4 control-label">
+					<c:choose>
+						<c:when test="${parameter.isDraft }">
+							<div style="width:150px;float:left;display:inline;background-color:#f2dede">${parameter.parameterValue}&nbsp;&nbsp;${parameter.unitName}</div>
+						</c:when>
+						<c:otherwise>
+							<div style="width:150px;float:left;display:inline">${parameter.parameterValue}&nbsp;&nbsp;${parameter.unitName}</div>
+						</c:otherwise>
+					</c:choose>
 					<c:choose>
 						<c:when test="${parameter.options == \"\"}">
 							<div style="width: 300px; hefloat: left; display: inline;font-size:11px;color:gray">取值范围(${parameter.minValue},${parameter.maxValue})</div>
 						</c:when>
 						<c:otherwise>
-							<div style="width: 300px; hefloat: left; display: inline;font-size:11px;color:gray">可选值(${parameter.options})</div>
+							<div style="width: 200px; hefloat: left; display: inline;font-size:11px;color:gray">可选值(${parameter.options})</div>
 						</c:otherwise>
 					</c:choose>
-					&nbsp;&nbsp;<a href="#" data-toggle="popover"><label for="fileupload${parameter.id}" class="glyphicon glyphicon-upload" aria-hidden="true" title="上传文件"></label>
-					<input id="fileupload${parameter.id}" type="file" name="files[]" style="display:none" data-url="../../filecontroller/upload/L2COMPONENTPARAMETER/${parameter.id}"></input></a>
-					&nbsp;&nbsp;
+				</div>
+				<div class="col-sm-3 control-label">
+					<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+					<a href="#" data-toggle="popover"><label for="fileupload${parameter.id}" class="glyphicon glyphicon-upload" aria-hidden="true" title="上传文件"></label>
+						<input id="fileupload${parameter.id}" type="file" name="files[]" style="display:none" data-url="../../filecontroller/upload/L2COMPONENTPARAMETER/${parameter.id}"></input></a>
+					</sec:authorize>
 					<a href="javascript:void(0);" onclick="showParameterAttachments(${parameter.id}, '${parameter.category}')" data-toggle="popover" title="下载文件"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a>
-					
-					&nbsp;&nbsp;
-					&nbsp;&nbsp;
-						<a href="javascript:void(0);" onclick="showUpdateParameter(${parameter.id})" data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-						<a href="javascript:void(0);" onclick="showDailog(${parameter.id},'parameter')" data-toggle="popover" title="删除"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-				
+					<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+						<c:if test="${isAllowed=='true'}">
+							<a href="javascript:void(0);" onclick="showHistory('L1COMPONENTPARAMETER',${parameter.id})" data-toggle="popover" title="历史记录"><span class=" glyphicon glyphicon-random" aria-hidden="true"></span></a>
+							<a href="javascript:void(0);" onclick="showUpdateParameter(${parameter.id})" data-toggle="popover" title="编辑"><img alt="" style="width:20px;margin-left:4px" src="<%=path%>/images/edit.png"></a>
+							<a href="javascript:void(0);" onclick="showDailog(${parameter.id},'parameter')" data-toggle="popover" title="删除"><img alt="" style="width:20px;margin-left:4px" src="<%=path%>/images/delete.png"></a>
+						</c:if>
+					</sec:authorize>
 				</div>
 			</div>
 		</c:forEach>
-		
-		<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
-			<div class="form-group">
-				<div class="col-sm-offset-7 col-sm-5" style="align: right">
-					<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
-					<input type="button" id="add_new" class="btn btn-primary" value="增加属性"></input>
-					<input type="button" onclick="addL3Component()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
-				</div>
+
+		<div class="form-group">
+			<div class="col-sm-offset-7 col-sm-5" style="align: right">
+				<c:choose>
+					<c:when test="! ${component.template}">
+						<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+							<c:if test="${isAllowed=='true'}">
+								<label for="fileupload" title="上传文件"><img alt=""
+									style="margin-top: -4px;width:24px;height:18px" src="<%=path%>/images/upload.png">
+								</label>
+								<input id="fileupload" type="file" name="files[]"
+									style="display: none"
+									data-url="../../filecontroller/upload/l2component/${component.id}">&nbsp;
+								<input type="button" onclick="update()"
+									class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
+								<input type="button" id="add_new" class="btn btn-primary"
+									value="增加属性"></input>
+								<input type="button" onclick="addL3Component()"
+									class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
+							</c:if>
+						</sec:authorize>
+					</c:when>
+					<c:otherwise>
+						<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+							<c:if test="${isAllowed=='true'}">
+								<label for="fileupload" title="上传文件"><img alt=""
+									style="margin-top: -4px;width:24px;height:18px" src="<%=path%>/images/upload.png">
+								</label>
+								<input id="fileupload" type="file" name="files[]"
+									style="display: none"
+									data-url="../../filecontroller/upload/l2component/${component.id}">&nbsp;
+								<input type="button" onclick="update()"
+									class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
+								<input type="button" id="add_new" class="btn btn-primary"
+									value="增加属性"></input>
+								<input type="button" onclick="addL3Component()"
+									class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
+							</c:if>
+					</sec:authorize>
+					</c:otherwise>
+				</c:choose>
 			</div>
-		</sec:authorize>
-		
+		</div>
+
 		<div id="attachments" style="display:block;width:100%">
 		</div>
 		
-		<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
-			<div style="display: inline; width: 17%;float:right">
-				<label for="fileupload" title="上传文件"><img alt="" src="<%=path%>/images/upload.png"> </label>
-				<input id="fileupload" type="file" name="files[]" style="display:none"
-					data-url="../../filecontroller/upload/l2component/${component.id}"
-					multiple>
-			</div>
-		</sec:authorize>
 		<br/>
 	</fieldset>
 	<br>
 	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1">
 		<thead>
 	        <tr class="success">
-				<th data-field="name"  data-sortable="true">模块名称</th>
-				<th data-field="function"  data-sortable="true">功能描述</th>
-				<th data-field="description"  data-sortable="true">模块描述</th>
-	            <th data-sortable="false">操作</th>
+				<th data-field="name"  data-sortable="true" data-halign="center">模块名称</th>
+				<th data-field="function"  data-sortable="true" data-halign="center">功能描述</th>
+				<th data-field="description"  data-sortable="true" data-halign="center">模块描述</th>
+	            <th data-sortable="false" data-halign="center">操作</th>
 	        </tr>
    	 	</thead>
    	 	<tbody>
@@ -186,9 +222,9 @@ String path = request.getContextPath();
                  <td>${l3component.functionName}</td> 
                 <td>${l3component.description}</td>  
                 <td>
-                <a href="../../l3component/view/${l3component.id}"  data-toggle="popover" title="查看"><span class="glyphicon glyphicon-th" aria-hidden="true"></span></a>
+                <a href="../../l3component/view/${l3component.id}"  data-toggle="popover" title="查看"><img alt="" src="<%=path%>/images/view.png"></a>
                 &nbsp;&nbsp;
-                <a href="javascript:void(0);" onclick="showDailog(${l3component.id},'component')" data-toggle="popover" title="编辑"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                <!-- <a href="javascript:void(0);" onclick="showDailog(${l3component.id},'component')" data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a>-->
    	 			&nbsp;&nbsp;
             </tr>  
        		</c:forEach>
@@ -213,215 +249,333 @@ String path = request.getContextPath();
   </div>
 </div>
 
-<div class="entry-form" id="parameterAttachments">
+<!-- 确认框  -->
+<div class="modal fade" id="historyForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">历史记录</h4>
+      </div>
+      <div class="modal-body" style="display:block;height:300px">
+      		<table id="historyTable" border="0" align="left" >
+      			
+      		</table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- download parameter-->
+<div class="modal fade" id="parameterAttachments" tabindex="-1" role="dialog">
 	<form method="POST" action="../update/${component.id}">
-		<table width="100%" border="0" cellpadding="4" cellspacing="0">
-			<tr>
-				<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
-			</tr>
-			<tr>
-				<td><div id="parameterAttachmentsDiv"></div></td>
-			</tr>
-		</table>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">${component.name}的附件</h4>
+				</div>
+				<div class="modal-body">
+					<table>
+						<tr>
+							<td><div id="parameterAttachmentsDiv" style="display:block"></div></td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<input type="button" value="取消" class="btn btn-primary closeForm" data-dismiss="modal">
+				</div>
+			</div>
+		</div>
 	</form>
 </div>
-<!-- update 当前name and description -->
-<div class="entry-form" id="updateForm">
+
+<!-- update detail -->
+<div class="modal fade" id="updateForm" tabindex="-1" role="dialog">
 	<form method="POST" action="../update/${component.id}">
-		<table width="100%" border="0" cellpadding="4" cellspacing="0">
-			<tr>
-			<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
-			</tr>
-			<tr>
-				<td>模块名称：</td>
-				<td><input type="text" name="name" value="${component.name}"></td>
-			</tr>
-			<tr>
-				<td>功能名称：</td>
-				<td><input type="text" name="functionName" value="${component.functionName}"></td>
-			</tr>
-			<tr>
-				<td>描述：</td>
-				<td><input type="text" name="description" value="${component.description}"></td>
-			</tr>
-			<tr>
-				<td align="right"></td>
-				<td><input type="submit" value="保存" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="button" value="取消" class="btn btn-primary closeForm"></td>
-			</tr>
-		</table>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">编辑${component.name}信息</h4>
+				</div>
+				<div class="modal-body">
+
+					<table width="100%" border="0" cellpadding="4" cellspacing="0">
+						<tr>
+							<td>模块名称：</td>
+							<td><div class="form-group"><input type="text" name="name" value="${component.name}" class="form-control"></div></td>
+						</tr>
+						<tr>
+							<td>功能名称：</td>
+							<td><div class="form-group"><input type="text" name="functionName" class="form-control"
+								value="${component.functionName}"></div></td>
+						</tr>
+						<tr>
+							<td>描述：</td>
+							<td><div class="form-group"><input type="text" name="description" class="form-control"
+								value="${component.description}"></div></td>
+						</tr>
+						<tr>
+							<td align="right"></td>
+							<td></td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" value="保存" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" value="取消" class="btn btn-primary closeForm" data-dismiss="modal">
+				</div>
+			</div>
+		</div>
 	</form>
 </div>
+
 <!-- 添加parameter细节form -->
-<div class="entry-form" id="parameterinfoForm">
+<div class="modal fade" id="parameterinfoForm" tabindex="-1"
+	role="dialog">
 	<form name="parameterinfo" id="parameterinfo">
-		<table width="100%" border="0" cellpadding="4" cellspacing="0">
-			<tr>
-				<td colspan="2" align="right"><a href="#" class="closeForm" id="close">关闭</a></td>
-			</tr>
-			<tr>
-				<td><input type="text" id="componentId" style="display:none" value="${component.id}"></td>
-			</tr>
-			<tr>
-				<td>参数名称：</td>
-				<td><input type="text" name="parameterName" ></td>
-			</tr>
-			<tr>
-				<td>默认值：</td>
-				<td><input type="text" name="parameterValue"></td>
-			</tr>
-			<tr>
-				<td>最小值：</td>
-				<td><input type="text" name="minValue"></td>
-			</tr>
-			<tr>
-				<td>最大值：</td>
-				<td><input type="text" name="maxValue"></td>
-			</tr>
-			<tr>
-				<td>单位：</td>
-				<td><input type="text" name="unitName"></td>
-			</tr>
-			<tr>
-				<td>可选项：</td>
-				<td><input type="text" name="options"></td>
-			</tr>
-			<tr>
-				<td align="right"></td>
-				<td><input type="button" value="保存" id="saveparameter" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;<input
-					type="button" value="取消" id="cancel" class="btn btn-primary closeForm"></td>
-			</tr>
-		</table>
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">增加子模块</h4>
+				</div>
+				<div class="modal-body">
+					<table width="100%" border="0" cellpadding="4" cellspacing="0">
+						<tr>
+							<td><input type="text" id="componentId"
+								style="display: none" value="${component.id}"></td>
+						</tr>
+						<tr>
+							<td>参数名称：</td>
+							<td><div class="form-group"><input type="text" name="parameterName" class="form-control"></div></td>
+						</tr>
+						<tr>
+							<td>默认值：</td>
+							<td><div class="form-group"><input type="text" name="parameterValue" class="form-control"></div></td>
+						</tr>
+						<tr>
+							<td>最小值：</td>
+							<td><div class="form-group"><input type="text" name="minValue" class="form-control"></div></td>
+						</tr>
+						<tr>
+							<td>最大值：</td>
+							<td><div class="form-group"><input type="text" name="maxValue" class="form-control"></div></td>
+						</tr>
+						<tr>
+							<td>单位：</td>
+							<td><div class="form-group"><input type="text" name="unitName" class="form-control"></div></td>
+						</tr>
+						<tr>
+							<td>可选项：</td>
+							<td><div class="form-group"><input type="text" name="options" class="form-control"></div></td>
+						</tr>
+						<tr>
+							<td>添加原因：</td>
+							<td><div class="form-group"><textarea rows="2" cols="1" class="form-control" name="changeReason"></textarea></div></td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<input type="button" value="保存" id="saveparameter"
+						class="btn btn-primary"> <input type="button" value="取消"
+						class="btn btn-primary closeForm" data-dismiss="modal">
+				</div>
+			</div>
+		</div>
 	</form>
 </div>
+
 <!-- 添加下一级component的form -->
-<div class="entry-form" id="addComponentForm">
-	<form name="addComponent" method="POST" action="./${component.id}/add/component">
-		<table width="100%" border="0" cellpadding="4" cellspacing="0">
-			<tr>
-			<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
-			</tr>
-			<tr>
-				<td>模块名称：</td>
-				<td><input type="text" name="name"></td>
-			</tr>
-			<tr>
-				<td>描述：</td>
-				<td><input type="text" name="description"></td>
-			</tr>
-			<tr>
-				<td align="right"></td>
-				<td><input type="submit" value="保存" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="button" value="取消" class="btn btn-primary closeForm"></td>
-			</tr>
-		</table>
+<div class="modal fade" id="addComponentForm" tabindex="-1"
+	role="dialog">
+	<form name="addComponent" method="POST"
+		action="./${component.id}/add/component">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">增加子模块</h4>
+				</div>
+				<div class="modal-body">
+					<table width="100%" border="0" cellpadding="4" cellspacing="0">
+						<tr>
+							<td>模块名称：</td>
+							<td><div class="form-group"><input type="text" name="name" class="form-control"></div></td>
+						</tr>
+						<tr>
+							<td>描述：</td>
+							<td><div class="form-group"><input type="text" name="description" class="form-control"></div></td>
+						</tr>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<input type="submit" value="保存" class="btn btn-primary">&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="button" value="取消" class="btn btn-primary closeForm"
+						data-dismiss="modal">
+				</div>
+			</div>
+		</div>
 	</form>
 </div>
 
 <!-- 修改parameter细节form -->
-<c:forEach items="${parameters}" var="parameter">
-<div class="entry-form" id="updateParameterinfo${parameter.id}">
-	<form id="updateParameterForm${parameter.id}" >
-		<table width="100%" border="0" cellpadding="4" cellspacing="0">
-			<tr>
-				<td colspan="2" align="right"><a href="#" class="closeForm">关闭</a></td>
-			</tr>
-			<tr>
-				<td><input type="text" name="id" style="display:none" value="${parameter.id}"></td>
-			</tr>
-			<tr>
-				<td>参数名称：</td>
-				<td><input type="text" name="parameterName" value="${parameter.parameterName}"></td>
-			</tr>
-			<tr>
-				<td>默认值：</td>
-				<td>
-					<c:choose>
-						<c:when test="${parameter.l2Component.template}">
-							<input type="text" name="parameterValue" value="${parameter.parameterValue}">
-						</c:when>
-						<c:otherwise>
-							<c:choose>
-								<c:when test="${parameter.isDraft}">
-									<input type="text" name="draftValue" value="${parameter.getDraftValue()}" style="background-color:#f2dede">
-								</c:when>
-								<c:otherwise>
-									<input type="text" name="draftValue" value="${parameter.getDraftValue()}">
-								</c:otherwise>
-							</c:choose>
-							<input type="text" name="parameterValue" value="${parameter.parameterValue}" style="display:none">
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-			<tr>
-				<td>最小值：</td>
-				<td>
-					<c:choose>
-						<c:when test="${parameter.l2Component.template}">
-							<input type="text" name="minValue" value="${parameter.minValue}">
-						</c:when>
-						<c:otherwise>
-							<input type="text" name="minValue" value="${parameter.minValue}" style="display:none">
-							<input type="text" name="minValue" value="${parameter.minValue}" disabled="disabled">
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-			<tr>
-				<td>最大值：</td>
-				<td>
-					<c:choose>
-						<c:when test="${parameter.l2Component.template}">
-							<input type="text" name="maxValue" value="${parameter.maxValue}">
-						</c:when>
-						<c:otherwise>
-							<input type="text" name="maxValue" value="${parameter.maxValue}" style="display:none">
-							<input type="text" name="maxValue" value="${parameter.maxValue}" disabled="disabled">
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-			<tr>
-				<td>单位：</td>
-				<td>
-					<c:choose>
-						<c:when test="${parameter.l2Component.template}">
-							<input type="text" name="unitName" value="${parameter.unitName}">
-						</c:when>
-						<c:otherwise>
-							<input type="text" name="unitName" value="${parameter.unitName}" style="display:none">
-							<input type="text" name="unitName" value="${parameter.unitName}" disabled="disabled">
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-			<tr>
-				<td>可选项：</td>
-				<td>
-					<c:choose>
-						<c:when test="${parameter.l2Component.template}">
-							<input type="text" name="options" value="${parameter.options}">
-						</c:when>
-						<c:otherwise>
-							<input type="text" name="options" value="${parameter.options}" style="display:none">
-							<input type="text" name="options" value="${parameter.options}" disabled="disabled">
-						</c:otherwise>
-					</c:choose>
-				</td>
-			</tr>
-			<tr>
-				<td align="right"></td>
-				<td><input type="button" value="保存" onclick="updateParameter(${parameter.id})" class="btn btn-primary">&nbsp;
-					<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
-						<c:if test="${parameter.isDraft}">
-							<input type="button" value="批准" onclick="approveParameter(${parameter.id})" class="btn btn-primary">&nbsp;
-							<input type="button" value="拒绝" onclick="declineParameter(${parameter.id})" class="btn btn-primary">&nbsp;
-						</c:if>
-					</sec:authorize>
-				<input type="button" value="取消" class="btn btn-primary closeForm"></td>
-			</tr>
-		</table>
+<c:forEach items="${parameters}" var="parameter" >
+<div class="modal fade" tabindex="-1" role="dialog" id="updateParameterinfo${parameter.id}">
+	<form id="updateParameterForm${parameter.id}">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">编辑${component.name}信息</h4>
+				</div>
+				<div class="modal-body">
+						<table width="100%" border="0" cellpadding="4" cellspacing="0">
+							<tr>
+								<td><div class="form-group"><input type="text" name="id" style="display: none"
+									value="${parameter.id}"></div></td>
+							</tr>
+							<tr>
+								<td>参数名称：</td>
+								<td><div class="form-group"><input type="text" name="parameterName" class="form-control"
+									value="${parameter.parameterName}"></div></td>
+							</tr>
+							<tr>
+								<td>默认值：</td>
+								<td><c:choose>
+										<c:when test="${parameter.l2Component.template}">
+											<div class="form-group"><input type="text" name="parameterValue" class="form-control"
+												value="${parameter.parameterValue}"></div>
+										</c:when>
+										<c:otherwise>
+											<c:choose>
+												<c:when test="${parameter.isDraft}">
+													<div class="form-group"><input type="text" name="draftValue" class="form-control"
+														value="${parameter.getDraftValue()}"
+														style="background-color: #f2dede"></div>
+												</c:when>
+												<c:otherwise>
+													<div class="form-group"><input type="text" name="draftValue" class="form-control"
+														value="${parameter.getDraftValue()}"></div>
+												</c:otherwise>
+											</c:choose> 
+											<div class="form-group"><input type="text" name="parameterValue" class="form-control"
+												value="${parameter.parameterValue}" style="display: none"></div>
+										</c:otherwise>
+									</c:choose></td>
+							</tr>
+							<tr>
+								<td>最小值：</td>
+								<td><c:choose>
+										<c:when test="${parameter.l2Component.template}">
+											<div class="form-group"><input type="text" name="minValue" class="form-control"
+												value="${parameter.minValue}"></div>
+										</c:when>
+										<c:otherwise>
+											<div class="form-group"><input type="text" name="minValue" class="form-control"
+												value="${parameter.minValue}" style="display: none"></div>
+											<div class="form-group"><input type="text" name="minValue" class="form-control"
+												value="${parameter.minValue}" disabled="disabled"></div>
+										</c:otherwise>
+									</c:choose></td>
+							</tr>
+							<tr>
+								<td>最大值：</td>
+								<td><c:choose>
+										<c:when test="${parameter.l2Component.template}">
+											<div class="form-group"><input type="text" name="maxValue" class="form-control"
+												value="${parameter.maxValue}"></div>
+										</c:when>
+										<c:otherwise>
+											<div class="form-group"><input type="text" name="maxValue" class="form-control"
+												value="${parameter.maxValue}" style="display: none"></div>
+											<div class="form-group"><input type="text" name="maxValue" class="form-control"
+												value="${parameter.maxValue}" disabled="disabled"></div>
+										</c:otherwise>
+									</c:choose></td>
+							</tr>
+							<tr>
+								<td>单位：</td>
+								<td><c:choose>
+										<c:when test="${parameter.l2Component.template}">
+											<div class="form-group"><input type="text" name="unitName" class="form-control"
+												value="${parameter.unitName}"></div>
+										</c:when>
+										<c:otherwise>
+											<div class="form-group"><input type="text" name="unitName" class="form-control"
+												value="${parameter.unitName}" style="display: none"></div>
+											<div class="form-group"><input type="text" name="unitName" class="form-control"
+												value="${parameter.unitName}" disabled="disabled"></div>
+										</c:otherwise>
+									</c:choose></td>
+							</tr>
+							<tr>
+								<td>可选项：</td>
+								<td><c:choose>
+										<c:when test="${parameter.l2Component.template}">
+											<div class="form-group"><input type="text" name="options" class="form-control"
+												value="${parameter.options}"></div>
+										</c:when>
+										<c:otherwise>
+											<div class="form-group"><input type="text" name="options" class="form-control"
+												value="${parameter.options}" style="display: none"></div>
+											<div class="form-group"><input type="text" name="options" class="form-control"
+												value="${parameter.options}" disabled="disabled"></div>
+										</c:otherwise>
+									</c:choose></td>
+							</tr>
+							<!-- <tr>
+								<td><a href="#" data-toggle="popover"><label
+										for="fileupload${parameter.id}"
+										class="glyphicon glyphicon-upload" aria-hidden="true"
+										title="上传文件"></label> <input id="fileupload${parameter.id}"
+										type="file" name="files[]" style="display: none"
+										data-url="../../filecontroller/upload/L1COMPONENTPARAMETER/${parameter.id}"></input></a>
+								</td>
+							</tr> -->
+							<tr>
+								<td>更改原因：</td>
+								<td>
+									<div class="form-group">
+										<textarea rows="2" cols="1" class="form-control"
+											name="changeReason"></textarea>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<input type="button" value="保存"
+							onclick="updateParameter(${parameter.id})"
+							class="btn btn-primary">&nbsp;
+						<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+							<c:if test="${isAllowed=='true'}">
+								<c:if test="${parameter.isDraft}">
+									<input type="button" value="批准"
+										onclick="approveParameter(${parameter.id})"
+										class="btn btn-primary">&nbsp;
+												<input type="button" value="拒绝"
+										onclick="declineParameter(${parameter.id})"
+										class="btn btn-primary">&nbsp;
+								</c:if>
+							</c:if>
+						</sec:authorize>
+						<input type="button" value="取消" class="btn btn-primary closeForm"
+							data-dismiss="modal">
+					</div>
+				</div>
+		</div>
 	</form>
 </div>
 </c:forEach>

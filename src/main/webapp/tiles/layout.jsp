@@ -32,15 +32,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 	<div style="display:none" id="meanItem"><tiles:getAsString name="menuItem"></tiles:getAsString></div>
-	<nav class="navbar navbar-inverse navbar-fixed-top" style="background-image:url(<%=path%>/images/header.png);background-repeat:no-repeat;height:80px;margin-top:1px;margin-left:3px;margin-right:3px">
-		<div class="container-fluid" >
+	<div class="navbar-fixed-top" style="width:100%">
+		<img alt="" src="<%=path%>/images/lego.png" style="background-color: #2bc0be"> 
+		<div style="display:inline;background-image:url(<%=path%>/images/header.png);background-repeat:no-repeat;margin-left:200px;height:95px" class="navbar-fixed-top">
+			<div style="font-size:45px;padding-left:30px">杭州龙鑫科技有限公司</div>
 			<tiles:insertAttribute name="header" />
 		</div>
-	</nav>
+	</div>
 
-	<div class="container-fluid" style="padding-top:40px">
+	<div class="container-fluid" style="padding-top:50px">
 		<div class="row">
-			<div class="col-sm-3 col-md-2 sidebar" style="padding-top:50px">
+			<div class="col-sm-3 col-md-2 sidebar" style="padding-top:50px;background-color: #121921;width:200px">
 				<tiles:insertAttribute name="menu" />
 			</div>
 

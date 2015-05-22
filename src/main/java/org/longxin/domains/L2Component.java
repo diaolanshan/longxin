@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
 /**
@@ -24,7 +25,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "l2_component", catalog = "longxin")
-public class L2Component implements java.io.Serializable, Cloneable
+public class L2Component extends Component implements java.io.Serializable, Cloneable
 {
 
 	/**
@@ -110,6 +111,7 @@ public class L2Component implements java.io.Serializable, Cloneable
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "l2Component", cascade= CascadeType.ALL)
+	@OrderBy("id ASC")
 	public Set<L2ComponentParameter> getL2ComponentParameters()
 	{
 		return this.l2ComponentParameters;
@@ -121,7 +123,8 @@ public class L2Component implements java.io.Serializable, Cloneable
 		this.l2ComponentParameters = l2ComponentParameters;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "l2Component", cascade= CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "l2Component", cascade= CascadeType.ALL)
+	@OrderBy("id ASC")
 	public Set<L3Component> getL3Components()
 	{
 		return this.l3Components;

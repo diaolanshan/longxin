@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -99,7 +100,8 @@ public class Module implements java.io.Serializable, Cloneable
 		this.template = template;
 	}
 
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "module", cascade= CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "module", cascade= CascadeType.ALL)
+	@OrderBy("id ASC")
 	public Set<L1Component> getL1Components()
 	{
 		return l1Components;
