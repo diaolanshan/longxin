@@ -71,7 +71,7 @@ public class L2ComponentController extends ComponentContoller
     @RequestMapping(value = "/diagram/{componentId}", method = RequestMethod.GET)
     public String showDiagram(@PathVariable int componentId, Model model)
     {
-        L2Component component = l2ComponentService.getL2ComponentByID(componentId);
+        L2Component component = l2ComponentService.getL2ComponentByIDForDiagram(componentId);
         model.addAttribute("component", component);
         return "/l2component/diagram";
     }
@@ -79,7 +79,7 @@ public class L2ComponentController extends ComponentContoller
     @RequestMapping(value = "/functiondiagram/{componentId}", method = RequestMethod.GET)
     public String showFunctionDiagram(@PathVariable int componentId, Model model)
     {
-        L2Component component = l2ComponentService.getL2ComponentByID(componentId);
+        L2Component component = l2ComponentService.getL2ComponentByIDForDiagram(componentId);
         model.addAttribute("component", component);
         return "/l2component/functiondiagram";
     }

@@ -39,4 +39,27 @@ public class L1ComponentParameterDAOImpl extends HibernateDaoSupport implements 
     {
         this.getHibernateTemplate().update(l1parameter);
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<L1ComponentParameter> searchByKeywords(String keywords)
+    {
+        keywords = "%" + keywords + "%";
+        List<L1ComponentParameter> results = this
+                .getHibernateTemplate()
+                .find(
+                    "FROM L1ComponentParameter parameter WHERE parameter.parameterName like ? OR parameter.parameterValue like ? OR parameter.options like ? OR parameter.minValue like ? OR parameter.maxValue like ? OR parameter.draftValue like ?",
+                    keywords,
+                    keywords,
+                    keywords,
+                    keywords,
+                    keywords,
+                    keywords);
+        
+        for(L1ComponentParameter parameter : results)
+        {
+            parameter.setSearched(true);
+        }
+        
+        return results; 
+    }
 }

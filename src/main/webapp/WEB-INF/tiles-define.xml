@@ -178,4 +178,10 @@
 		<put-attribute name="menuItem" value="productmanagement" />
 		<put-attribute name="body" value="/view/feature/showmatrix.jsp" />
 	</definition>
+	
+	<definition name="/product/create" extends="base.definition">
+		<put-attribute name="title" value="产品管理" />
+		<put-attribute name="menuItem" value="productmanagement" />
+		<put-attribute name="body" value="/view/product/addproduct.jsp" />
+	</definition>
 </tiles-definitions>  

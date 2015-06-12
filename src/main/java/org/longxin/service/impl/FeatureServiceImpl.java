@@ -8,6 +8,8 @@ import org.longxin.dao.L1ComponentDAO;
 import org.longxin.domains.Feature;
 import org.longxin.domains.FunctionModule;
 import org.longxin.domains.L1Component;
+import org.longxin.domains.L2Component;
+import org.longxin.domains.L3Component;
 import org.longxin.domains.Module;
 import org.longxin.domains.Product;
 import org.longxin.service.FeatureService;
@@ -65,6 +67,72 @@ public class FeatureServiceImpl implements FeatureService
         return featureDAO.getFeatureByID(featureID);
     }
     
+    public Feature getFeatureByIDForDiagram(Integer featureID)
+    {
+        Feature feature = featureDAO.getFeatureByID(featureID);
+
+        if (feature.getModules() != null)
+        {
+            for (Module module : feature.getModules())
+            {
+                if (module.getL1Components() != null)
+                {
+                    for (L1Component l1Component : module.getL1Components())
+                    {
+                        if (l1Component.getL2Components() != null)
+                        {
+                            for (L2Component l2Component : l1Component.getL2Components())
+                            {
+                                if (l2Component.getL3Components() != null)
+                                {
+                                    for (L3Component l3Component : l2Component.getL3Components())
+                                    {
+                                        l3Component.getName();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return feature;
+    }
+    
+    public Feature getFeatureByIDForFunctionDiagram(Integer featureID)
+    {
+        Feature feature = featureDAO.getFeatureByID(featureID);
+
+        if (feature.getFunctionModules() != null)
+        {
+            for (FunctionModule module : feature.getFunctionModules())
+            {
+                if (module.getL1Components() != null)
+                {
+                    for (L1Component l1Component : module.getL1Components())
+                    {
+                        if (l1Component.getL2Components() != null)
+                        {
+                            for (L2Component l2Component : l1Component.getL2Components())
+                            {
+                                if (l2Component.getL3Components() != null)
+                                {
+                                    for (L3Component l3Component : l2Component.getL3Components())
+                                    {
+                                        l3Component.getName();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return feature;
+    }
+    
     public List<MatrixBean> generateFunctionMatrix(int featureId)
     {
         Feature feature = getFeatureByID(featureId);
@@ -113,5 +181,11 @@ public class FeatureServiceImpl implements FeatureService
                 }
             }
         }
+    }
+
+    @Override
+    public List<Feature> searchByKeywords(String keywords)
+    {
+        return featureDAO.searchByKeywords(keywords);
     }
 }

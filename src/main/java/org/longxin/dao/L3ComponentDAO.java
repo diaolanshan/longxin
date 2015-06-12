@@ -18,4 +18,6 @@ public interface L3ComponentDAO
 	public void deleteL3Component(int id);
 	
 	public boolean isThereDraftParamterForComponent(int l3ComponentId);
+	
+	public List<L3Component> searchByKeywords(String keywords);
 }

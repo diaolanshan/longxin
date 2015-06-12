@@ -30,4 +30,24 @@ public class FeatureDAOImpl extends HibernateDaoSupport implements FeatureDAO
         Feature feature = getFeatureByID(featureID);
         this.getHibernateTemplate().delete(feature);
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<Feature> searchByKeywords(String keywords)
+    {
+        keywords = "%" + keywords + "%";
+        List<Feature> results = this
+                .getHibernateTemplate()
+                .find(
+                    "FROM Feature feature WHERE feature.featureName like ? OR feature.description like ? OR feature.functionName like ?",
+                    keywords,
+                    keywords,
+                    keywords);
+        
+        for(Feature result : results)
+        {
+            result.setSearched(true);
+        }
+        
+        return results;
+    }
 }

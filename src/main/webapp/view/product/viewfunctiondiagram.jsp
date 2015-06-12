@@ -9,11 +9,11 @@
 				<c:forEach items="${product.features}" var="feature">
 					<li id="${feature.id}"><a href="../../feature/view/${feature.id}">${feature.functionName}</a>
 						<ul>
-							<c:forEach items="${feature.modules}" var="module">
-								<li><a href="./../../module/view/${module.id}">${module.functionName}</a>
+							<c:forEach items="${feature.functionModules}" var="module">
+								<li><a href="./../../module/view/${module.id}">${module.name}</a>
 									<ul>
 										<c:forEach items="${module.l1Components}" var="l1">
-											<li><a href="./../../l1component/view/${l1.id}" target="_blank">${l1.functionName}</a>
+											<li><a href="./../../l1component/view/${l1.id}" target="_blank">${l1.name}</a>
 												<ul>
 													<c:forEach items="${l1.l2Components}" var="l2">
 														<li>

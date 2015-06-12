@@ -17,6 +17,7 @@ import org.longxin.domains.Attachment;
 import org.longxin.service.AttachmentService;
 import org.longxin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -34,7 +35,8 @@ public class FileController
 {
     protected static Logger logger = Logger.getLogger(FileController.class);
 
-    public static final String FILE_ROOT = "D:/temp/files";
+    @Value("#{applicationSetting['fileRoot']}")
+    String fileRoot;
 
     LinkedList<Attachment> files = new LinkedList<Attachment>();
 
@@ -69,7 +71,7 @@ public class FileController
 
             try
             {
-                File folder = new File(FILE_ROOT + File.separator + category + File.separator + componentId);
+                File folder = new File(fileRoot + File.separator + category + File.separator + componentId);
                 if (!folder.exists())
                 {
                     folder.mkdirs();
@@ -112,7 +114,7 @@ public class FileController
 
             try
             {
-                File folder = new File(FILE_ROOT + File.separator + category + File.separator + componentId);
+                File folder = new File(fileRoot + File.separator + category + File.separator + componentId);
                 if (!folder.exists())
                 {
                     folder.mkdirs();
@@ -168,7 +170,7 @@ public class FileController
         @PathVariable int attachmentId)
     {
         Attachment attachment = this.attachmentService.getAttachmentById(attachmentId);
-        Path file = Paths.get(FILE_ROOT + File.separator + attachment.getCategory() + File.separator + attachment.getReferenceId()
+        Path file = Paths.get(fileRoot + File.separator + attachment.getCategory() + File.separator + attachment.getReferenceId()
                 + File.separator + attachment.getFileName());
 
         try

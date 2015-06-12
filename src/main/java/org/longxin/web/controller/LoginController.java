@@ -1,6 +1,10 @@
 package org.longxin.web.controller;
 
+import java.util.List;
+
+import org.longxin.domains.Product;
 import org.longxin.domains.Users;
+import org.longxin.service.ProductService;
 import org.longxin.service.UserPermissionMatrixService;
 import org.longxin.service.UserService;
 import org.longxin.util.Roles;
@@ -23,6 +27,22 @@ public class LoginController
     @Autowired
     UserPermissionMatrixService userPermissionMatrixService;
     
+    @Autowired
+    ProductService productService;
+    
+    /**
+     * Used to generate the product menu.
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/menu", method = RequestMethod.GET)
+    public @ResponseBody
+    List<Product> getAllProductsForMenu(Model model)
+    {
+        List<Product> products = productService.getAllProducts();
+        return products;
+    }
+    
     @RequestMapping(value = "/waiting/count", method = RequestMethod.GET)
     public @ResponseBody int countComponentNeedToBeApproved(Model model)
     {
@@ -39,15 +59,6 @@ public class LoginController
             return userPermissionMatrixService.componnentCountNeedToBeApproved(user.getId());
         }
        return 0;
-    }
-    
-    @RequestMapping(value = "/waiting/list", method = RequestMethod.GET)
-    public String listComponentNeedToBeApproved(Model model)
-    {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Users user = userService.findUserByUserName(userDetails.getUsername());
-        
-        return "/feature/view";
     }
 
 }

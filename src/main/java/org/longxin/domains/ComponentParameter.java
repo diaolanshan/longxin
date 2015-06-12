@@ -21,6 +21,9 @@ public abstract class ComponentParameter
     private Boolean isDraft;
     private String draftValue;
     private String changeReason;
+    private Boolean scopeStatus;
+    private Boolean searched;
+    private String tempParameterValue;
     
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -140,7 +143,42 @@ public abstract class ComponentParameter
     {
         this.changeReason = changeReason;
     }
-    
-    
+
+    @Column(name = "SCOPE_STATUS")
+    public Boolean getScopeStatus()
+    {
+        return scopeStatus;
+    }
+
+    public void setScopeStatus(Boolean scopeStatus)
+    {
+        this.scopeStatus = scopeStatus;
+    }
+
+    @Transient
+    public Boolean getSearched()
+    {
+        return searched;
+    }
+
+    public void setSearched(Boolean searched)
+    {
+        this.searched = searched;
+    }
+
+    @Transient
+    public String getTempParameterValue()
+    {
+        if (this.tempParameterValue == null)
+        {
+            tempParameterValue = this.parameterValue;
+        }
+        return tempParameterValue;
+    }
+
+    public void setTempParameterValue(String tempParameterValue)
+    {
+        this.tempParameterValue = tempParameterValue;
+    }
 }
 

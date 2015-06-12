@@ -9,6 +9,8 @@ public interface L2ComponentService
 {
 	public L2Component getL2ComponentByID(Integer ID);
 	
+	public L2Component getL2ComponentByIDForDiagram(Integer ID);
+	
 	public List<L2Component> getL2ComponentsByL1(L1Component l1Component);
 
 	public void updateL2Component(L2Component l2Component);
@@ -20,4 +22,6 @@ public interface L2ComponentService
 	public int getFeatureId(int l2ComponentId);
 	
 	public boolean isThereDraftParamterForComponent(int l2ComponentId);
+	
+	public List<L2Component> searchByKeywords(String keywords);
 }

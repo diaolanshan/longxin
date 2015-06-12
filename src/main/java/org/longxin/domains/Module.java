@@ -2,7 +2,9 @@ package org.longxin.domains;
 
 // Generated 2015-1-17 19:49:59 by Hibernate Tools 3.4.0.CR1
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Transient;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -28,131 +31,164 @@ import javax.persistence.Table;
 public class Module implements java.io.Serializable, Cloneable
 {
 
-	private static final long serialVersionUID = 610942910382178152L;
-	private Integer id;
-	private Feature feature;
-	private String moduleName;
-	private Boolean template;
-	private String description;
-	private String functionName;
-	private Set<L1Component> l1Components = new HashSet<L1Component>(0);
+    private static final long serialVersionUID = 610942910382178152L;
 
-	public Module()
-	{
-	}
+    private Integer id;
 
-	public Module(Feature feature)
-	{
-		this.feature = feature;
-	}
+    private Feature feature;
 
-	public Module(Feature feature, String moduleName, Boolean template)
-	{
-		this.feature = feature;
-		this.moduleName = moduleName;
-		this.template = template;
-	}
+    private String moduleName;
 
-	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name = "ID", unique = true, nullable = false)
-	public Integer getId()
-	{
-		return this.id;
-	}
+    private Boolean template;
 
-	public void setId(Integer id)
-	{
-		this.id = id;
-	}
+    private String description;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "FEATURE", nullable = false)
-	public Feature getFeature()
-	{
-		return this.feature;
-	}
+    private String functionName;
 
-	public void setFeature(Feature feature)
-	{
-		this.feature = feature;
-	}
+    private Set<L1Component> l1Components = new HashSet<L1Component>(0);
+    
+    private List<L1Component> tempL1Components = new ArrayList<L1Component>();
 
-	@Column(name = "MODULE_NAME", length = 128)
-	public String getModuleName()
-	{
-		return this.moduleName;
-	}
+    private Boolean searched;
 
-	public void setModuleName(String moduleName)
-	{
-		this.moduleName = moduleName;
-	}
+    public Module()
+    {
+    }
 
-	@Column(name = "TEMPLATE")
-	public Boolean getTemplate()
-	{
-		return this.template;
-	}
+    public Module(Feature feature)
+    {
+        this.feature = feature;
+    }
 
-	public void setTemplate(Boolean template)
-	{
-		this.template = template;
-	}
+    public Module(Feature feature, String moduleName, Boolean template)
+    {
+        this.feature = feature;
+        this.moduleName = moduleName;
+        this.template = template;
+    }
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "module", cascade= CascadeType.ALL)
-	@OrderBy("id ASC")
-	public Set<L1Component> getL1Components()
-	{
-		return l1Components;
-	}
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "ID", unique = true, nullable = false)
+    public Integer getId()
+    {
+        return this.id;
+    }
 
-	public void setL1Components(Set<L1Component> l1Components)
-	{
-		this.l1Components = l1Components;
-	}
-	
-	@Column(name = "DESCRIPTION")
-	public String getDescription()
-	{
-		return description;
-	}
+    public void setId(Integer id)
+    {
+        this.id = id;
+    }
 
-	public void setDescription(String description)
-	{
-		this.description = description;
-	}
-	
-	@Column(name = "FUNCTION_NAME")
-	public String getFunctionName()
-	{
-		return functionName;
-	}
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "FEATURE", nullable = false)
+    public Feature getFeature()
+    {
+        return this.feature;
+    }
 
-	public void setFunctionName(String functionName)
-	{
-		this.functionName = functionName;
-	}
+    public void setFeature(Feature feature)
+    {
+        this.feature = feature;
+    }
 
-	@Override
-	protected Module clone() throws CloneNotSupportedException
-	{
-		Module cloned = (Module)super.clone();
-		cloned.setId(null);
-		cloned.setTemplate(Boolean.FALSE);
-		if (this.l1Components != null)
-		{
-			Set<L1Component> clonedL1Components = new HashSet<L1Component>();
-			for (L1Component l1Component : l1Components)
-			{
-				L1Component clonedL1Component = (L1Component) l1Component.clone();
-				clonedL1Component.setModule(cloned);
-				clonedL1Components.add(clonedL1Component);
-			}
+    @Column(name = "MODULE_NAME", length = 128)
+    public String getModuleName()
+    {
+        return this.moduleName;
+    }
 
-			cloned.setL1Components(clonedL1Components);
-		}
-		
-		return cloned;
-	}
+    public void setModuleName(String moduleName)
+    {
+        this.moduleName = moduleName;
+    }
+
+    @Column(name = "TEMPLATE")
+    public Boolean getTemplate()
+    {
+        return this.template;
+    }
+
+    public void setTemplate(Boolean template)
+    {
+        this.template = template;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "module", cascade = CascadeType.ALL)
+    @OrderBy("id ASC")
+    public Set<L1Component> getL1Components()
+    {
+        return l1Components;
+    }
+
+    public void setL1Components(Set<L1Component> l1Components)
+    {
+        this.l1Components = l1Components;
+    }
+
+    @Column(name = "DESCRIPTION")
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    @Column(name = "FUNCTION_NAME")
+    public String getFunctionName()
+    {
+        return functionName;
+    }
+
+    public void setFunctionName(String functionName)
+    {
+        this.functionName = functionName;
+    }
+
+    @Transient
+    public Boolean getSearched()
+    {
+        return searched;
+    }
+
+    public void setSearched(Boolean searched)
+    {
+        this.searched = searched;
+    }
+
+    @Transient
+    public List<L1Component> getTempL1Components()
+    {
+        return tempL1Components;
+    }
+
+    public void setTempL1Components(List<L1Component> tempL1Components)
+    {
+        this.tempL1Components = tempL1Components;
+    }
+
+    @Override
+    public Module clone() throws CloneNotSupportedException
+    {
+        Module cloned = (Module) super.clone();
+        cloned.setId(null);
+        cloned.setTemplate(Boolean.FALSE);
+        if (this.l1Components != null)
+        {
+            Set<L1Component> clonedL1Components = new HashSet<L1Component>();
+            for (L1Component l1Component : l1Components)
+            {
+                L1Component clonedL1Component = (L1Component) l1Component.clone();
+                clonedL1Component.setModule(cloned);
+                clonedL1Components.add(clonedL1Component);
+            }
+
+            cloned.setL1Components(clonedL1Components);
+        }
+
+        return cloned;
+    }
 }

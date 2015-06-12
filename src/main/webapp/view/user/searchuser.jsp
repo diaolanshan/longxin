@@ -18,11 +18,12 @@ String path = request.getContextPath();
     	$('#myModal').modal('show');
     }
     function deleteUser(){
-    	$.post('./delete/'+deleteUserId);
-    	$('#searchUserForm').submit();
+    	$.post('./delete/'+deleteUserId, location.reload());
     	$('#myModal').modal('hide');
     }
-    
+    $(function(){
+   		 $("#logincount").poshytip();
+    });
 </script>
 
 <form:form method="POST" modelAttribute="userSearchBean" role="form"
@@ -46,9 +47,9 @@ String path = request.getContextPath();
 	            <th data-field="createdat"  data-sortable="true" data-halign="center">创建日期</th>
 	            <th data-field="telephone"  data-sortable="true" data-halign="center">电话</th>
 	            <th data-field="role"  data-sortable="true" data-halign="center">权限</th>
-	            <th data-field="loginCount"  data-sortable="true" data-halign="center">会员等级</th>
+	            <th data-field="loginCount"  data-sortable="true" data-halign="center">用户积分</th>
 	            <th data-field="department"  data-sortable="true" data-halign="center">部门</th>
-	            <th data-sortable="false" data-halign="center">操作</th>
+	            <th data-sortable="false" data-halign="center">操作区域</th>
 	        </tr>
    	 	</thead>
    	 	<tbody>
@@ -59,7 +60,7 @@ String path = request.getContextPath();
    	 				<td>${item.createdat}</td>
    	 				<td>${item.telephone}</td>
    	 				<td>${item.role.description}</td>
-   	 				<td>
+   	 				<td >
    	 				<c:forEach begin="0" end="${item.grade}" step="1">
 						<img src="<%=path%>/images/grade.png" style="width:17px"/>
 	   	 			</c:forEach></td>
@@ -67,7 +68,7 @@ String path = request.getContextPath();
    	 				<td>
    	 					<a href="./edit/${item.id}"  data-toggle="popover" title="编辑"><img alt="" src="<%=path%>/images/edit.png"></a>
    	 					&nbsp;&nbsp;
-   	 					<a href="javascript:void(0);" onclick="showDailog(${item.id})"  data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a>
+   	 					<a href="javascript:void(0);" onclick="showDailog(${item.id})"  data-toggle="popover" title="删除" id="logincount" title="dddddddddddddddddddd"><img alt="" src="<%=path%>/images/delete.png"></a>
    	 				</td>
    	 			</tr>
    	 		</c:forEach>

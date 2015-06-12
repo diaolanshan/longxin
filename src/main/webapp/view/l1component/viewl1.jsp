@@ -67,7 +67,7 @@ String path = request.getContextPath();
     }
     function deleteThis(){
     	$.post(url);
-    	location.reload();
+    	$('#myModal').modal('hide');
     }
 
     function update(){
@@ -86,6 +86,7 @@ String path = request.getContextPath();
 	class="form-horizontal" id="editProductForm">
 	<fieldset>
 		<legend>
+			<a href="<%=path%>/module/view/${component.module.id}">返回</a>
 			${component.name}细节 &nbsp;&nbsp;&nbsp;<a href="../diagram/${component.id}">
 				<span title="物理结构图" class="glyphicon glyphicon-indent-left"></span></a> 
 			&nbsp;&nbsp;<a href="../functiondiagram/${component.id}">
@@ -118,6 +119,14 @@ String path = request.getContextPath();
 						</c:when>
 						<c:otherwise>
 							<div style="width: 200px; hefloat: left; display: inline;font-size:11px;color:gray">可选值(${parameter.options})</div>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${parameter.scopeStatus}">
+							<img alt="取值范围已被论证" src="<%=path%>/images/greenlight.png" style="width:14px;" title="取值范围已被论证">
+						</c:when>
+						<c:otherwise>
+							<img alt="取值范围未被论证" src="<%=path%>/images/redlight.png"  style="width:14px;"  title="取值范围还未被论证">
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -193,7 +202,7 @@ String path = request.getContextPath();
 				<th data-field="name"  data-sortable="true" data-halign="center">模块名称</th>
 				<th data-field="function"  data-sortable="true" data-halign="center">功能描述</th>
 				<th data-field="description"  data-sortable="true" data-halign="center">模块描述</th>
-	            <th data-sortable="false" data-halign="center">操作</th>
+	            <th data-sortable="false" data-halign="center">操作区域</th>
 	        </tr>
    	 	</thead>
    	 	<tbody>
@@ -205,7 +214,7 @@ String path = request.getContextPath();
                 <td>
                 <a href="../../l2component/view/${l2component.id}"  data-toggle="popover" title="查看"><img alt="" src="<%=path%>/images/view.png"></a>
                 &nbsp;&nbsp;
-                <!-- <a href="javascript:void(0);" onclick="showDailog(${l2component.id},'component')" data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a>-->
+                 <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="showDailog(${l2component.id},'component')" data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a></sec:authorize>
    	 			&nbsp;&nbsp;
             </tr>  
        		</c:forEach>
@@ -238,7 +247,7 @@ String path = request.getContextPath();
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="myModalLabel">历史记录</h4>
       </div>
-      <div class="modal-body" style="display:block;height:300px">
+      <div class="modal-body" style="display:block" id="changehistorymodal">
       		<table id="historyTable" border="0" align="left" >
       			
       		</table>
@@ -316,8 +325,11 @@ String path = request.getContextPath();
 								<td>默认值：</td>
 								<td><c:choose>
 										<c:when test="${parameter.l1Component.template}">
-											<div class="form-group"><input type="text" name="parameterValue" class="form-control"
-												value="${parameter.parameterValue}"></div>
+											<div class="form-group">
+												<input type="text" name="parameterValue" class="form-control"
+												value="${parameter.parameterValue}">
+													<input type="text" class="form-control" name="tempParameterValue"
+									value="${parameter.tempParameterValue}" style="display:none"></div>
 										</c:when>
 										<c:otherwise>
 											<c:choose>
@@ -396,6 +408,21 @@ String path = request.getContextPath();
 										</c:otherwise>
 									</c:choose></td>
 							</tr>
+							<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+							<tr>
+								<td>取值范围已论证？</td>
+								<td>
+									<c:choose>
+										<c:when  test="${parameter.scopeStatus }">
+											<div class="form-group"><input type="checkbox" name="scopeStatus" class="form-control" checked value="true"></div>
+										</c:when >
+										<c:otherwise>
+											<div class="form-group"><input type="checkbox" name="scopeStatus" class="form-control" value="true"></div>
+										</c:otherwise>
+									</c:choose>
+								</td>
+							</tr>
+							</sec:authorize>
 							<tr>
 								<td>更改原因：</td>
 								<td>
@@ -498,6 +525,10 @@ String path = request.getContextPath();
 						<tr>
 							<td>可选项：</td>
 							<td><div class="form-group"><input type="text" name="options" class="form-control"></div></td>
+						</tr>
+						<tr>
+							<td>取值范围已论证？</td>
+							<td><div class="form-group"><input type="checkbox" name="scopeStatus" class="form-control" value="true"></div></td>
 						</tr>
 						<tr>
 							<td>添加原因：</td>

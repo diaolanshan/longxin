@@ -86,7 +86,7 @@
 			<div class="form-group">
 				<label for="role" class="col-sm-2 control-label">用户角色：</label>
 				<div class="col-sm-10">
-					<form:select path="role" class="form-control" id="role">
+					<form:select path="role" class="form-control" id="role" disabled="${user.role=='ROLE_ADMIN'}">
 						<c:forEach var="item" items="${roles}">
 							<form:option value="${item}">${item.description}</form:option>
 						</c:forEach>

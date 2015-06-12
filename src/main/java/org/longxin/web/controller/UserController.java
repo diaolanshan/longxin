@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @RequestMapping("/user")
-@SessionAttributes("user")
+@SessionAttributes({"user","department"})
 public class UserController
 {
 	@Autowired
@@ -129,7 +129,7 @@ public class UserController
     public String editProfile(Model model,@ModelAttribute("user") Users user)
     {
         userService.editUser(user);
-        model.addAttribute(new Users());
+        model.addAttribute("user",user);
         return "/view/profile";
     }
 	

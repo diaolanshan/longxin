@@ -52,8 +52,8 @@ String path = request.getContextPath();
     	$('#myModal').modal('show');
     }
     function deleteThis(){
-    	$.post('../delete/component/'+deleteId);
-    	location.reload();
+    	$.post('../delete/component/'+deleteId,location.reload());
+    	$('#myModal').modal('hide');
     }
     
     function update(){
@@ -70,7 +70,9 @@ String path = request.getContextPath();
 	class="form-horizontal" id="viewProductForm">
 
 	<fieldset>
-		<legend>${module.moduleName} 
+		<legend>
+			<a href="<%=path%>/feature/view/${module.feature.id}">返回</a>
+			${module.moduleName} 
 			&nbsp;&nbsp;&nbsp;<a href="../diagram/${module.id}">
 				<span title="物理结构图" class="glyphicon glyphicon-indent-left"></span>
 			</a> 
@@ -140,7 +142,7 @@ String path = request.getContextPath();
 				<th data-field="name"  data-sortable="true" data-halign="center">模块名称</th>
 				<th data-field="function"  data-sortable="true" data-halign="center">功能描述</th>
 				<th data-field="description"  data-sortable="true" data-halign="center">模块描述</th>
-	            <th data-sortable="false" data-halign="center">操作</th>
+	            <th data-sortable="false" data-halign="center">操作区域</th>
 	        </tr>
    	 	</thead>
    	 	<tbody>
@@ -152,7 +154,7 @@ String path = request.getContextPath();
                 <td>
                 <a href="../../l1component/view/${l1component.id}"  data-toggle="popover" title="查看"><img alt="" src="<%=path%>/images/view.png"></a>
                 &nbsp;&nbsp;
-                <sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="showDailog(${l1component.id})"  data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a></sec:authorize>
+                <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="showDailog(${l1component.id})"  data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a></sec:authorize>
             </tr>  
        		</c:forEach>
    	 	</tbody>

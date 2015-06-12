@@ -19,4 +19,5 @@ public interface ProductDAO {
 	public Product getTemplate();
 	
 	public List<Product> getProductsByIds(String [] ids);
+	
 }

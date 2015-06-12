@@ -16,4 +16,6 @@ public interface L2ComponentParameterService
 	public void deleteParameter(int id);
 	
 	public void updateParameter(L2ComponentParameter l2parameter);
+	
+	public List<L2ComponentParameter> searchByKeywords(String keywords);
 }

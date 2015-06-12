@@ -108,8 +108,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
     
     function deleteThis(){
-    	$.post('../delete/feature/'+deleteId);
-    	location.reload();
+    	$.post('../delete/feature/'+deleteId,location.reload());
+    	$('#myModal').modal('hide');
     }
     
 </script>
@@ -242,7 +242,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					data-halign="center">功能描述</th>
 				<th data-field="description" data-sortable="true"
 					data-halign="center">特性描述</th>
-				<th data-sortable="false" data-halign="center">操作</th>
+				<th data-sortable="false" data-halign="center">操作区域</th>
 			</tr>
 		</thead>
 		<tbody>

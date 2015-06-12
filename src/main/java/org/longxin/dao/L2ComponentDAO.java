@@ -19,4 +19,6 @@ public interface L2ComponentDAO
 	public void deleteL2Component(int id);
 	
 	public boolean isThereDraftParamterForComponent(int l1ComponentId);
+	
+	public List<L2Component> searchByKeywords(String keywords);
 }

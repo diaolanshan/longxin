@@ -14,4 +14,6 @@ public interface FeatureDAO
 	public Feature getFeatureByID(Integer featureID);
 	
 	public void deleteFeatureByID(Integer featureID);
+	
+	public List<Feature> searchByKeywords(String keywords);
 }

@@ -16,6 +16,5 @@ public class Surounder
     {
         this.bean = bean;
     }
-
 }
 

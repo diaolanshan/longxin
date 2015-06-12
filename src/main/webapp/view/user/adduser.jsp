@@ -7,10 +7,11 @@
 			rules : {
 				username : {
 					required : true,
-					minlength : 5,
+					minlength : 2,
 					remote : {
 						url : "../user/check",
 						type : "get",
+						contentType: "application/x-www-form-urlencoded; charset=utf-8", 
 						data : {
 							username : function() {
 								return $("#username").val();

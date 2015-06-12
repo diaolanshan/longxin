@@ -167,13 +167,13 @@
 	<bean id="functionModuleDAO" class="org.longxin.dao.impl.FunctionModuleDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
-	
-	<bean id="propertyConfigurer"
-	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-	<property name="location">
-		<value>/WEB-INF/classes/longxin.properties</value>
-	</property>
-</bean>
+
+	<bean id="applicationSetting"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location">
+			<value>/WEB-INF/classes/longxin.properties</value>
+		</property>
+	</bean>
 	
 	<bean id="userService" class="org.longxin.service.impl.UserServiceImpl"></bean>
 	

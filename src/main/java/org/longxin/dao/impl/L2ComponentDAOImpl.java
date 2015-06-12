@@ -60,4 +60,25 @@ public class L2ComponentDAOImpl extends HibernateDaoSupport implements L2Compone
         }
         return false;
     }
+	
+    @SuppressWarnings("unchecked")
+    public List<L2Component> searchByKeywords(String keywords)
+    {
+        keywords = "%" + keywords + "%";
+        List<L2Component> results = this
+                .getHibernateTemplate()
+                .find(
+                    "FROM L2Component component WHERE component.name like ? OR component.description like ? OR component.functionName like ?",
+                    keywords,
+                    keywords,
+                    keywords);
+        
+        
+        for(L2Component result : results)
+        {
+            result.setSearched(true);
+        }
+        
+        return results;
+    }
 }

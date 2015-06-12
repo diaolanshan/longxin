@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	$.ajax({
 		type: "GET", 
-		url: "http://localhost:8080/longxin/product/menu", 
+		url: "http://localhost:8080/longxin/login/menu", 
 		dataType: "json",
 		contentType: "application/json; charset=utf-8",
 		success: function(data){
@@ -12,9 +12,9 @@ $(document).ready(function(){
 					}
 				)
 		},
-		error: function(res){
-			alert("Unexpected error! Try again.");
-		}
+		  error: function (xhr, ajaxOptions, thrownError) {
+			  alert("未知错误，请重试！");
+		      }
 	})   
 	
 	$.ajax({
@@ -28,7 +28,7 @@ $(document).ready(function(){
 			}
 		},
 		error: function(res){
-			alert("Unexpected error! Try again.");
+			alert("Unexpected error! Try againn.");
 		}
 	})     
 	
@@ -97,7 +97,7 @@ $(document).ready(function(){
 				}
 			},
 			error: function(res){
-				alert("Unexpected error! Try agaiddddn.");
+				alert("Unexpected error! Try again.");
 			}
 		});
 	}
@@ -214,26 +214,32 @@ function updateParameter(parameterId){
 			contentType: "application/json; charset=utf-8",
 			success: function(data){
 				$("#historyTable").empty();
+				$("#changehistorymodal").css({"height": data.length*60+40+"px"});
+				if(data.length==0)
+					{
+						$("#historyTable").append("这项参数没有更改记录");
+						$("#changehistorymodal").css({"height": "100px"});
+					}
 				$.each(data, function(idx,item)
 		    			{
 							if(item.operationType=='ADD')
 							{
-		    				var body = "<tr><td><img src=''/></td><td style='text-align:left'>" + item.displayUpdateAt + '  ' + item.operator.username + '增加了这个属性' + "</td></tr>"
+		    				var body = "<tr><td><img src='../../images/timeline.png'/></td><td style='text-align:left'>" + item.displayUpdateAt + ',  ' + item.operator.username + '增加了这个属性' + "</td></tr>"
 		    				$("#historyTable").append(body);
 							}
 							if(item.operationType=='CHANGE')
 							{
-		    				var body = "<tr><td><img src=''/></td><td style='text-align:left'>" + item.displayUpdateAt + '  ' + item.operator.username + "把值从<font color='green'>" + item.oldValue +"</font>变成<font color='green'>" + item.newValue + "</font>, 原因是：" + item.comments + "</td></tr>"
+		    				var body = "<tr><td><img src='../../images/timeline.png'/></td><td style='text-align:left'>" + item.displayUpdateAt + ',  ' + item.operator.username + "把值从<font color='green'>" + item.oldValue +"</font>变成<font color='green'>" + item.newValue + "</font>, 原因是：" + item.comments + "</td></tr>"
 		    				$("#historyTable").append(body);
 							}
 							if(item.operationType=='APPROVE')
 							{
-		    				var body = "<tr><td><img src=''/></td><td style='text-align:left'>" + item.displayUpdateAt + '  ' + item.operator.username + "批准了把值从<font color='green'>" + item.oldValue +"</font>变成<font color='green'>" + item.newValue + "</font>, 原因是：" + item.comments + "</td></tr>"
+		    				var body = "<tr><td><img src='../../images/timeline.png'/></td><td style='text-align:left'>" + item.displayUpdateAt + ',  ' + item.operator.username + "批准了把值从<font color='green'>" + item.oldValue +"</font>变成<font color='green'>" + item.newValue + "</font>, 原因是：" + item.comments + "</td></tr>"
 		    				$("#historyTable").append(body);
 							}
 							if(item.operationType=='DECLINE')
 							{
-		    				var body = "<tr><td><img src=''/></td><td style='text-align:left'>" + item.displayUpdateAt + '  ' + item.operator.username + "拒绝了把值从<font color='green'>" + item.oldValue +"</font>变成<font color='green'>" + item.newValue + "</font>, 原因是：" + item.comments + "</td></tr>"
+		    				var body = "<tr><td><img src='../../images/timeline.png'/></td><td style='text-align:left'>" + item.displayUpdateAt + ',  ' + item.operator.username + "拒绝了把值从<font color='green'>" + item.oldValue +"</font>变成<font color='green'>" + item.newValue + "</font>, 原因是：" + item.comments + "</td></tr>"
 		    				$("#historyTable").append(body);
 							}
 		    			}

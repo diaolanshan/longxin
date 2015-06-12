@@ -67,7 +67,7 @@ public class L1ComponentController<T> extends ComponentContoller
     @RequestMapping(value = "/diagram/{componentId}", method = RequestMethod.GET)
     public String showDiagram(@PathVariable int componentId, Model model)
     {
-        L1Component component = l1ComponentService.getL1ComponentByID(componentId);
+        L1Component component = l1ComponentService.getL1ComponentByIDForDragram(componentId);
         model.addAttribute("component", component);
         return "/l1component/diagram";
     }
@@ -75,7 +75,7 @@ public class L1ComponentController<T> extends ComponentContoller
     @RequestMapping(value = "/functiondiagram/{componentId}", method = RequestMethod.GET)
     public String showFunctionDiagram(@PathVariable int componentId, Model model)
     {
-        L1Component component = l1ComponentService.getL1ComponentByID(componentId);
+        L1Component component = l1ComponentService.getL1ComponentByIDForDragram(componentId);
         model.addAttribute("component", component);
         return "/l1component/functiondiagram";
     }
@@ -118,7 +118,7 @@ public class L1ComponentController<T> extends ComponentContoller
         return new ModelMap("success", 1);
     }
 
-    @RequestMapping(value = "/delete/parameter/{parameterid}", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete/parameter/{parameterid}", method = RequestMethod.DELETE)
     public void deleteComponentParameter(@PathVariable int parameterid)
     {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

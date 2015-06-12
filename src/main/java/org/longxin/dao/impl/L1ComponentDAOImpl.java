@@ -78,6 +78,25 @@ public class L1ComponentDAOImpl extends HibernateDaoSupport implements L1Compone
         updateString.append(featureId).append(" )");
         
         this.getHibernateTemplate().getSessionFactory().getCurrentSession().createSQLQuery(updateString.toString()).executeUpdate();
+    }
+    
+    @SuppressWarnings("unchecked")
+    public List<L1Component> searchByKeywords(String keywords)
+    {
+        keywords = "%" + keywords + "%";
+        List<L1Component> results = this
+                .getHibernateTemplate()
+                .find(
+                    "FROM L1Component component WHERE component.name like ? OR component.description like ? OR component.functionName like ?",
+                    keywords,
+                    keywords,
+                    keywords);
         
+        for(L1Component result : results)
+        {
+            result.setSearched(true);
+        }
+        
+        return results;
     }
 }

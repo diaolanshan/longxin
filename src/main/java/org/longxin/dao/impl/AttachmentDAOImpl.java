@@ -15,6 +15,7 @@ public class AttachmentDAOImpl extends HibernateDaoSupport implements Attachment
        this.getHibernateTemplate().saveOrUpdate(attachment);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Attachment> getAttachmentByCategoryAndRefID(String category, int referenceID)
     {

@@ -52,4 +52,10 @@ public class L3ComponentServiceImpl implements L3ComponentService
     {
         return this.l3ComponentDAO.isThereDraftParamterForComponent(l3ComponentId);
     }
+
+    @Override
+    public List<L3Component> searchByKeywords(String keywords)
+    {
+        return this.l3ComponentDAO.searchByKeywords(keywords);
+    }
 }

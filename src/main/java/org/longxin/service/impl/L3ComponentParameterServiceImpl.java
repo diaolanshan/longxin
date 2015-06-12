@@ -51,4 +51,10 @@ public class L3ComponentParameterServiceImpl implements L3ComponentParameterServ
     {
         return l3ComponentParameterDAO.getL3ComponentParamtersByID(parameterId);
     }
+
+    @Override
+    public List<L3ComponentParameter> searchByKeywords(String keywords)
+    {
+        return this.l3ComponentParameterDAO.searchByKeywords(keywords);
+    }
 }

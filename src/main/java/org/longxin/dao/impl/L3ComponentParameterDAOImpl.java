@@ -56,4 +56,26 @@ public class L3ComponentParameterDAOImpl extends HibernateDaoSupport implements 
     {
         return this.getHibernateTemplate().get(L3ComponentParameter.class, parameterId);
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<L3ComponentParameter> searchByKeywords(String keywords)
+    {
+        keywords = "%" + keywords + "%";
+        List<L3ComponentParameter> results =
+                this.getHibernateTemplate()
+                .find(
+                    "FROM L3ComponentParameter parameter WHERE parameter.parameterName like ? OR parameter.parameterValue like ? OR parameter.options like ? OR parameter.minValue like ? OR parameter.maxValue like ? OR parameter.draftValue like ?",
+                    keywords,
+                    keywords,
+                    keywords,
+                    keywords,
+                    keywords,
+                    keywords);
+        for(L3ComponentParameter parameter : results)
+        {
+            parameter.setSearched(true);
+        }
+        
+        return results;
+    }
 }

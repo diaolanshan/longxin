@@ -39,4 +39,27 @@ public class L2ComponentParameterDAOImpl extends HibernateDaoSupport implements 
     {
         this.getHibernateTemplate().update(l2parameter);
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<L2ComponentParameter> searchByKeywords(String keywords)
+    {
+        keywords = "%" + keywords + "%";
+        List<L2ComponentParameter> results = this
+                .getHibernateTemplate()
+                .find(
+                    "FROM L2ComponentParameter parameter WHERE parameter.parameterName like ? OR parameter.parameterValue like ? OR parameter.options like ? OR parameter.minValue like ? OR parameter.maxValue like ? OR parameter.draftValue like ?",
+                    keywords,
+                    keywords,
+                    keywords,
+                    keywords,
+                    keywords,
+                    keywords);
+        
+        for(L2ComponentParameter parameter : results)
+        {
+            parameter.setSearched(true);
+        }
+        
+        return results; 
+    }
 }

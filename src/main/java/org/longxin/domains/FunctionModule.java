@@ -98,7 +98,7 @@ public class FunctionModule implements java.io.Serializable
         this.template = template;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "module", cascade= CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "functionModule", cascade= CascadeType.ALL)
     @OrderBy("id ASC")
     public Set<L1Component> getL1Components()
     {

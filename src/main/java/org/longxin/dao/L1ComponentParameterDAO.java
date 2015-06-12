@@ -16,4 +16,6 @@ public interface L1ComponentParameterDAO
 	public void deleteParameter(int id);
 	
 	public void updateParameter(L1ComponentParameter l1parameter);
+	
+	public List<L1ComponentParameter> searchByKeywords(String keywords);
 }

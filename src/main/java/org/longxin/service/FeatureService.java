@@ -15,6 +15,10 @@ public interface FeatureService
     
     public Feature getFeatureByID(Integer featureID);
     
+    public Feature getFeatureByIDForDiagram(Integer featureID);
+    
+    public Feature getFeatureByIDForFunctionDiagram(Integer featureID);
+    
     public void saveFeature(Feature feature);
     
     public void deleteFeatureById(Integer featureID);
@@ -22,4 +26,6 @@ public interface FeatureService
     public List<MatrixBean> generateFunctionMatrix(int featureId);
     
     public void updateFunctionMatrix(Surounder rounder ,int featureId);
+    
+    public List<Feature> searchByKeywords(String keywords);
 }

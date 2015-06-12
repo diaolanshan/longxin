@@ -16,20 +16,22 @@ import javax.persistence.Transient;
 @Table(name = "l3_component_parameter", catalog = "longxin")
 public class L3ComponentParameter extends ComponentParameter implements java.io.Serializable, Cloneable
 {
-	/**
+    /**
 	 * 
 	 */
-	private static final long serialVersionUID = 4944996945861236995L;
-	public String CATEGORY = "L2COMPONENTPARAMETER";
-	private L3Component l3Component;
-	
-	public L3ComponentParameter()
-	{
-	}
-	
+    private static final long serialVersionUID = 4944996945861236995L;
+
+    public String CATEGORY = "L3COMPONENTPARAMETER";
+
+    private L3Component l3Component;
+
+    public L3ComponentParameter()
+    {
+    }
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "L3_COMPONENT")
-	public L3Component getL3Component()
+    public L3Component getL3Component()
     {
         return l3Component;
     }
@@ -39,11 +41,12 @@ public class L3ComponentParameter extends ComponentParameter implements java.io.
         this.l3Component = l3Component;
     }
 
-    protected Object clone() throws CloneNotSupportedException{
-		L3ComponentParameter l3ComponentParameter = (L3ComponentParameter)super.clone();
-		l3ComponentParameter.setId(null);
-		return l3ComponentParameter;
-	}
+    protected Object clone() throws CloneNotSupportedException
+    {
+        L3ComponentParameter l3ComponentParameter = (L3ComponentParameter) super.clone();
+        l3ComponentParameter.setId(null);
+        return l3ComponentParameter;
+    }
 
     @Override
     @Transient

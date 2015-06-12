@@ -37,4 +37,24 @@ public class ModuleDAOImpl extends HibernateDaoSupport implements ModuleDAO
         Module module = this.getHibernateTemplate().get(Module.class,moduleID);
         this.getHibernateTemplate().delete(module);
     }
+    
+    @SuppressWarnings("unchecked")
+    public List<Module> searchByKeywords(String keywords)
+    {
+        keywords = "%" + keywords + "%";
+        List<Module> results = this
+                .getHibernateTemplate()
+                .find(
+                    "FROM Module module WHERE module.moduleName like ? OR module.description like ? OR module.functionName like ?",
+                    keywords,
+                    keywords,
+                    keywords);
+        
+        for(Module result : results)
+        {
+            result.setSearched(true);
+        }
+        
+        return results;
+    }
 }

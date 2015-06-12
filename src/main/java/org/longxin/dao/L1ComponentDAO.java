@@ -22,4 +22,6 @@ public interface L1ComponentDAO
 	public void updateL1Component(int componentId, int functionModuleId);
 	
 	public void resetL1ComponentMatrix(int featureId);
+	
+	public List<L1Component> searchByKeywords(String keywords);
 }

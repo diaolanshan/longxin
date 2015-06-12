@@ -5,6 +5,11 @@
 <%  
 String path = request.getContextPath();  
 %>
+<style>
+a {
+    color: #2bc0be;
+}
+</style>
 <script>
 	var deleteProductId;
     $(function () {
@@ -19,11 +24,15 @@ String path = request.getContextPath();
     	$('#myModal').modal('show');
     }
     function deleteProduct(){
-    	$.post('./delete/'+deleteProductId);
-    	$('#searchProductForm').submit();
+    	$.post('./delete/'+deleteProductId,location.reload());
     	$('#myModal').modal('hide');
     }
-    
+    function createProduct()
+    {
+    	document.searchProductForm.method = "POST";
+		document.searchProductForm.action = "./create";
+		document.searchProductForm.submit();
+    }
 </script>
 
 <form:form method="POST" modelAttribute="productSearchBean" role="form"
@@ -33,11 +42,13 @@ String path = request.getContextPath();
 	<fieldset>
 		<legend>产品管理</legend>
 		<div class="form-group">
-			<form:input type="text" class="form-control" style="display:inline;margin-left:10px" id="keyword"  path="keyword" />&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="submit" class="btn btn-primary start-example" value="查询" />
+			<form:input type="text" class="form-control" style="display:inline;margin-left:10px" id="keyword"  path="keyword" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="submit" class="btn btn-primary start-example" value="查询" />&nbsp; &nbsp;&nbsp;
+			<a href="./create"><input type="button" class="btn btn-primary start-example" value="创建新产品" /></a>
 		</div>
 	</fieldset>
 	<br/>
+	<c:if test="${not searched}">
 	<div style="margin-left:-5px">
 		<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1" >
 			<thead>
@@ -46,7 +57,7 @@ String path = request.getContextPath();
 					<th data-field="name"  data-sortable="true" data-halign="center">产品名称</th>
 					<th data-field="createdat"  data-sortable="true" data-halign="center">创建日期</th>
 					<th data-field="owner"  data-sortable="true" data-halign="center">创建人</th>
-		            <th data-sortable="false" data-halign="center">操作</th>
+		            <th data-sortable="false" data-halign="center">操作区域</th>
 		        </tr>
 	   	 	</thead>
 	   	 	<tbody>
@@ -69,6 +80,177 @@ String path = request.getContextPath();
 	   	 	</tbody>
 		</table>
 	</div>
+	</c:if>
+
+	<c:if test="${searched}">
+		<div style="margin-left: -5px">
+			<c:forEach items="${products}" var="product">
+				<div style="font-size:19px">
+					<c:choose>
+						<c:when test="${product.searched}">
+							 <a href="../product/list/${product.id}">${product.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${product.description}</a>
+						</c:when>
+						<c:otherwise>
+							${product.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${product.description}
+						</c:otherwise>
+					</c:choose>
+					<c:forEach items="${product.tempFeatures}" var="feature">
+						<div style="padding-left:30px;font-size:18px">
+							<img alt="" src="<%=path%>/images/arrow.png" style="width:23px">
+							<c:choose>
+								<c:when test="${feature.searched}">
+									 <a href="../feature/view/${feature.id}">${feature.featureName} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${feature.description}</a>
+								</c:when>
+								<c:otherwise>
+									${feature.featureName} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${feature.description}
+								</c:otherwise>
+							</c:choose>
+							<c:forEach items="${feature.tempModules}" var="module">
+								<div style="padding-left:30px;font-size:17px">
+									<img alt="" src="<%=path%>/images/arrow.png" style="width:23px">
+									<c:choose>
+										<c:when test="${module.searched}">
+											 <a href="../module/view/${module.id}">${module.moduleName} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${module.description}</a>
+										</c:when>
+										<c:otherwise>
+											${module.moduleName} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${module.description}
+										</c:otherwise>
+									</c:choose>
+									<c:forEach items="${module.tempL1Components}" var="l1">
+										<div style="padding-left:30px;font-size:16px">
+											<img alt="" src="<%=path%>/images/arrow.png" style="width:22px">
+											<c:choose>
+												<c:when test="${l1.searched}">
+													 <a href="../l3component/view/${l1.id}">${l1.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${l1.description}</a>
+												</c:when>
+												<c:otherwise>
+													${l1.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${l1.description}
+												</c:otherwise>
+											</c:choose>
+											<c:forEach items="${l1.tempL1Parameters}" var="parameter">
+												<img alt="" src="<%=path%>/images/arrow.png" style="width:21px">
+												<div style="padding-left:30px;font-size:15px">
+													 <a href="../l1component/view/${l1.id}">${parameter.parameterName}
+																	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														${parameter.parameterValue}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+														<c:choose>
+															<c:when test="${parameter.options == \"\"}">
+																<div style="width: 300px; hefloat: left; display: inline; font-size: 11px; color: gray">取值范围(${parameter.minValue},${parameter.maxValue})</div>
+															</c:when>
+															<c:otherwise>
+																<div style="width: 200px; hefloat: left; display: inline; font-size: 11px; color: gray">可选值(${parameter.options})</div>
+															</c:otherwise>
+														</c:choose> 
+														<c:choose>
+															<c:when test="${parameter.scopeStatus}">
+																<img alt="取值范围已被论证"
+																	src="<%=path%>/images/greenlight.png"
+																	style="width: 14px;" title="取值范围已被论证">
+															</c:when>
+															<c:otherwise>
+																<img alt="取值范围未被论证"
+																	src="<%=path%>/images/redlight.png"
+																	style="width: 14px;" title="取值范围还未被论证">
+															</c:otherwise>
+														</c:choose>
+													</a>
+												</div>
+											</c:forEach>
+											<c:forEach items="${l1.tempL2Components}" var="l2">
+												<div style="padding-left:30px">
+													<img alt="" src="<%=path%>/images/arrow.png" style="width:19px">
+													<c:choose>
+														<c:when test="${l2.searched}">
+															 <a href="../l2component/view/${l2.id}">${l2.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${l2.description}</a>
+														</c:when>
+														<c:otherwise>
+															${l2.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${l2.description}
+														</c:otherwise>
+													</c:choose>
+													<c:forEach items="${l2.tempL2Parameters}" var="parameter">
+														<img alt="" src="<%=path%>/images/arrow.png" style="width:18px">
+														<div style="padding-left:30px;font-size:14px">
+															 <a href="../l2component/view/${l2.id}">${parameter.parameterName}
+																	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																	${parameter.parameterValue}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																	<c:choose>
+																		<c:when test="${parameter.options == \"\"}">
+																			<div style="width: 300px; hefloat: left; display: inline; font-size: 11px; color: gray">取值范围(${parameter.minValue},${parameter.maxValue})</div>
+																		</c:when>
+																		<c:otherwise>
+																			<div style="width: 200px; hefloat: left; display: inline; font-size: 11px; color: gray">可选值(${parameter.options})</div>
+																		</c:otherwise>
+																	</c:choose> 
+																	<c:choose>
+																		<c:when test="${parameter.scopeStatus}">
+																			<img alt="取值范围已被论证"
+																				src="<%=path%>/images/greenlight.png"
+																				style="width: 14px;" title="取值范围已被论证">
+																		</c:when>
+																		<c:otherwise>
+																			<img alt="取值范围未被论证"
+																				src="<%=path%>/images/redlight.png"
+																				style="width: 14px;" title="取值范围还未被论证">
+																		</c:otherwise>
+																	</c:choose>
+															</a>
+														</div>
+													</c:forEach>
+													<c:forEach items="${l2.tempL3Components}" var="l3">
+														<div style="padding-left:30px">
+															<img alt="" src="<%=path%>/images/arrow.png" style="width:18px">
+															<c:choose>
+																<c:when test="${l3.searched}">
+																	 <a href="../l3component/view/${l3.id}">${l3.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${l3.description}</a>
+																</c:when>
+																<c:otherwise>
+																	${l3.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${l3.description}
+																</c:otherwise>
+															</c:choose>
+															<c:forEach items="${l3.tempL3Parameters}" var="parameter">
+																<div style="padding-left:30px;font-size:13px">
+																   <img alt="" src="<%=path%>/images/arrow.png" style="width:17px">
+																   <a href="../l3component/view/${l3.id}">${parameter.parameterName}
+																		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																		${parameter.parameterValue}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																		<c:choose>
+																			<c:when test="${parameter.options == \"\"}">
+																				<div style="width: 300px; hefloat: left; display: inline; font-size: 11px; color: gray">取值范围(${parameter.minValue},${parameter.maxValue})</div>
+																			</c:when>
+																			<c:otherwise>
+																				<div style="width: 200px; hefloat: left; display: inline; font-size: 11px; color: gray">可选值(${parameter.options})</div>
+																			</c:otherwise>
+																		</c:choose> 
+																		<c:choose>
+																			<c:when test="${parameter.scopeStatus}">
+																				<img alt="取值范围已被论证"
+																					src="<%=path%>/images/greenlight.png"
+																					style="width: 14px;" title="取值范围已被论证">
+																			</c:when>
+																			<c:otherwise>
+																				<img alt="取值范围未被论证"
+																					src="<%=path%>/images/redlight.png"
+																					style="width: 14px;" title="取值范围还未被论证">
+																			</c:otherwise>
+																		</c:choose>
+																	</a>
+																</div>
+															</c:forEach>
+														</div>
+													</c:forEach>
+												</div>
+											</c:forEach>
+										</div>
+									</c:forEach>
+								</div>
+							</c:forEach>
+						</div>
+					</c:forEach>
+				</div>
+				<hr/>
+			</c:forEach>
+		</div>
+	</c:if>
 </form:form>
 
 <!-- Modal -->

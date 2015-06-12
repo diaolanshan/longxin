@@ -9,6 +9,8 @@ public interface L1ComponentService
 {
 	public L1Component getL1ComponentByID(Integer ID);
 	
+	public L1Component getL1ComponentByIDForDragram(Integer ID);
+	
 	public List<L1Component> getL1ComponentsByModule(Module module);
 
 	public void updateL1Component(L1Component l1Component);
@@ -22,4 +24,6 @@ public interface L1ComponentService
 	public boolean isThereDraftParamterForComponent(int l1ComponentId);
 	
 	public void updateL1Component(int componentId, int functionModuleId);
+	
+	public List<L1Component> searchByKeywords(String keywords);
 }

@@ -93,7 +93,7 @@
 			<div class="form-group">
 				<label for="role" class="col-sm-2 control-label">用户角色：</label>
 				<div class="col-sm-10">
-					<form:select path="role" class="form-control" id="role">
+					<form:select path="role" class="form-control" id="role" disabled="${user.role=='ROLE_ADMIN'}">
 						<c:forEach var="item" items="${roles}">
 							<form:option value="${item}">${item.description}</form:option>
 						</c:forEach>
@@ -119,11 +119,12 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="username" class="col-sm-2 control-label">用户等级：</label>
+				<label for="username" class="col-sm-2 control-label">用户积分：</label>
 				<div class="col-sm-10">
 					<c:forEach begin="0" end="${user.grade}" step="1">
-						<img src="<%=path%>/images/grade.png" style="width: 17px" />
+						<img src="<%=path%>/images/grade.png" style="width: 16px" />
 					</c:forEach>
+					&nbsp;&nbsp;&nbsp;共计登陆<font color="green"> ${user.loginCount }</font>&nbsp;次
 				</div>
 			</div>
 			<div class="form-group">

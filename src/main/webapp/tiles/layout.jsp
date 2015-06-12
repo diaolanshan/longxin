@@ -28,6 +28,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="<%=path%>/js/jquery.ui.widget.js"></script>
 <script src="<%=path%>/js/jquery.fileupload.js"></script>
 <script src="<%=path%>/js/jquery.iframe-transport.js"></script>
+<script src="<%=path%>/js/jquery.poshytip.js"></script>
 <script src="<%=path%>/js/longxin.js"></script>
 </head>
 <body>

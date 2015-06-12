@@ -20,4 +20,6 @@ public interface L3ComponentService
 	public int getFeatureId(int l3ComponentId);
 	
 	public boolean isThereDraftParamterForComponent(int l3ComponentId);
+	
+	public List<L3Component> searchByKeywords(String keywords);
 }

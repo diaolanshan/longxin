@@ -182,7 +182,7 @@ public class Users implements java.io.Serializable {
 		this.lastLogin = lastLogin;
 	}
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner", cascade= CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", cascade= CascadeType.ALL)
     @JsonIgnore
     public Set<Product> getProducts()
     {
@@ -194,7 +194,7 @@ public class Users implements java.io.Serializable {
         this.products = products;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner", cascade= CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner", cascade= CascadeType.ALL)
     @JsonIgnore
     public Set<Attachment> getAttachments()
     {

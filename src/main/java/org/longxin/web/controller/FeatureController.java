@@ -17,8 +17,6 @@ import org.longxin.service.L3ComponentService;
 import org.longxin.service.ModuleService;
 import org.longxin.service.UserPermissionMatrixService;
 import org.longxin.service.UserService;
-import org.longxin.web.controller.bean.Matrix;
-import org.longxin.web.controller.bean.MatrixBean;
 import org.longxin.web.controller.bean.Surounder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -85,7 +83,7 @@ public class FeatureController
     public String showFeatureDiagram(@PathVariable int featureId,Model model)
     {
         //product
-        Feature feature = featureService.getFeatureByID(featureId);
+        Feature feature = featureService.getFeatureByIDForDiagram(featureId);
         model.addAttribute("feature", feature);
         
         return "/feature/diagram";
@@ -95,7 +93,7 @@ public class FeatureController
     public String showFeatureFunctionDiagram(@PathVariable int featureId,Model model)
     {
         //product
-        Feature feature = featureService.getFeatureByID(featureId);
+        Feature feature = featureService.getFeatureByIDForFunctionDiagram(featureId);
         model.addAttribute("feature", feature);
         return "/feature/functiondiagram";
     }

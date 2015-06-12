@@ -51,8 +51,8 @@ String path = request.getContextPath();
     	$('#myModal').modal('show');
     }
     function deleteThis(){
-    	$.post('../delete/module/'+deleteId);
-    	location.reload();
+    	$.post('../delete/module/'+deleteId,location.reload());
+    	$('#myModal').modal('hide');
     }
     
     function update(){
@@ -72,7 +72,9 @@ String path = request.getContextPath();
 	class="form-horizontal" id="viewProductForm">
 
 	<fieldset>
-		<legend>${feature.featureName} &nbsp;&nbsp;&nbsp;<a href="../diagram/${feature.id}">
+		<legend>
+			<a href="<%=path%>/product/list/${feature.product.id}">返回</a>
+			${feature.featureName} &nbsp;&nbsp;&nbsp;<a href="../diagram/${feature.id}">
 				<span title="物理结构图" class="glyphicon glyphicon-indent-left"></span></a> 
 			&nbsp;&nbsp;<a href="../functiondiagram/${feature.id}">
 			<span title="功能结构图" class="glyphicon glyphicon-indent-right"></span></a>
@@ -119,7 +121,7 @@ String path = request.getContextPath();
 				        <tr class="success">
 							<th data-field="name"  data-sortable="true" data-halign="center">模块名称</th>
 							<th data-field="description"  data-sortable="true" data-halign="center">模块描述</th>
-				            <th data-sortable="false" data-halign="center">操作</th>
+				            <th data-sortable="false" data-halign="center">操作区域</th>
 				        </tr>
 			   	 	</thead>
 			   	 	<tbody>

@@ -9,6 +9,7 @@ import org.longxin.service.ChangeHistoryService;
 import org.longxin.service.UserService;
 import org.longxin.util.OperationType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +27,16 @@ public abstract class ComponentContoller
     {
         ChangeHistory change = new ChangeHistory();
 
-        change.setOldValue(parameter.getParameterValue());
+        if(!StringUtils.isEmpty(parameter.getTempParameterValue()))
+        {
+            if (parameter.getTempParameterValue().equalsIgnoreCase(parameter.getDraftValue()))
+            {
+                //no update.
+                return;
+            }
+        }
+        
+        change.setOldValue(parameter.getTempParameterValue());
         change.setNewValue(parameter.getDraftValue());
         change.setOperator(user);
         change.setOperationType(operationType);

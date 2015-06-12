@@ -6,12 +6,12 @@
 	<ul id="org" style="display: none">
 		<li id="${feature.id}"><a href="../../feature/view/${feature.id}">${feature.functionName}</a>
 			<ul>
-				<c:forEach items="${feature.modules}" var="module">
-					<li><a href="./../../module/view/${module.id}">${module.functionName}</a>
+				<c:forEach items="${feature.functionModules}" var="functionmodule">
+					<li><a href="./../../module/view/${module.id}">${functionmodule.name}</a>
 						<ul>
-							<c:forEach items="${module.l1Components}" var="l1">
+							<c:forEach items="${functionmodule.l1Components}" var="l1">
 								<li> <a href="./../../l1component/view/${l1.id}"
-									target="_blank">${l1.functionName}</a>
+									target="_blank">${l1.name}</a>
 									<ul>
 										<c:forEach items="${l1.l2Components}" var="l2">
 											<li><a href="./../../l2component/view/${l2.id}"

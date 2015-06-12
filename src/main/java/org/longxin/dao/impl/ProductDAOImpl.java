@@ -35,6 +35,12 @@ public class ProductDAOImpl extends HibernateDaoSupport implements ProductDAO {
 	    String wildcardKeyword = "%" + keyword +"%";
         List<Product> products = (List<Product>) this.getHibernateTemplate().find(
                 "FROM Product product WHERE product.name LIKE ? OR product.functionName like ? OR product.description like ? ", wildcardKeyword, wildcardKeyword, wildcardKeyword);
+        
+        for(Product result : products)
+        {
+            result.setSearched(true);
+        }
+        
         return products;
 	}
 	

@@ -60,5 +60,24 @@ public class L3ComponentDAOImpl extends HibernateDaoSupport implements L3Compone
         }
         return false;
     }
-
+    
+    @SuppressWarnings("unchecked")
+    public List<L3Component> searchByKeywords(String keywords)
+    {
+        keywords = "%" + keywords + "%";
+        List<L3Component> results = this
+                .getHibernateTemplate()
+                .find(
+                    "FROM L3Component component WHERE component.name like ? OR component.description like ? OR component.functionName like ?",
+                    keywords,
+                    keywords,
+                    keywords);
+        
+        for(L3Component result : results)
+        {
+            result.setSearched(true);
+        }
+        
+        return results;
+    }
 }

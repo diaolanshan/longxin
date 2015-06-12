@@ -42,4 +42,10 @@ public class L2ComponentParameterServiceImpl implements L2ComponentParameterServ
     {
         return this.l2ComponentParameterDAO.getL2ComponentParamtersByID(ID);
     }
+
+    @Override
+    public List<L2ComponentParameter> searchByKeywords(String keywords)
+    {
+        return this.l2ComponentParameterDAO.searchByKeywords(keywords);
+    }
 }

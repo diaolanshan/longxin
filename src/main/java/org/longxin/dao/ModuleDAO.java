@@ -16,4 +16,6 @@ public interface ModuleDAO
     public void updateModule(Module module);
     
     public void deleteModuleByID(Integer moduleID);
+    
+    public List<Module> searchByKeywords(String keywords);
 }

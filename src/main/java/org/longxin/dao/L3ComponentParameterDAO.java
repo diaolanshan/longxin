@@ -21,4 +21,6 @@ public interface L3ComponentParameterDAO
 	public void updateParameter(L3ComponentParameter l3parameter);
 	
 	public L3ComponentParameter getL3ComponentParamtersByID(Integer parameterId);
+	
+	public List<L3ComponentParameter> searchByKeywords(String keywords);
 }

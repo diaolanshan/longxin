@@ -49,4 +49,10 @@ public class L1ComponentParameterServiceImpl implements L1ComponentParameterServ
     {
         return this.l1ComponentParameterDAO.getL1ComponentParameterByID(ID);
     }
+
+    @Override
+    public List<L1ComponentParameter> searchByKeywords(String keywords)
+    {
+       return this.l1ComponentParameterDAO.searchByKeywords(keywords);
+    }
 }

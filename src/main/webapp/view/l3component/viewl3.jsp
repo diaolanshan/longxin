@@ -65,8 +65,8 @@ String path = request.getContextPath();
     	$('#myModal').modal('show');
     }
     function deleteThis(){
-    	$.post(url);
-    	location.reload();
+    	$.post(url, location.reload());
+    	$('#myModal').modal('hide');
     }
 
     function update(){
@@ -129,6 +129,7 @@ String path = request.getContextPath();
 	class="form-horizontal" id="editProductForm">
 	<fieldset>
 		<legend>
+			<a href="<%=path%>/l2component/view/${component.l2Component.id}">返回</a>
 			${component.name}细节 &nbsp;&nbsp;&nbsp;&nbsp;
 		</legend>
 		<div class="form-group">
@@ -160,6 +161,14 @@ String path = request.getContextPath();
 							<div style="width: 200px; hefloat: left; display: inline;font-size:11px;color:gray">可选值(${parameter.options})</div>
 						</c:otherwise>
 					</c:choose>
+					<c:choose>
+						<c:when test="${parameter.scopeStatus}">
+							<img alt="取值范围已被论证" src="<%=path%>/images/greenlight.png" style="width:14px;" title="取值范围已被论证">
+						</c:when>
+						<c:otherwise>
+							<img alt="取值范围未被论证" src="<%=path%>/images/redlight.png"  style="width:14px;"  title="取值范围还未被论证">
+						</c:otherwise>
+					</c:choose>
 				</div>
 				<div class="col-sm-3 control-label">
 					<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
@@ -171,7 +180,7 @@ String path = request.getContextPath();
 					<a href="javascript:void(0);" onclick="showParameterAttachments(${parameter.id})" data-toggle="popover" title="下载文件"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></a>
 					<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
 						<c:if test="${isAllowed=='true'}">
-							<a href="javascript:void(0);" onclick="showHistory('L1COMPONENTPARAMETER',${parameter.id})" data-toggle="popover" title="历史记录"><span class=" glyphicon glyphicon-random" aria-hidden="true"></span></a>
+							<a href="javascript:void(0);" onclick="showHistory('L3COMPONENTPARAMETER',${parameter.id})" data-toggle="popover" title="历史记录"><span class=" glyphicon glyphicon-random" aria-hidden="true"></span></a>
 							<a href="javascript:void(0);" onclick="showUpdateParameter(${parameter.id})" data-toggle="popover" title="编辑"><img alt="" style="width:20px;margin-left:4px" src="<%=path%>/images/edit.png"></a>
 							<a href="javascript:void(0);" onclick="showDailog(${parameter.id},'parameter')" data-toggle="popover" title="删除"><img alt="" style="width:20px;margin-left:4px" src="<%=path%>/images/delete.png"></a>
 						</c:if>
@@ -268,7 +277,7 @@ String path = request.getContextPath();
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
         <h4 class="modal-title" id="myModalLabel">历史记录</h4>
       </div>
-      <div class="modal-body" style="display:block;height:300px">
+      <div class="modal-body" style="display:block" id="changehistorymodal">
       		<table id="historyTable" border="0" align="left" >
       			
       		</table>
@@ -363,6 +372,10 @@ String path = request.getContextPath();
 							<td><div class="form-group"><input type="text" name="options" class="form-control"></div></td>
 						</tr>
 						<tr>
+							<td>取值范围已论证？</td>
+							<td><div class="form-group"><input type="checkbox" name="scopeStatus" class="form-control" value="true"></div></td>
+						</tr>
+						<tr>
 							<td>添加原因：</td>
 							<td><div class="form-group"><textarea rows="2" cols="1" class="form-control" name="changeReason"></textarea></div></td>
 						</tr>
@@ -405,8 +418,11 @@ String path = request.getContextPath();
 								<td>默认值：</td>
 								<td><c:choose>
 										<c:when test="${parameter.l3Component.template}">
-											<div class="form-group"><input type="text" name="parameterValue" class="form-control"
-												value="${parameter.parameterValue}"></div>
+											<div class="form-group">
+												<input type="text" name="parameterValue" class="form-control"
+												value="${parameter.parameterValue}">
+												<input type="text" class="form-control" name="tempParameterValue"
+									value="${parameter.tempParameterValue}" style="display:none"></div>
 										</c:when>
 										<c:otherwise>
 											<c:choose>
@@ -494,6 +510,21 @@ String path = request.getContextPath();
 										data-url="../../filecontroller/upload/L1COMPONENTPARAMETER/${parameter.id}"></input></a>
 								</td>
 							</tr> -->
+							<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+								<tr>
+									<td>取值范围已论证？</td>
+									<td>
+										<c:choose>
+											<c:when  test="${parameter.scopeStatus }">
+												<div class="form-group"><input type="checkbox" name="scopeStatus" class="form-control" checked value="true"></div>
+											</c:when>
+											<c:otherwise>
+												<div class="form-group"><input type="checkbox" name="scopeStatus" class="form-control" value="true"></div>
+											</c:otherwise>
+										</c:choose>
+									</td>
+								</tr>
+							</sec:authorize>
 							<tr>
 								<td>更改原因：</td>
 								<td>

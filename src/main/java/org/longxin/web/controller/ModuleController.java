@@ -36,7 +36,7 @@ public class ModuleController
 	@RequestMapping(value = "/diagram/{moduleId}", method = RequestMethod.GET)
 	public String showModuleDiagram(@PathVariable int moduleId, Model model)
 	{
-		Module module = moduleService.getModuleByID(moduleId);
+		Module module = moduleService.getModuleByIDForDiagram(moduleId);
 		model.addAttribute("module", module);
 		return "/module/diagram";
 	}
@@ -44,7 +44,7 @@ public class ModuleController
 	@RequestMapping(value = "/functiondiagram/{moduleId}", method = RequestMethod.GET)
 	public String showModuleFunctionDiagram(@PathVariable int moduleId, Model model)
 	{
-		Module module = moduleService.getModuleByID(moduleId);
+		Module module = moduleService.getModuleByIDForDiagram(moduleId);
 		model.addAttribute("module", module);
 		return "/module/functiondiagram";
 	}
