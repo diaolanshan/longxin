@@ -36,10 +36,10 @@ String path = request.getContextPath();
 		</table>
 		<br/>
 		<div class="form-group">
-			<div class="col-sm-offset-4 col-sm-2">
+			<div class="col-sm-offset-4 col-sm-5">
+				<button type="submit" class="btn btn-primary">保存</button>
 				<button type="button" class="btn btn-primary"
 					onclick="location='./select'">取消</button>
-				<button type="submit" class="btn btn-primary">保存</button>
 			</div>
 		</div>
 	</fieldset>

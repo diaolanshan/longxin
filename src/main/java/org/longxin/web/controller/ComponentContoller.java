@@ -27,12 +27,15 @@ public abstract class ComponentContoller
     {
         ChangeHistory change = new ChangeHistory();
 
-        if(!StringUtils.isEmpty(parameter.getTempParameterValue()))
+        if (operationType == OperationType.CHANGE)
         {
-            if (parameter.getTempParameterValue().equalsIgnoreCase(parameter.getDraftValue()))
+            if (!StringUtils.isEmpty(parameter.getTempParameterValue()))
             {
-                //no update.
-                return;
+                if (parameter.getTempParameterValue().equalsIgnoreCase(parameter.getDraftValue()))
+                {
+                    // no update.
+                    return;
+                }
             }
         }
         

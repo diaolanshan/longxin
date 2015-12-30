@@ -122,14 +122,16 @@ public class L2ComponentController extends ComponentContoller
         return new ModelMap("success", 1);
     }
 
-    @RequestMapping(value = "/delete/parameter/{parameterid}", method = RequestMethod.POST)
-    public void deleteComponentParameter(@PathVariable int parameterid)
+    @RequestMapping(value = "/parameter/{parameterid}", method = RequestMethod.DELETE)
+    public @ResponseBody ModelMap deleteComponentParameter(@PathVariable int parameterid)
     {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Users user = userService.findUserByUserName(userDetails.getUsername());
         trackChange(l2ComponentParameterService.getL2ComponentParamtersByID(parameterid), user, OperationType.DELETE);
         
         l2ComponentParameterService.deleteParameter(parameterid);
+        
+        return new ModelMap("success", 1);
     }
     
     @RequestMapping(value = "/view/approve/parameter/{parameterId}", method = RequestMethod.POST)
@@ -188,18 +190,14 @@ public class L2ComponentController extends ComponentContoller
             json.setIsDraft(Boolean.FALSE);
             json.setParameterValue(json.getDraftValue());
         }
-        else if (!component.getTemplate())
+        else
         {
             if (StringUtils.isNotEmpty(json.getOptions()))
             {
-                String[] options = StringUtils.split(json.getOptions(), ",");
-                for (String option : options)
+                if (StringUtils.containsIgnoreCase(json.getOptions(), json.getDraftValue()))
                 {
-                    if (StringUtils.containsIgnoreCase(option, json.getDraftValue()))
-                    {
-                        json.setParameterValue(json.getDraftValue());
-                        json.setIsDraft(Boolean.FALSE);
-                    }
+                    json.setParameterValue(json.getDraftValue());
+                    json.setIsDraft(Boolean.FALSE);
                 }
             }
             else if (json.getMinValue() != null && json.getMaxValue() != null)
@@ -231,9 +229,11 @@ public class L2ComponentController extends ComponentContoller
         return "redirect:/l2component/view/" + l2Id;
     }
 
-    @RequestMapping(value = "/delete/component/{l3Id}", method = RequestMethod.POST)
-    public void deleteL3Componment(@PathVariable int l3Id)
+    @RequestMapping(value = "/component/{l3Id}", method = RequestMethod.DELETE)
+    public @ResponseBody ModelMap deleteL3Componment(@PathVariable int l3Id)
     {
         l3ComponentService.deleteL3Component(l3Id);
+        
+        return new ModelMap("success", 1);
     }
 }

@@ -5,7 +5,7 @@
 /* Move down content because we have a fixed navbar that is 50px tall */
 body {
 	padding-top: 50px;
-	font-family:微软雅黑
+	font-family:微软雅黑;
 }
 
 /*
@@ -351,4 +351,14 @@ form a
 th
 {
 	text-align:center;
+}
+
+.footer {
+	position: relative;
+	bottom: 0;
+	width: 95%;
+	height: 30px;
+	clear:both;
+	text-align:center;
+	font-size:11px
 }

@@ -11,5 +11,6 @@ public interface FunctionModuleService
     
     public List<FunctionModule> getFunctionModulesByFeature(Feature feature);
     
+    public FunctionModule getFunctionModuleById(int functionModuleId);
 }
 

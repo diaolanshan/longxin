@@ -39,8 +39,14 @@ public class LoginController
     public @ResponseBody
     List<Product> getAllProductsForMenu(Model model)
     {
-        List<Product> products = productService.getAllProducts();
-        return products;
+        if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof UserDetails)
+        {
+            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            Users user = userService.findUserByUserName(userDetails.getUsername());
+            return productService.getProductsByPermission(user);
+        }
+        
+        return null;
     }
     
     @RequestMapping(value = "/waiting/count", method = RequestMethod.GET)

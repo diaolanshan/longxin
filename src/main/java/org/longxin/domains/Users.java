@@ -2,6 +2,7 @@ package org.longxin.domains;
 
 // Generated 2014-12-18 21:55:02 by Hibernate Tools 3.4.0.CR1
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,6 +37,8 @@ import org.longxin.util.Roles;
 public class Users implements java.io.Serializable {
 
 	private static final long serialVersionUID = -2491739765791697998L;
+
+	public static final String DATE_FORMAT = "yyyy-MM-dd hh:mm";
 	
 	private Integer id;
 	private String username;
@@ -47,10 +50,13 @@ public class Users implements java.io.Serializable {
 	private String passwordAgain;
 	private int loginCount; 
 	private Date lastLogin;
-	private int grade;
+	@SuppressWarnings("unused")
+    private int grade;
+	@SuppressWarnings("unused")
+    private String displayCreatedAt;
 	private Set<Product> products = new HashSet<Product>(0);
 	private Set<Attachment> attachments = new HashSet<Attachment>(0);
-
+	
 	public Users() {
 	}
 
@@ -102,6 +108,13 @@ public class Users implements java.io.Serializable {
 		return this.createdat;
 	}
 	
+    @Transient
+    public String getDisplayCreatedAt()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+        return sdf.format(this.getCreatedat());
+    }
+	
 	public void setCreatedat(Date createdat) {
 		this.createdat = createdat;
 	}
@@ -143,7 +156,7 @@ public class Users implements java.io.Serializable {
     {
         return loginCount/100;
     }
-
+	
     public void setGrade(int grade)
     {
         this.grade =  loginCount/100;

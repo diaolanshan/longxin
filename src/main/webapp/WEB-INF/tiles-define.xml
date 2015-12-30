@@ -10,6 +10,14 @@
 		<put-attribute name="menuItem" value="productmanagement" />
 		<put-attribute name="body" value="" />
 	</definition>
+	
+	<definition name="base.definition.matrix" template="/tiles/layoutMatrix.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/tiles/header.jsp" />
+		<put-attribute name="menu" value="/tiles/menu.jsp" />
+		<put-attribute name="menuItem" value="productmanagement" />
+		<put-attribute name="body" value="" />
+	</definition>
 
 	<definition name="/product/addproduct" extends="base.definition">
 		<put-attribute name="title" value="添加产品" />
@@ -161,7 +169,7 @@
 		<put-attribute name="body" value="/view/permission/select.jsp" />
 	</definition>
 	
-	<definition name="/permission/matrix" extends="base.definition">
+	<definition name="/permission/matrix" extends="base.definition.matrix">
 		<put-attribute name="title" value="权限管理" />
 		<put-attribute name="menuItem" value="permissionmanagement" />
 		<put-attribute name="body" value="/view/permission/matrix.jsp" />
@@ -173,7 +181,7 @@
 		<put-attribute name="body" value="/view/admin/listdraft.jsp" />
 	</definition>
 	
-	<definition name="/function/show/matrix" extends="base.definition">
+	<definition name="/function/show/matrix" extends="base.definition.matrix">
 		<put-attribute name="title" value="产品管理" />
 		<put-attribute name="menuItem" value="productmanagement" />
 		<put-attribute name="body" value="/view/feature/showmatrix.jsp" />
@@ -184,4 +192,11 @@
 		<put-attribute name="menuItem" value="productmanagement" />
 		<put-attribute name="body" value="/view/product/addproduct.jsp" />
 	</definition>
+	
+	<definition name="/requirements/view" extends="base.definition.matrix">
+		<put-attribute name="title" value="需求管理" />
+		<put-attribute name="menuItem" value="productmanagement" />
+		<put-attribute name="body" value="/view/requirements/viewrequirements.jsp" />
+	</definition>
+	
 </tiles-definitions>  

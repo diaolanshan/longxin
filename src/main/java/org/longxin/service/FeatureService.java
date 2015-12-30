@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.longxin.domains.Feature;
 import org.longxin.domains.Product;
+import org.longxin.domains.Users;
 import org.longxin.web.controller.bean.MatrixBean;
 import org.longxin.web.controller.bean.Surounder;
 
@@ -12,6 +13,8 @@ public interface FeatureService
     public void saveFeatures(List<Feature> features);
     
     public List<Feature> getFeatureByProduct(Product product);
+    
+    public List<Feature> getFeatureByProductAndPermission(Product product, Users user);
     
     public Feature getFeatureByID(Integer featureID);
     

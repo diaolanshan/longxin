@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 import org.longxin.dao.L1ComponentDAO;
+import org.longxin.domains.FunctionModule;
 import org.longxin.domains.L1Component;
 import org.longxin.domains.Module;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -99,4 +100,15 @@ public class L1ComponentDAOImpl extends HibernateDaoSupport implements L1Compone
         
         return results;
     }
+
+	@Override
+	public List<L1Component> getL1ComponentsByFunctionModule(
+			FunctionModule functionModule) {
+		  @SuppressWarnings("unchecked")
+		List<L1Component> l1Components = (List<L1Component>) this.getHibernateTemplate().find(
+		            "FROM L1Component WHERE functionModule = ? ORDER BY ID ASC",
+		            functionModule);
+
+		        return l1Components;
+	}
 }

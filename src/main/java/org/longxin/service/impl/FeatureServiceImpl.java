@@ -1,10 +1,12 @@
 package org.longxin.service.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.longxin.dao.FeatureDAO;
 import org.longxin.dao.L1ComponentDAO;
+import org.longxin.dao.UserPermissionMatrixDAO;
 import org.longxin.domains.Feature;
 import org.longxin.domains.FunctionModule;
 import org.longxin.domains.L1Component;
@@ -12,9 +14,12 @@ import org.longxin.domains.L2Component;
 import org.longxin.domains.L3Component;
 import org.longxin.domains.Module;
 import org.longxin.domains.Product;
+import org.longxin.domains.UserPermissionMatrix;
+import org.longxin.domains.Users;
 import org.longxin.service.FeatureService;
 import org.longxin.service.FunctionModuleService;
 import org.longxin.service.ModuleService;
+import org.longxin.util.Roles;
 import org.longxin.web.controller.bean.Matrix;
 import org.longxin.web.controller.bean.MatrixBean;
 import org.longxin.web.controller.bean.Surounder;
@@ -33,6 +38,9 @@ public class FeatureServiceImpl implements FeatureService
     
     @Autowired
     L1ComponentDAO l1ComponentDAO;
+    
+    @Autowired
+    UserPermissionMatrixDAO permissionMatrixDAO;
     
     public void saveFeatures(List<Feature> features)
     {
@@ -60,6 +68,41 @@ public class FeatureServiceImpl implements FeatureService
     public List<Feature> getFeatureByProduct(Product product)
     {
         return featureDAO.getFeatureByProduct(product);
+    }
+    
+    public List<Feature> getFeatureByProductAndPermission(Product product, Users user)
+    {
+        List<Feature> features = getFeatureByProduct(product);
+        if (user.getRole() == Roles.ROLE_ADMIN)
+        {
+            //Admin, no need to check the permission.
+            return features;
+        }
+        else
+        {
+            //normal user, need to check the permission.
+            List<UserPermissionMatrix> matrixs = permissionMatrixDAO.getPermissionMatrixsByUserIDs(new int[] {user.getId()});
+
+            Iterator<Feature> iterator = features.iterator();  
+            while(iterator.hasNext())
+            {
+                boolean found = false;
+                Feature feature = iterator.next(); 
+                for (UserPermissionMatrix matrix : matrixs)
+                {
+                    if (feature.getId() == matrix.getFeature().getId())
+                    {
+                        found = true;
+                    }
+                }
+                if(!found)
+                {
+                    iterator.remove();
+                }
+            }
+
+            return features;
+        }
     }
 
     public Feature getFeatureByID(Integer featureID)
@@ -150,18 +193,20 @@ public class FeatureServiceImpl implements FeatureService
                     for (L1Component l1Component : module.getL1Components())
                     {
                         Matrix matrix;
-                        if(l1Component.getFunctionModule()!=null&&l1Component.getFunctionModule().getId()==functiomModule.getId())
+                        if (l1Component.getFunctionModule() != null
+                                && l1Component.getFunctionModule().getId() == functiomModule.getId())
                         {
-                            matrix = new Matrix(functiomModule.getId(), l1Component.getId(),true);
-                        }else
+                            matrix = new Matrix(functiomModule.getId(), l1Component.getId(), true);
+                        }
+                        else
                         {
-                            matrix = new Matrix(functiomModule.getId(), l1Component.getId(),false);
+                            matrix = new Matrix(functiomModule.getId(), l1Component.getId(), false);
                         }
                         matrixs.add(matrix);
                     }
-                    bean.getMatrixs().addAll(matrixs);
                 }
             }
+            bean.getMatrixs().addAll(matrixs);
             beans.add(bean);
         }
         return beans;

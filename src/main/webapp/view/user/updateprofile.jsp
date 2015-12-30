@@ -86,7 +86,7 @@
 			<div class="form-group">
 				<label for="role" class="col-sm-2 control-label">用户角色：</label>
 				<div class="col-sm-10">
-					<form:select path="role" class="form-control" id="role" disabled="${user.role=='ROLE_ADMIN'}">
+					<form:select path="role" class="form-control" id="role" disabled="${user.role!='ROLE_ADMIN'}">
 						<c:forEach var="item" items="${roles}">
 							<form:option value="${item}">${item.description}</form:option>
 						</c:forEach>
@@ -98,7 +98,9 @@
 				<label for="role" class="col-sm-2 control-label">创建时间：</label>
 				<div class="col-sm-10">
 					<form:input type="text" class="form-control" id="username"
-						path="createdat" disabled="true" />
+						path="displayCreatedAt" disabled="true"/>
+					<form:input type="text" class="form-control" id="username"
+						path="createdat" disabled="true" style="display:none"/>
 				</div>
 			</div>
 			
@@ -106,7 +108,7 @@
 				<label for="department.id" class="col-sm-2 control-label">部门：</label>
 				<div class="col-sm-10">
 					<form:select path="department.id" class="form-control"
-						id="department.id">
+						id="department.id" disabled="${user.role!='ROLE_ADMIN'}">
 						<c:forEach var="item" items="${departments}">
 							<form:option value="${item.id}">${item.departmentname}</form:option>
 						</c:forEach>
@@ -116,9 +118,9 @@
 
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" class="btn btn-primary">保存修改</button>
 					<button type="button" class="btn btn-primary"
 						onclick="location='../../user/profile'">关闭</button>
-					<button type="submit" class="btn btn-primary">保存修改</button>
 				</div>
 			</div>
 		</div>

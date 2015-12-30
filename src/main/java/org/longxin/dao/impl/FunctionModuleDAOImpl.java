@@ -25,5 +25,14 @@ public class FunctionModuleDAOImpl extends HibernateDaoSupport implements Functi
 
         return modules;
     }
+    
+    /**
+     * Get the FunctionModule object by the primary key.
+     */
+    @Override
+    public FunctionModule getFunctionModuleById(int functionModuleId)
+    {
+    	return this.getHibernateTemplate().load(FunctionModule.class, functionModuleId);
+    }
 }
 

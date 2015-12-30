@@ -64,6 +64,7 @@
 				<value>org.longxin.domains.Attachment</value>
 				<value>org.longxin.domains.ChangeHistory</value>
 				<value>org.longxin.domains.UserPermissionMatrix</value>
+				<value>org.longxin.domains.Requirements</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
@@ -167,6 +168,10 @@
 	<bean id="functionModuleDAO" class="org.longxin.dao.impl.FunctionModuleDAOImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	
+	<bean id="requirementDAO" class="org.longxin.dao.impl.RequirementsDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 
 	<bean id="applicationSetting"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
@@ -204,4 +209,6 @@
 	<bean id="userPermissionMatrixService" class="org.longxin.service.impl.UserPermissionMatrixServiceImpl"></bean>
 	
 	<bean id="functionModuleService" class="org.longxin.service.impl.FunctionModuleServiceImpl"></bean>
+	
+	<bean id="requirementsService" class="org.longxin.service.impl.RequirementServiceImpl"></bean>
 </beans>

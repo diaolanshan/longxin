@@ -38,9 +38,9 @@ String path = request.getContextPath();
 	<br/>
 	<div class="form-group">
 		<div class="col-sm-offset-4 col-sm-2">
+			<button type="submit" class="btn btn-primary">保存</button>
 			<button type="button" class="btn btn-primary"
 				onclick="location='../../../view/${featureId}'">取消</button>
-			<button type="submit" class="btn btn-primary">保存</button>
 		</div>
 	</div>
 	</fieldset>

@@ -54,7 +54,9 @@ public class ProductController
     @RequestMapping(method = RequestMethod.GET)
     public String getAllProducts(Model model)
     {
-        List<Product> products = productService.getAllProducts();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users user = userService.findUserByUserName(userDetails.getUsername());
+        List<Product> products = productService.getProductsByPermission(user);
         model.addAttribute("products", products);
         return "/product/listproducts";
     }
@@ -81,22 +83,25 @@ public class ProductController
     public String searchProduct(Model model)
     {
         model.addAttribute("productSearchBean", new ProductSearchBean());
-        model.addAttribute("products", productService.getAllProducts());
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users user = userService.findUserByUserName(userDetails.getUsername());
+        model.addAttribute("products", productService.getProductsByPermission(user));
         return "/product/listproducts";
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String doSearchProduct(Model model, ProductSearchBean searchForm)
     {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users user = userService.findUserByUserName(userDetails.getUsername());
         model.addAttribute("productSearchBean", searchForm);
-        // System.out.println(searchForm.getKeyword());
         if (StringUtils.isEmpty(searchForm.getKeyword()))
         {
-            model.addAttribute("products", productService.getAllProducts());
+            model.addAttribute("products", productService.getProductsByPermission(user));
         }
         else
         {
-            List<Product> products = productService.searchProductByKeyWords(StringUtils.trim(searchForm.getKeyword()));
+            List<Product> products = productService.searchProductByKeyWords(user, StringUtils.trim(searchForm.getKeyword()));
             model.addAttribute("products", products);
             model.addAttribute("searched", true);
         }
@@ -137,7 +142,6 @@ public class ProductController
     {
         Product product = productService.getProjectByID(productId);
         model.addAttribute("product", product);
-        model.addAttribute("features", featureService.getFeatureByProduct(product));
         return "/product/listoneproduct";
     }
 
@@ -155,7 +159,6 @@ public class ProductController
     {
         productService.saveProduct(product);
         model.addAttribute("product", product);
-        model.addAttribute("features", featureService.getFeatureByProduct(product));
         return "redirect:/product/list/" + product.getId();
     }
 

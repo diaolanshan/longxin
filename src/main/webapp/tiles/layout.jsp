@@ -6,8 +6,7 @@
 String path = request.getContextPath();  
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";  
 %>  
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-    "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -23,19 +22,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script src="<%=path%>/js/jquery-ui.min.js"></script>
 <script src="<%=path%>/js/bootstrap.min.js"></script>
 <script src="<%=path%>/js/bootstrap-table.min.js"></script>
+<script src="<%=path%>/js/bootstrap-table-zh-CN.js"></script>
 <script src="<%=path%>/js/jquery.validate.js"></script>
 <script src="<%=path%>/js/jquery.jOrgChart.js"></script>
 <script src="<%=path%>/js/jquery.ui.widget.js"></script>
 <script src="<%=path%>/js/jquery.fileupload.js"></script>
 <script src="<%=path%>/js/jquery.iframe-transport.js"></script>
-<script src="<%=path%>/js/jquery.poshytip.js"></script>
 <script src="<%=path%>/js/longxin.js"></script>
 </head>
 <body>
 	<div style="display:none" id="meanItem"><tiles:getAsString name="menuItem"></tiles:getAsString></div>
-	<div class="navbar-fixed-top" style="width:100%">
+	<div class="navbar-fixed-top" style="width:100%;background:#C1D0DF" >
 		<img alt="" src="<%=path%>/images/lego.png" style="background-color: #2bc0be"> 
-		<div style="display:inline;background-image:url(<%=path%>/images/header.png);background-repeat:no-repeat;margin-left:200px;height:95px" class="navbar-fixed-top">
+		<div style="display:inline;background-image:url(<%=path%>/images/header.png);background-repeat:no-repeat;margin-left:200px;height:94px" class="navbar-fixed-top">
 			<div style="font-size:45px;padding-left:30px">杭州龙鑫科技有限公司</div>
 			<tiles:insertAttribute name="header" />
 		</div>
@@ -50,7 +49,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<tiles:insertAttribute name="body" />
 			</div>
+			
+			
 		</div>
 	</div>
+	
+	 <footer class="footer">
+      <div class="container">
+			<span class="text-muted">This information is confidential and was prepared by MLC solely for client;It is not to be relied on any 3rd party without MLC's prior written consent.</span>
+      </div>
+    </footer>
 </body>
 </html>

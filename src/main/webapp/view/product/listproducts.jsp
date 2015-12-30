@@ -14,7 +14,6 @@ a {
 	var deleteProductId;
     $(function () {
 		$('#searchTable1').bootstrapTable({
-			
 		}).on('dbl-click-row.bs.table', function (e, row, $element) {
 			location.href="./list/"+row.id;
         });
@@ -44,13 +43,15 @@ a {
 		<div class="form-group">
 			<form:input type="text" class="form-control" style="display:inline;margin-left:10px" id="keyword"  path="keyword" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="submit" class="btn btn-primary start-example" value="查询" />&nbsp; &nbsp;&nbsp;
-			<a href="./create"><input type="button" class="btn btn-primary start-example" value="创建新产品" /></a>
+			  <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+			  	<a href="./create"><input type="button" class="btn btn-primary start-example" value="创建新产品" /></a>
+			  </sec:authorize>
 		</div>
 	</fieldset>
 	<br/>
 	<c:if test="${not searched}">
 	<div style="margin-left:-5px">
-		<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1" >
+		<table data-toggle="table" data-cache="false" data-height="425" data-pagination="true" id="searchTable1" >
 			<thead>
 		        <tr class="success">
 					<th data-field="id"  data-sortable="true" data-halign="center">ID</th>
@@ -121,7 +122,7 @@ a {
 											<img alt="" src="<%=path%>/images/arrow.png" style="width:22px">
 											<c:choose>
 												<c:when test="${l1.searched}">
-													 <a href="../l3component/view/${l1.id}">${l1.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${l1.description}</a>
+													 <a href="../l1component/view/${l1.id}">${l1.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${l1.description}</a>
 												</c:when>
 												<c:otherwise>
 													${l1.name} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${l1.description}
@@ -134,7 +135,7 @@ a {
 																	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 														${parameter.parameterValue}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 														<c:choose>
-															<c:when test="${parameter.options == \"\"}">
+															<c:when test="${parameter.options == ''}">
 																<div style="width: 300px; hefloat: left; display: inline; font-size: 11px; color: gray">取值范围(${parameter.minValue},${parameter.maxValue})</div>
 															</c:when>
 															<c:otherwise>
@@ -174,7 +175,7 @@ a {
 																	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 																	${parameter.parameterValue}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 																	<c:choose>
-																		<c:when test="${parameter.options == \"\"}">
+																		<c:when test="${parameter.options == ''}">
 																			<div style="width: 300px; hefloat: left; display: inline; font-size: 11px; color: gray">取值范围(${parameter.minValue},${parameter.maxValue})</div>
 																		</c:when>
 																		<c:otherwise>
@@ -214,7 +215,7 @@ a {
 																		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 																		${parameter.parameterValue}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 																		<c:choose>
-																			<c:when test="${parameter.options == \"\"}">
+																			<c:when test="${parameter.options == ''}">
 																				<div style="width: 300px; hefloat: left; display: inline; font-size: 11px; color: gray">取值范围(${parameter.minValue},${parameter.maxValue})</div>
 																			</c:when>
 																			<c:otherwise>

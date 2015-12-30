@@ -41,8 +41,8 @@ public class AttachmentServiceImpl implements AttachmentService
         List<Attachment> attachments = this.attachmentDAO.getAttachmentByCategoryAndRefID(category, referenceID);
         for(Attachment attachment : attachments)
         {
-            //attachment.setOwner(null);
-            //this.attachmentDAO.deleteAttachment(attachment);
+            attachment.setOwner(null);
+            this.attachmentDAO.deleteAttachment(attachment);
             File folder = new File(FILE_ROOT + File.separator + category + File.separator + referenceID);
             if(folder.exists())
             {

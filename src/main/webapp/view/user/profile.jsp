@@ -25,7 +25,7 @@ String path = request.getContextPath();
 			</div>
 			<div class="form-group">
 				<label for="role" class="col-sm-3 control-label">创建时间：</label>
-				<div class="control-label">${user.createdat}</div>
+				<div class="control-label">${user.getDisplayCreatedAt()}</div>
 			</div>
 			<div class="form-group">
 				<label for="department.id" class="col-sm-3 control-label">部门：</label>

@@ -1,7 +1,11 @@
 package org.longxin.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.longxin.domains.Feature;
 import org.longxin.domains.FunctionModule;
@@ -13,6 +17,7 @@ import org.longxin.domains.L3Component;
 import org.longxin.domains.L3ComponentParameter;
 import org.longxin.domains.Module;
 import org.longxin.domains.Product;
+import org.longxin.domains.UserPermissionMatrix;
 import org.longxin.domains.Users;
 import org.apache.log4j.Logger;
 import org.longxin.dao.FeatureDAO;
@@ -24,9 +29,11 @@ import org.longxin.dao.L3ComponentDAO;
 import org.longxin.dao.L3ComponentParameterDAO;
 import org.longxin.dao.ModuleDAO;
 import org.longxin.dao.ProductDAO;
+import org.longxin.dao.UserPermissionMatrixDAO;
 import org.longxin.service.FeatureService;
 import org.longxin.service.ModuleService;
 import org.longxin.service.ProductService;
+import org.longxin.util.Roles;
 import org.longxin.web.controller.bean.Matrix;
 import org.longxin.web.controller.bean.MatrixBean;
 import org.longxin.web.controller.bean.Surounder;
@@ -68,6 +75,9 @@ public class ProductServiceImpl implements ProductService
     
     @Autowired
     L3ComponentParameterDAO l3ComponentParameterDAO;
+    
+    @Autowired
+    UserPermissionMatrixDAO permissionMatrixDAO;
 
 	public List<Product> getAllProducts()
 	{
@@ -99,6 +109,31 @@ public class ProductServiceImpl implements ProductService
 		Product product = productDAO.getProductByID(prodcutID);
 		return product;
 	}
+	
+    public List<Product> getProductsByPermission(Users user)
+    {
+        if (user.getRole() == Roles.ROLE_ADMIN)
+        {
+            //Admin, no need to check the permission.
+            return getAllProducts();
+        }
+        else
+        {
+            //normal user, need to check the permission.
+            List<UserPermissionMatrix> matrixs = permissionMatrixDAO.getPermissionMatrixsByUserIDs(new int[] {user.getId()});
+
+            Set<Product> products = new HashSet<Product>();
+            for (UserPermissionMatrix matrix : matrixs)
+            {
+                products.add(matrix.getFeature().getProduct());
+            }
+
+            List<Product> ret = new ArrayList<Product>();
+            ret.addAll(products);
+
+            return ret;
+        }
+    }
 	
     public Product getProjectByIDForDiagram(int prodcutID)
     {
@@ -168,7 +203,7 @@ public class ProductServiceImpl implements ProductService
         return product;
     }
 	
-	public List<Product> searchProductByKeyWords(String keyword)
+	public List<Product> searchProductByKeyWords(Users user, String keyword)
 	{
 	    List<Product> products = productDAO.searchProductByKeyWords(keyword);
 	    
@@ -332,6 +367,33 @@ public class ProductServiceImpl implements ProductService
             }
         }
         
+        if (user.getRole() == Roles.ROLE_ADMIN)
+        {
+        }
+        else
+        {
+            List<UserPermissionMatrix> matrixs = permissionMatrixDAO.getPermissionMatrixsByUserIDs(new int[] {user
+                    .getId()});
+
+            Iterator<Feature> iterator = features.iterator();
+            while (iterator.hasNext())
+            {
+                boolean found = false;
+                Feature feature = iterator.next();
+                for (UserPermissionMatrix matrix : matrixs)
+                {
+                    if (feature.getId() == matrix.getFeature().getId())
+                    {
+                        found = true;
+                    }
+                }
+                if (!found)
+                {
+                    iterator.remove();
+                }
+            }
+        }
+        
         for (Feature feature : features)
         {
             boolean parentExist = false;
@@ -351,7 +413,7 @@ public class ProductServiceImpl implements ProductService
                 products.add(feature.getProduct());
             }
         }
-	    
+        
 	    return products;
 	}
 	

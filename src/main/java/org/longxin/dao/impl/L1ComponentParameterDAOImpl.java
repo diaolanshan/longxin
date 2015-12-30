@@ -31,7 +31,8 @@ public class L1ComponentParameterDAOImpl extends HibernateDaoSupport implements 
     @Override
     public void deleteParameter(int id)
     {
-        this.getHibernateTemplate().delete(this.getHibernateTemplate().get(L1ComponentParameter.class, id));
+        L1ComponentParameter parameter = this.getHibernateTemplate().get(L1ComponentParameter.class, id);
+        this.getHibernateTemplate().delete(parameter);
     }
 
     @Override

@@ -20,7 +20,9 @@ public interface ProductService {
 	
 	public Product getProjectByIDForFunctionDiagram(int prodcutID);
 	
-	public List<Product> searchProductByKeyWords(String keyword);
+	public List<Product> getProductsByPermission(Users user);
+	
+	public List<Product> searchProductByKeyWords(Users user, String keyword);
 	
 	public void deleteProduct(int productID);
 	

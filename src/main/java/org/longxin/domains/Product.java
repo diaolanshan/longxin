@@ -52,6 +52,8 @@ public class Product implements java.io.Serializable, Cloneable
     private Users owner;
 
     private Set<Feature> features = new HashSet<Feature>(0);
+    
+    private Set<Requirements> requirements = new HashSet<Requirements>(0);
 
     private Boolean searched;
     
@@ -156,9 +158,23 @@ public class Product implements java.io.Serializable, Cloneable
     {
         this.features = features;
     }
+    
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.ALL)
+    @OrderBy("id ASC")
+    @JsonIgnore
+    public Set<Requirements> getRequirements()
+    {
+        return requirements;
+    }
+
+    public void setRequirements(Set<Requirements> requirements)
+    {
+        this.requirements = requirements;
+    }
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "owner")
+    @JsonIgnore
     public Users getOwner()
     {
         return owner;
@@ -210,6 +226,19 @@ public class Product implements java.io.Serializable, Cloneable
             }
 
             cloned.setFeatures(clonedFeatures);
+        }
+        
+        if (this.requirements != null)
+        {
+        	Set<Requirements> clonedRequirements = new HashSet<Requirements>();
+        	for(Requirements requirement : requirements)
+        	{
+        		Requirements clonedRequirement = (Requirements)requirement.clone();
+        		clonedRequirement.setProduct(cloned);
+        		clonedRequirements.add(clonedRequirement);
+        	}
+        	
+        	cloned.setRequirements(clonedRequirements);
         }
 
         return cloned;

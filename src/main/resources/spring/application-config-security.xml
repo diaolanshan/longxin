@@ -54,8 +54,8 @@
 		<!-- max-sessions:允许用户帐号登录的次数。范例限制用户只能登录一次。exception-if-maximum-exceeded: 
 			默认为false，此值表示：用户第二次登录时，前一次的登录信息都被清空。当exception-if-maximum-exceeded="true"时系统会拒绝第二次登录。 -->
 		<security:session-management>
-			<security:concurrency-control
-				error-if-maximum-exceeded="true" max-sessions="4" expired-url="/view/login.jsp"/>
+			<security:concurrency-control 
+				error-if-maximum-exceeded="false" max-sessions="2" expired-url="/view/login.jsp"/>
 		</security:session-management>
 
 	</security:http>

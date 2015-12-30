@@ -54,21 +54,7 @@ String path = request.getContextPath();
     		}
     	})
 	});
-    function showDailog(id, type){
-    	deleteId = id;
-    	if(type=="parameter"){
-    		url = '../delete/parameter/'+deleteId;	
-    	}
-    	else{
-    		url = '../delete/component/'+deleteId;	
-    	}
-    	$('#myModal').modal('show');
-    }
-    function deleteThis(){
-    	$.post(url, location.reload());
-    	$('#myModal').modal('hide');
-    }
-
+  
     function update(){
     	$("#updateForm").modal('show');
     }
@@ -129,7 +115,7 @@ String path = request.getContextPath();
 	class="form-horizontal" id="editProductForm">
 	<fieldset>
 		<legend>
-			<a href="<%=path%>/l2component/view/${component.l2Component.id}">返回</a>
+			<a href="<%=path%>/l2component/view/${component.l2Component.id}" title="返回"><img alt="" src="<%=path%>/images/back.png" style="width:35px"></a>
 			${component.name}细节 &nbsp;&nbsp;&nbsp;&nbsp;
 		</legend>
 		<div class="form-group">
@@ -182,7 +168,7 @@ String path = request.getContextPath();
 						<c:if test="${isAllowed=='true'}">
 							<a href="javascript:void(0);" onclick="showHistory('L3COMPONENTPARAMETER',${parameter.id})" data-toggle="popover" title="历史记录"><span class=" glyphicon glyphicon-random" aria-hidden="true"></span></a>
 							<a href="javascript:void(0);" onclick="showUpdateParameter(${parameter.id})" data-toggle="popover" title="编辑"><img alt="" style="width:20px;margin-left:4px" src="<%=path%>/images/edit.png"></a>
-							<a href="javascript:void(0);" onclick="showDailog(${parameter.id},'parameter')" data-toggle="popover" title="删除"><img alt="" style="width:20px;margin-left:4px" src="<%=path%>/images/delete.png"></a>
+							<a href="javascript:void(0);" onclick="deleteX(this, ${parameter.id}, 'parameter')" data-toggle="popover" title="删除"><img alt="" style="width:20px;margin-left:4px" src="<%=path%>/images/delete.png"></a>
 						</c:if>
 					</sec:authorize>
 				</div>
@@ -190,9 +176,7 @@ String path = request.getContextPath();
 		</c:forEach>
 		
 		<div class="form-group">
-			<div class="col-sm-offset-7 col-sm-5" style="align: right">
-			<c:choose>
-				<c:when test="! ${component.template}">
+			<div class="col-sm-offset-6 col-sm-7" style="align: right">
 					<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
 						<c:if test="${isAllowed=='true'}">
 							<label for="fileupload" title="上传文件"><img alt="" style="margin-top:-4px;width:24px;height:18px"
@@ -202,10 +186,8 @@ String path = request.getContextPath();
 							<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
 							<input type="button" id="add_new" class="btn btn-primary" value="增加属性"></input>
 						</c:if>
-						</sec:authorize>
-				</c:when>
-				<c:otherwise>
-					<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+					</sec:authorize>
+					<!--<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
 						<c:if test="${isAllowed=='true'}">
 							<label for="fileupload" title="上传文件"><img alt="" style="margin-top:-4px;width:24px;height:18px"
 								src="<%=path%>/images/upload.png"> </label> <input id="fileupload"
@@ -214,9 +196,7 @@ String path = request.getContextPath();
 							<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
 							<input type="button" id="add_new" class="btn btn-primary" value="增加属性"></input>
 						</c:if>
-					</sec:authorize>
-				</c:otherwise>
-			</c:choose>
+					</sec:authorize>-->
 			</div>
 		</div>
 		
@@ -529,7 +509,7 @@ String path = request.getContextPath();
 								<td>更改原因：</td>
 								<td>
 									<div class="form-group">
-									<textarea rows="2" cols="1" class="form-control" name="changeReason"></textarea>
+									<textarea rows="2" cols="1" class="form-control" name="changeReason" id="changeReason"></textarea>
 									</div>
 								</td>
 							</tr>

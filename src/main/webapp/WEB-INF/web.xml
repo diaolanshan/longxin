@@ -5,7 +5,7 @@
 http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	id="WebApp_ID" version="2.5">
 
-	<display-name>longxin</display-name>
+	<display-name>kbm</display-name>
 
 	<filter>  
   		<filter-name>encodingFilter</filter-name>  
@@ -89,5 +89,9 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<res-auth>Container</res-auth>
 		<res-sharing-scope>Shareable</res-sharing-scope>
 	</resource-ref>
+	
+	<welcome-file-list>  
+    	<welcome-file>/view/login.jsp</welcome-file>  
+	</welcome-file-list>
 
 </web-app>

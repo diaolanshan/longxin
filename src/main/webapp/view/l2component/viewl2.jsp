@@ -15,6 +15,7 @@ String path = request.getContextPath();
 	var deleteId;
 	var url ;
     $(function () {
+    	$("#updateParameterForm62").validate();
 		$('#searchTable1').bootstrapTable({
 			
 		}).on('dbl-click-row.bs.table', function (e, row, $element) {
@@ -54,21 +55,7 @@ String path = request.getContextPath();
     		}
     	})
 	});
-    function showDailog(id, type){
-    	deleteId = id;
-    	if(type=="parameter"){
-    		url = '../delete/parameter/'+deleteId;	
-    	}
-    	else{
-    		url = '../delete/component/'+deleteId;	
-    	}
-    	$('#myModal').modal('show');
-    }
-    function deleteThis(){
-    	$.post(url, location.reload());
-    	$('#myModal').modal('hide');
-    }
-
+  
     function update(){
     	$("#updateForm").modal('show');
     }
@@ -99,15 +86,16 @@ String path = request.getContextPath();
     function addL3Component(){
     	$("#addComponentForm").modal('show');
     }
+    
 </script>
 
 <form:form method="POST" modelAttribute="component" role="form"
 	class="form-horizontal" id="editProductForm">
 	<fieldset>
 		<legend>
-			<a href="<%=path%>/l1component/view/${component.l1Component.id}">返回</a>
+			<a href="<%=path%>/l1component/view/${component.l1Component.id}" title="返回"><img alt="" src="<%=path%>/images/back.png" style="width:35px"></a>
 			${component.name}细节 &nbsp;&nbsp;&nbsp;<a href="../diagram/${component.id}">
-				<span title="物理结构图" class="glyphicon glyphicon-indent-left"></span></a> 
+			<span title="物理结构图" class="glyphicon glyphicon-indent-left"></span></a> 
 			&nbsp;&nbsp;<a href="../functiondiagram/${component.id}">
 			<span title="功能结构图" class="glyphicon glyphicon-indent-right"></span></a>
 		</legend>
@@ -161,7 +149,7 @@ String path = request.getContextPath();
 						<c:if test="${isAllowed=='true'}">
 							<a href="javascript:void(0);" onclick="showHistory('L2COMPONENTPARAMETER',${parameter.id})" data-toggle="popover" title="历史记录"><span class=" glyphicon glyphicon-random" aria-hidden="true"></span></a>
 							<a href="javascript:void(0);" onclick="showUpdateParameter(${parameter.id})" data-toggle="popover" title="编辑"><img alt="" style="width:20px;margin-left:4px" src="<%=path%>/images/edit.png"></a>
-							<a href="javascript:void(0);" onclick="showDailog(${parameter.id},'parameter')" data-toggle="popover" title="删除"><img alt="" style="width:20px;margin-left:4px" src="<%=path%>/images/delete.png"></a>
+							<a href="javascript:void(0);" onclick="deleteX(this, ${parameter.id}, 'parameter')" data-toggle="popover" title="删除"><img alt="" style="width:20px;margin-left:4px" src="<%=path%>/images/delete.png"></a>
 						</c:if>
 					</sec:authorize>
 				</div>
@@ -169,45 +157,39 @@ String path = request.getContextPath();
 		</c:forEach>
 
 		<div class="form-group">
-			<div class="col-sm-offset-7 col-sm-5" style="align: right">
-				<c:choose>
-					<c:when test="! ${component.template}">
-						<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
-							<c:if test="${isAllowed=='true'}">
-								<label for="fileupload" title="上传文件"><img alt=""
-									style="margin-top: -4px;width:24px;height:18px" src="<%=path%>/images/upload.png">
-								</label>
-								<input id="fileupload" type="file" name="files[]"
-									style="display: none"
-									data-url="../../filecontroller/upload/l2component/${component.id}">&nbsp;
-								<input type="button" onclick="update()"
-									class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
-								<input type="button" id="add_new" class="btn btn-primary"
-									value="增加属性"></input>
-								<input type="button" onclick="addL3Component()"
-									class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
-							</c:if>
-						</sec:authorize>
-					</c:when>
-					<c:otherwise>
-						<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
-							<c:if test="${isAllowed=='true'}">
-								<label for="fileupload" title="上传文件"><img alt=""
-									style="margin-top: -4px;width:24px;height:18px" src="<%=path%>/images/upload.png">
-								</label>
-								<input id="fileupload" type="file" name="files[]"
-									style="display: none"
-									data-url="../../filecontroller/upload/l2component/${component.id}">&nbsp;
-								<input type="button" onclick="update()"
-									class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
-								<input type="button" id="add_new" class="btn btn-primary"
-									value="增加属性"></input>
-								<input type="button" onclick="addL3Component()"
-									class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
-							</c:if>
-					</sec:authorize>
-					</c:otherwise>
-				</c:choose>
+			<div class="col-sm-offset-6 col-sm-7" style="align: right">
+				<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+					<c:if test="${isAllowed=='true'}">
+						<label for="fileupload" title="上传文件"><img alt=""
+							style="margin-top: -4px;width:24px;height:18px" src="<%=path%>/images/upload.png">
+						</label>
+						<input id="fileupload" type="file" name="files[]"
+							style="display: none"
+							data-url="../../filecontroller/upload/l2component/${component.id}">&nbsp;
+						<input type="button" onclick="update()"
+							class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
+						<input type="button" id="add_new" class="btn btn-primary"
+							value="增加属性"></input>
+						<input type="button" onclick="addL3Component()"
+							class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
+					</c:if>
+				</sec:authorize>
+				<!--<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+					<c:if test="${isAllowed=='true'}">
+						<label for="fileupload" title="上传文件"><img alt=""
+							style="margin-top: -4px;width:24px;height:18px" src="<%=path%>/images/upload.png">
+						</label>
+						<input id="fileupload" type="file" name="files[]"
+							style="display: none"
+							data-url="../../filecontroller/upload/l2component/${component.id}">&nbsp;
+						<input type="button" onclick="update()"
+							class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
+						<input type="button" id="add_new" class="btn btn-primary"
+							value="增加属性"></input>
+						<input type="button" onclick="addL3Component()"
+							class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;
+					</c:if>
+				</sec:authorize>-->
 			</div>
 		</div>
 
@@ -235,7 +217,7 @@ String path = request.getContextPath();
                 <td>
                 <a href="../../l3component/view/${l3component.id}"  data-toggle="popover" title="查看"><img alt="" src="<%=path%>/images/view.png"></a>
                 &nbsp;&nbsp;
-                 <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="showDailog(${l3component.id},'component')" data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a></sec:authorize>
+                 <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="deleteX(this, ${l3component.id}, 'subComponent')" data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a></sec:authorize>
    	 			&nbsp;&nbsp;
             </tr>  
        		</c:forEach>
@@ -329,8 +311,8 @@ String path = request.getContextPath();
 						</tr>
 						<tr>
 							<td>描述：</td>
-							<td><div class="form-group"><input type="text" name="description" class="form-control"
-								value="${component.description}"></div></td>
+							<td><div class="form-group"><textarea rows="3" name="description" class="form-control"
+								value="${component.description}"></textarea></div></td>
 						</tr>
 						<tr>
 							<td align="right"></td>
@@ -395,7 +377,7 @@ String path = request.getContextPath();
 						</tr>
 						<tr>
 							<td>添加原因：</td>
-							<td><div class="form-group"><textarea rows="2" cols="1" class="form-control" name="changeReason"></textarea></div></td>
+							<td><div class="form-group"><textarea rows="2" cols="1" class="form-control" name="changeReason" required ></textarea></div></td>
 						</tr>
 					</table>
 				</div>
@@ -430,7 +412,7 @@ String path = request.getContextPath();
 						</tr>
 						<tr>
 							<td>描述：</td>
-							<td><div class="form-group"><input type="text" name="description" class="form-control"></div></td>
+							<td><div class="form-group"><textarea rows="3" name="description" class="form-control"></textarea></div></td>
 						</tr>
 					</table>
 				</div>
@@ -527,7 +509,7 @@ String path = request.getContextPath();
 								<td>单位：</td>
 								<td><c:choose>
 										<c:when test="${parameter.l2Component.template}">
-											<div class="form-group"><input type="text" name="unitName" class="form-control"
+											<div class="form-group"><input type="text" name="unitName" class="form-control" required
 												value="${parameter.unitName}"></div>
 										</c:when>
 										<c:otherwise>
@@ -581,8 +563,7 @@ String path = request.getContextPath();
 								<td>更改原因：</td>
 								<td>
 									<div class="form-group">
-										<textarea rows="2" cols="1" class="form-control"
-											name="changeReason"></textarea>
+										<textarea rows="2" cols="1" class="form-control" name="changeReason" id="changeReason"></textarea>
 									</div>
 								</td>
 							</tr>

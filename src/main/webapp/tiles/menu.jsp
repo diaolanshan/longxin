@@ -15,7 +15,7 @@ String path = request.getContextPath();
 	
 	<security:authorize ifAllGranted="ROLE_ADMIN">
 		<li id="permissionmanagement">
-			<a href="/longxin/permission/select" style="font-size:16px;color:white"><img alt="" src="<%=path%>/images/iconfont-yonghu.png">&nbsp;&nbsp;权限管理</a>
+			<a href="/longxin/permission/select" style="font-size:16px;color:white"><img alt="" src="<%=path%>/images/permission.png">&nbsp;&nbsp;权限管理</a>
 		</li>
 	</security:authorize>
 </ul>

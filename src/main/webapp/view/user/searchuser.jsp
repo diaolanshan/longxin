@@ -12,18 +12,26 @@ String path = request.getContextPath();
 		}).on('dbl-click-row.bs.table', function (e, row, $element) {
 			location.href="./edit/"+row.id;
         });
+		
+		$('deleteUser').click(function()
+		{
+			$.ajax({
+		   	      url:'<%=path%>/user/delete/'+deleteUserId,
+		   	      method: "DELETE",
+		   	     }).done(function(){
+		   	        $('#user'+deleteUserId).fadeOut(function(){
+		   	          $(this).remove(); 
+		   	        });
+		   	    })
+
+		    	$('#myModal').modal('hide');
+		    }
+		})
 	});
     function showDailog(userId){
     	deleteUserId = userId;
     	$('#myModal').modal('show');
-    }
-    function deleteUser(){
-    	$.post('./delete/'+deleteUserId, location.reload());
-    	$('#myModal').modal('hide');
-    }
-    $(function(){
-   		 $("#logincount").poshytip();
-    });
+    }    	
 </script>
 
 <form:form method="POST" modelAttribute="userSearchBean" role="form"
@@ -35,11 +43,11 @@ String path = request.getContextPath();
 			<form:input type="text" class="form-control" id="keyword" style="display:inline;margin-left:10px" path="keyword" />&nbsp;&nbsp;
 			<input type="submit" class="btn btn-primary start-example" value="查询" />
 			&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="http://localhost:8080/longxin/user/add" class="btn btn-primary start-example"><font style="color:#fff">添加用户</font></a>
+			<a href="<%=path%>/user/add" class="btn btn-primary start-example"><font style="color:#fff">添加用户</font></a>
 		</div>
 	</fieldset>
 	<br/>
-	<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable" data-row-style="rowStyle">
+	<table data-toggle="table" data-cache="false" data-height="425" data-pagination="true" id="searchTable" data-row-style="rowStyle">
 		<thead>
 	        <tr class="success">
 	            <th data-field="id" data-visible="false" data-sortable="true" data-halign="center">用户ID</th>
@@ -54,10 +62,10 @@ String path = request.getContextPath();
    	 	</thead>
    	 	<tbody>
    	 		<c:forEach var="item" items="${users}">
-   	 			<tr>
+   	 			<tr id="user${item.id}">
    	 				<td data-visible="false">${item.id}</td>
    	 				<td>${item.username}</td>
-   	 				<td>${item.createdat}</td>
+   	 				<td>${item.getDisplayCreatedAt()}</td>
    	 				<td>${item.telephone}</td>
    	 				<td>${item.role.description}</td>
    	 				<td >
@@ -74,7 +82,7 @@ String path = request.getContextPath();
    	 		</c:forEach>
    	 	</tbody>
 	</table>
-	
+   	 			
 </form:form>
 
 <!-- Modal -->
@@ -87,7 +95,7 @@ String path = request.getContextPath();
       </div>
       <div class="modal-body"> 确认要删除该用户？</div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="deleteUser()">确定</button>
+        <button type="button" class="btn btn-primary" id="deleteUser">确定</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
       </div>
     </div>

@@ -15,6 +15,7 @@ import org.longxin.service.L1ComponentService;
 import org.longxin.service.L2ComponentService;
 import org.longxin.service.L3ComponentService;
 import org.longxin.service.ModuleService;
+import org.longxin.service.ProductService;
 import org.longxin.service.UserPermissionMatrixService;
 import org.longxin.service.UserService;
 import org.longxin.web.controller.bean.Surounder;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
@@ -58,6 +60,17 @@ public class FeatureController
     
     @Autowired
     UserPermissionMatrixService userPermissionMatrixService;
+    
+    @Autowired
+    ProductService productService;
+    
+    @RequestMapping(value = "/{productID}", method = RequestMethod.GET)
+    public @ResponseBody List<Feature> getFeaturesByProduct(@PathVariable int productID)
+    {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users user = userService.findUserByUserName(userDetails.getUsername());
+        return featureService.getFeatureByProductAndPermission(productService.getProjectByID(productID), user);
+    }
 
     @RequestMapping(value = "/view/{featureId}", method = RequestMethod.GET)
     public String viewFeature(@PathVariable int featureId, Model model)

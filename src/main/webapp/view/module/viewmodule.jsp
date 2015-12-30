@@ -68,10 +68,9 @@ String path = request.getContextPath();
 
 <form:form method="POST" modelAttribute="module" role="form"
 	class="form-horizontal" id="viewProductForm">
-
 	<fieldset>
 		<legend>
-			<a href="<%=path%>/feature/view/${module.feature.id}">返回</a>
+			<a href="<%=path%>/feature/view/${module.feature.id}" title="返回"><img alt="" src="<%=path%>/images/back.png" style="width:35px"></a>
 			${module.moduleName} 
 			&nbsp;&nbsp;&nbsp;<a href="../diagram/${module.id}">
 				<span title="物理结构图" class="glyphicon glyphicon-indent-left"></span>
@@ -96,7 +95,7 @@ String path = request.getContextPath();
 		<div class="form-group" align="right">
 			<div class="col-sm-offset-7 col-sm-5" style="align: right">
 				<c:choose>
-					<c:when test="! ${module.template}">
+					<c:when test="${module.template == false}">
 						<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
 							<label for="fileupload" title="上传文件"><img alt=""
 								style="margin-top: -4px" src="<%=path%>/images/upload.png">
@@ -206,8 +205,8 @@ String path = request.getContextPath();
 						</tr>
 						<tr>
 							<td>描述：</td>
-							<td><div class="form-group"><input type="text" name="description" class="form-control"
-								value="${module.description}"></div></td>
+							<td><div class="form-group"><textarea rows="3" name="description" class="form-control"
+								value="${module.description}"></textarea></div></td>
 						</tr>
 					</table>
 				</div>
@@ -240,7 +239,7 @@ String path = request.getContextPath();
 						</tr>
 						<tr>
 							<td>描述：</td>
-							<td><div class="form-group"><input type="text" name="description" class="form-control"></div></td>
+							<td><div class="form-group"><textarea rows="3" name="description" class="form-control"></textarea></div></td>
 						</tr>
 					</table>
 				</div>

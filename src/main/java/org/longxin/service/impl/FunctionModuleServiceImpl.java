@@ -26,5 +26,10 @@ public class FunctionModuleServiceImpl implements FunctionModuleService
         return functionModuleDAO.getFunctionModulesByFeature(feature);
     }
    
+    @Override
+    public FunctionModule getFunctionModuleById(int functionModuleId)
+    {
+    	return functionModuleDAO.getFunctionModuleById(functionModuleId);
+    }
 }
 

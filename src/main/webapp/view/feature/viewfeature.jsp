@@ -13,6 +13,19 @@ String path = request.getContextPath();
 		}).on('dbl-click-row.bs.table', function (e, row, $element) {
 			//location.href="./edit/"+row.id;
         });
+		
+		$('#updateCurrent').click(function(){
+			$("#updateForm").modal('show');
+		});
+		
+		$('#addModule').click(function(){
+			$("#addComponentForm").modal('show');
+		});
+		
+		$('#addFunctionModule').click(function(){
+			$("#addFunctionModuleForm").modal('show');
+		});
+		
 		//file upload
 		$('#fileupload').fileupload({
 		    dataType: 'json',
@@ -54,18 +67,6 @@ String path = request.getContextPath();
     	$.post('../delete/module/'+deleteId,location.reload());
     	$('#myModal').modal('hide');
     }
-    
-    function update(){
-    	$("#updateForm").modal('show');
-    }
-    
-    function addModule(){
-    	$("#addComponentForm").modal('show');
-    }
-    
-    function addFunctionModule(){
-    	$("#addFunctionModuleForm").modal('show');
-    }
 </script>
 
 <form:form method="POST" modelAttribute="feature" role="form"
@@ -73,11 +74,11 @@ String path = request.getContextPath();
 
 	<fieldset>
 		<legend>
-			<a href="<%=path%>/product/list/${feature.product.id}">返回</a>
-			${feature.featureName} &nbsp;&nbsp;&nbsp;<a href="../diagram/${feature.id}">
-				<span title="物理结构图" class="glyphicon glyphicon-indent-left"></span></a> 
-			&nbsp;&nbsp;<a href="../functiondiagram/${feature.id}">
-			<span title="功能结构图" class="glyphicon glyphicon-indent-right"></span></a>
+			<a href="<%=path%>/product/list/${feature.product.id}" title="返回"><img alt="" src="<%=path%>/images/back.png" style="width:35px"> </a>
+			${feature.featureName} &nbsp;&nbsp;&nbsp;<a href="../diagram/${feature.id}" title="物理结构图">
+				<span  class="glyphicon glyphicon-indent-left"></span></a> 
+			&nbsp;&nbsp;<a href="../functiondiagram/${feature.id}"  title="功能结构图">
+			<span class="glyphicon glyphicon-indent-right"></span></a>
 		 </legend>
 		<div class="form-group">
 			<input type="text" id="idvalue" style="display:none" value="${feature.id}">
@@ -93,19 +94,21 @@ String path = request.getContextPath();
 			<div class="col-sm-8 control-label">${feature.description}</div>
 		</div>
 	</fieldset>
-	<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
-		<div class="form-group">
-			<div class="col-sm-offset-6 col-sm-7" style="align: right">
+	<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+		<div class="form-group" align="right">
+			<div class="col-sm-offset-6 col-sm-6" style="align: right">
 				<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
 						<label for="fileupload" title="上传文件"><img alt="" style="margin-top:-4px;width:24px;height:18px"
 							src="<%=path%>/images/upload.png"> </label> <input id="fileupload"
 							type="file" name="files[]" style="display: none"
 							data-url="../../filecontroller/upload/FEATURE/${feature.id}">&nbsp;
 				</sec:authorize>
-				<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"><input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;</sec:authorize>
-				<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"><input type="button" onclick="addModule()" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;</sec:authorize>
-				<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"><input type="button" onclick="addFunctionModule()" class="btn btn-primary start-example" value="添加功能模块" />&nbsp;&nbsp;</sec:authorize>
-				<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"><a href="../function/matrix/show/${feature.id}"><input type="button" class="btn btn-primary start-example" value="创建关联" /></a> &nbsp;&nbsp;</sec:authorize>
+				<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><input type="button" id="updateCurrent" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;</sec:authorize>
+				<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><input type="button" id="addModule" class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;</sec:authorize>
+				<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><input type="button" id="addFunctionModule" class="btn btn-primary start-example" value="添加功能模块" />&nbsp;&nbsp;</sec:authorize>
+				<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+				<button type="button" class="btn btn-primary"
+									onclick="location='../function/matrix/show/${feature.id}'">创建关联</button></sec:authorize>
 			</div>
 		</div>
 	</sec:authorize>
@@ -113,9 +116,9 @@ String path = request.getContextPath();
 	<div id="attachments" style="display:block;width:100%;">
 	</div>
 	<br/>
-	<table style="width:1010px">
+	<table style="width:100%">
 		<tr>
-			<td style="width:500px">
+			<td style="width:49%">
 				<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable1">
 					<thead>
 				        <tr class="success">
@@ -128,18 +131,18 @@ String path = request.getContextPath();
 			   	 		<c:forEach items="${modules}" var="module">  
 			            <tr>  
 			                <td>${module.moduleName}</td>  
-			                <td>${module.description}</td>  
+			                <td><div style="text-align:left">${module.description}</div></td>  
 			                <td>
 			                <a href="../../module/view/${module.id}"  data-toggle="popover" title="查看"><img alt="" src="<%=path%>/images/view.png"></a>
 			                &nbsp;&nbsp;
-			               <sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="showDailog(${module.id})"  data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a>
+			               <sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="showDailog(${module.id})"  data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a>
 			   	 			&nbsp;&nbsp;</sec:authorize>
 			            </tr>  
 			       		</c:forEach>
 			   	 	</tbody>
 				</table>
 			</td>
-			<td style="padding-left:20px;width:500px">
+			<td style="padding-left:20px;width:49%">
 				<table data-toggle="table" data-cache="false" data-height="350" data-pagination="true" id="searchTable2">
 					<thead>
 				        <tr class="success">
@@ -202,8 +205,8 @@ String path = request.getContextPath();
 						</tr>
 						<tr>
 							<td>描述：</td>
-							<td><div class="form-group"><input type="text" name="description" class="form-control"
-								value="${feature.description}"></div></td>
+							<td><div class="form-group"><textarea rows="3" name="description" class="form-control"
+								value="${feature.description}"></textarea></div></td>
 						</tr>
 					</table>
 				</div>
@@ -238,7 +241,7 @@ String path = request.getContextPath();
 						</tr>
 						<tr>
 							<td>描述：</td>
-							<td><div class="form-group"><input type="text" name="description" class="form-control"></div></td>
+							<td><div class="form-group"><textarea rows="3" name="description" class="form-control"></textarea></div></td>
 						</tr>
 					</table>
 				</div>
@@ -269,7 +272,7 @@ String path = request.getContextPath();
 						</tr>
 						<tr>
 							<td>描述：</td>
-							<td><div class="form-group"><input type="text" name="description" class="form-control"></div></td>
+							<td><div class="form-group"><textarea rows="3" name="description" class="form-control"></textarea></div></td>
 						</tr>
 					</table>
 				</div>

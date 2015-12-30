@@ -108,10 +108,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
     
     function deleteThis(){
-    	$.post('../delete/feature/'+deleteId,location.reload());
+    	$.post('../delete/feature/'+deleteId, location.reload());
     	$('#myModal').modal('hide');
     }
-    
+    function operateFormatter(value, row, index) {
+        return [
+			'<a href="../../feature/view/',
+			row.id + '" data-toggle="popover" title="查看">',
+			'<img alt="" src="<%=path%>/images/view.png"></a> &nbsp;&nbsp;',
+			'<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">',
+			'<a href="javascript:void(0);" onclick="showDailog(',
+			row.id + ')" data-toggle="popover" title="删除">',
+			'<img alt="" src="<%=path%>/images/delete.png"></a>',
+			'&nbsp;&nbsp;</sec:authorize>'
+        ].join('');
+    }
 </script>
 <style>
 .container {
@@ -223,6 +234,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								<button type="button" class="btn btn-primary"
 									onclick="location='../edit/${product.id}'">编辑</button>
 							</sec:authorize>
+							<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+								<button type="button" class="btn btn-primary"
+									onclick="location='../../requirements/${product.id}'">需求管理</button>
+							</sec:authorize>
 						</div>
 					</div>
 				</td>
@@ -231,41 +246,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div id="attachments" style="display: block; width: 100%"></div>
 	</fieldset>
 	<br />
-	<table data-toggle="table" data-cache="false" data-height="350"
+	<table data-toggle="table" data-cache="false" data-height="350" data-url="<%=path%>/feature/${product.id}"
 		data-pagination="true" id="searchTable1">
 		<thead>
 			<tr class="success">
-				<th data-field="id" data-visible="false" data-sortable="true"
-					data-halign="center">用户ID</th>
-				<th data-field="name" data-sortable="true" data-halign="center">特性名称</th>
+				<th data-field="featureName" data-sortable="true" data-halign="center">特性名称</th>
 				<th data-field="functionName" data-sortable="true"
 					data-halign="center">功能描述</th>
 				<th data-field="description" data-sortable="true"
 					data-halign="center">特性描述</th>
-				<th data-sortable="false" data-halign="center">操作区域</th>
+				<th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents" data-sortable="false" data-halign="center">操作区域</th>
 			</tr>
 		</thead>
-		<tbody>
-			<c:forEach items="${features}" var="feature">
-				<tr>
-					<td data-visible="false">${feature.id}</td>
-					<td>${feature.featureName}</td>
-					<td>${feature.functionName}</td>
-					<td>${feature.description}</td>
-					<td><a href="../../feature/view/${feature.id}"
-						data-toggle="popover" title="查看"><img alt=""
-							src="<%=path%>/images/view.png"></a> &nbsp;&nbsp; <sec:authorize
-							access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
-							<a href="javascript:void(0);" onclick="showDailog(${feature.id})"
-								data-toggle="popover" title="删除"><img alt=""
-								src="<%=path%>/images/delete.png"></a>
-   	 			&nbsp;&nbsp;</sec:authorize>
-				</tr>
-			</c:forEach>
-		</tbody>
 	</table>
 </form:form>
-
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog"

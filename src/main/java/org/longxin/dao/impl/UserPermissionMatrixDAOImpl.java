@@ -45,7 +45,7 @@ public class UserPermissionMatrixDAOImpl extends HibernateDaoSupport implements 
         // TODO Auto-generated method stub
         return null;
     }
-
+    
     public void saveOrUpdateUserPermissionMatrix(UserPermissionMatrix matrix)
     {
         this.getHibernateTemplate().saveOrUpdate(matrix);

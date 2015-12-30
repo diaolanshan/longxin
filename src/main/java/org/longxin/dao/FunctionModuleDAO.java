@@ -11,6 +11,6 @@ public interface FunctionModuleDAO
     
     public List<FunctionModule> getFunctionModulesByFeature(Feature feature);
     
-
+    public FunctionModule getFunctionModuleById(int functionModuleId);
 }
 

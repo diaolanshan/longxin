@@ -107,14 +107,17 @@ public class L3ComponentController extends ComponentContoller
 		return new ModelMap("success", 1);
 	}
 
-	@RequestMapping(value = "/delete/parameter/{parameterid}", method = RequestMethod.POST)
-	public void deleteComponentParameter(@PathVariable int parameterid)
+	@RequestMapping(value = "/parameter/{parameterid}", method = RequestMethod.DELETE)
+	public @ResponseBody ModelMap deleteComponentParameter(@PathVariable int parameterid)
 	{
 	    UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Users user = userService.findUserByUserName(userDetails.getUsername());
         trackChange(l3ComponentParameterService.getL3ComponentParamtersByID(parameterid), user, OperationType.DELETE);
         
 		l3ComponentParameterService.deleteParameter(parameterid);
+		
+		return new ModelMap("success", 1);
+		
 	}
 	
 	@RequestMapping(value = "/view/approve/parameter/{parameterId}", method = RequestMethod.POST)
@@ -173,18 +176,14 @@ public class L3ComponentController extends ComponentContoller
             json.setIsDraft(Boolean.FALSE);
             json.setParameterValue(json.getDraftValue());
         }
-        else if (!component.getTemplate())
+        else
         {
             if (StringUtils.isNotEmpty(json.getOptions()))
             {
-                String[] options = StringUtils.split(json.getOptions(), ",");
-                for (String option : options)
+                if (StringUtils.containsIgnoreCase(json.getOptions(), json.getDraftValue()))
                 {
-                    if (StringUtils.containsIgnoreCase(option, json.getDraftValue()))
-                    {
-                        json.setParameterValue(json.getDraftValue());
-                        json.setIsDraft(Boolean.FALSE);
-                    }
+                    json.setParameterValue(json.getDraftValue());
+                    json.setIsDraft(Boolean.FALSE);
                 }
             }
             else if (json.getMinValue() != null && json.getMaxValue() != null)

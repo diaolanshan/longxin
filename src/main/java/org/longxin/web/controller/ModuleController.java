@@ -1,7 +1,9 @@
 package org.longxin.web.controller;
 
+import org.longxin.domains.FunctionModule;
 import org.longxin.domains.L1Component;
 import org.longxin.domains.Module;
+import org.longxin.service.FunctionModuleService;
 import org.longxin.service.L1ComponentService;
 import org.longxin.service.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,10 @@ public class ModuleController
 {
 	@Autowired
 	ModuleService moduleService;
+	
+	@Autowired
+	FunctionModuleService functionModuleService;
+	
 	@Autowired
 	L1ComponentService l1ComponentService;
 
