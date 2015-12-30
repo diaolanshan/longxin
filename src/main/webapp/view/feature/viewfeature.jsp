@@ -7,6 +7,7 @@ String path = request.getContextPath();
 %>
 <script>
 	var deleteId;
+	var category;
     $(function () {
 		$('#searchTable1').bootstrapTable({
 			
@@ -59,12 +60,13 @@ String path = request.getContextPath();
     		}
     	})
 	});
-    function showDailog(id){
+    function showDailog(id, category){
     	deleteId = id;
+    	category = category;
     	$('#myModal').modal('show');
     }
     function deleteThis(){
-    	$.post('../delete/module/'+deleteId,location.reload());
+    	$.post('../delete/'+category+'/'+deleteId,location.reload());
     	$('#myModal').modal('hide');
     }
 </script>
@@ -135,8 +137,9 @@ String path = request.getContextPath();
 			                <td>
 			                <a href="../../module/view/${module.id}"  data-toggle="popover" title="查看"><img alt="" src="<%=path%>/images/view.png"></a>
 			                &nbsp;&nbsp;
-			               <sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="showDailog(${module.id})"  data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a>
+			               <sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="showDailog(${module.id}, 'module')"  data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a>
 			   	 			&nbsp;&nbsp;</sec:authorize>
+			   	 			</td>
 			            </tr>  
 			       		</c:forEach>
 			   	 	</tbody>
@@ -148,6 +151,7 @@ String path = request.getContextPath();
 				        <tr class="success">
 							<th data-field="name"  data-sortable="true" data-halign="center">功能名称</th>
 							<th data-field="description"  data-sortable="true" data-halign="center">模块描述</th>
+							<th data-sortable="false" data-halign="center">操作区域</th>
 				        </tr>
 			   	 	</thead>
 			   	 	<tbody>
@@ -155,6 +159,12 @@ String path = request.getContextPath();
 			            <tr>  
 			                <td>${functionModule.name}</td>  
 			                <td>${functionModule.description}</td>  
+			                <td>
+			                <a href="../../functionmodule/view/${functionModule.id}"  data-toggle="popover" title="查看"><img alt="" src="<%=path%>/images/view.png"></a>
+			                &nbsp;&nbsp;
+			               <sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><a href="javascript:void(0);" onclick="showDailog(${functionModule.id},'functionModule')"  data-toggle="popover" title="删除"><img alt="" src="<%=path%>/images/delete.png"></a>
+			   	 			&nbsp;&nbsp;</sec:authorize>
+			   	 			</td>
 			            </tr>  
 			       		</c:forEach>
 			   	 	</tbody>
@@ -205,8 +215,7 @@ String path = request.getContextPath();
 						</tr>
 						<tr>
 							<td>描述：</td>
-							<td><div class="form-group"><textarea rows="3" name="description" class="form-control"
-								value="${feature.description}"></textarea></div></td>
+							<td><div class="form-group"><textarea rows="3" name="description" class="form-control">${feature.description}</textarea></div></td>
 						</tr>
 					</table>
 				</div>

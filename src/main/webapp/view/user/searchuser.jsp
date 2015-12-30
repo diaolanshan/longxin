@@ -6,6 +6,10 @@ String path = request.getContextPath();
 %>  
 <script>
 	var deleteUserId;
+ 	function showDailog(userId){
+    	deleteUserId = userId;
+    	$('#myModal').modal('show');
+    }    
     $(function () {
 		$('#searchTable').bootstrapTable({
 			
@@ -13,7 +17,7 @@ String path = request.getContextPath();
 			location.href="./edit/"+row.id;
         });
 		
-		$('deleteUser').click(function()
+		$('#deleteUser').click(function()
 		{
 			$.ajax({
 		   	      url:'<%=path%>/user/delete/'+deleteUserId,
@@ -25,13 +29,8 @@ String path = request.getContextPath();
 		   	    })
 
 		    	$('#myModal').modal('hide');
-		    }
-		})
-	});
-    function showDailog(userId){
-    	deleteUserId = userId;
-    	$('#myModal').modal('show');
-    }    	
+		    });
+	}); 	
 </script>
 
 <form:form method="POST" modelAttribute="userSearchBean" role="form"
@@ -76,7 +75,7 @@ String path = request.getContextPath();
    	 				<td>
    	 					<a href="./edit/${item.id}"  data-toggle="popover" title="编辑"><img alt="" src="<%=path%>/images/edit.png"></a>
    	 					&nbsp;&nbsp;
-   	 					<a href="javascript:void(0);" onclick="showDailog(${item.id})"  data-toggle="popover" title="删除" id="logincount" title="dddddddddddddddddddd"><img alt="" src="<%=path%>/images/delete.png"></a>
+   	 					<a href="javascript:void(0);" onclick="showDailog(${item.id})"  data-toggle="popover" title="删除" title=""><img alt="" src="<%=path%>/images/delete.png"></a>
    	 				</td>
    	 			</tr>
    	 		</c:forEach>

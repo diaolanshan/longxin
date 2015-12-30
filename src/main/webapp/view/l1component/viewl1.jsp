@@ -259,8 +259,7 @@ String path = request.getContextPath();
 						</tr>
 						<tr>
 							<td>描述：</td>
-							<td><div class="form-group"><textarea rows="3" name="description" class="form-control"
-								value="${component.description}"></textarea></div></td>
+							<td><div class="form-group"><textarea rows="3" name="description" class="form-control">${component.description}</textarea></div></td>
 						</tr>
 						<tr>
 							<td align="right"></td>
@@ -392,7 +391,7 @@ String path = request.getContextPath();
 								<td>取值范围已论证？</td>
 								<td>
 									<c:choose>
-										<c:when  test="${parameter.scopeStatus }">
+										<c:when  test="${parameter.scopeStatus}">
 											<div class="form-group"><input type="checkbox" name="scopeStatus" class="form-control" checked value="true"></div>
 										</c:when >
 										<c:otherwise>

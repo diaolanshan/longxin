@@ -311,8 +311,7 @@ String path = request.getContextPath();
 						</tr>
 						<tr>
 							<td>描述：</td>
-							<td><div class="form-group"><textarea rows="3" name="description" class="form-control"
-								value="${component.description}"></textarea></div></td>
+							<td><div class="form-group"><textarea rows="3" name="description" class="form-control">${component.description}</textarea></div></td>
 						</tr>
 						<tr>
 							<td align="right"></td>
