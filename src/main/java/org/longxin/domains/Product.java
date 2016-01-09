@@ -172,7 +172,7 @@ public class Product implements java.io.Serializable, Cloneable
         this.requirements = requirements;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "owner")
     @JsonIgnore
     public Users getOwner()

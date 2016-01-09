@@ -13,5 +13,7 @@ public interface AttachmentService
     public Attachment getAttachmentById(int id);
     
     public void deleteAttachmentsByCategoryAndRefID(String category, int referenceID);
+    
+    public void deleteAttachment(Attachment attachment);
 }
 

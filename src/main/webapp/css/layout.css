@@ -362,3 +362,19 @@ th
 	text-align:center;
 	font-size:11px
 }
+
+.itemsContainer
+{
+    position:relative
+}
+
+.play{
+    position : absolute;
+    display:none;
+    top:20%; 
+    margin:0 auto; left:0px;
+    right:0px;
+    z-index:100;
+    float:left
+} 
+.itemsContainer:hover .play{display:block}

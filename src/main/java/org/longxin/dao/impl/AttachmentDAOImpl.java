@@ -31,7 +31,7 @@ public class AttachmentDAOImpl extends HibernateDaoSupport implements Attachment
     @Override
     public void deleteAttachment(Attachment attachment)
     {
-        this.getHibernateTemplate().delete(attachment);
+       this.getHibernateTemplate().delete(attachment);
     }
 }
 

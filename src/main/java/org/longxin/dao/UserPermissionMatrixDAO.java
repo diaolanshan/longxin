@@ -2,6 +2,7 @@ package org.longxin.dao;
 
 import java.util.List;
 
+import org.longxin.domains.Feature;
 import org.longxin.domains.UserPermissionMatrix;
 
 public interface UserPermissionMatrixDAO
@@ -9,8 +10,6 @@ public interface UserPermissionMatrixDAO
     public List<UserPermissionMatrix> getAllPermissionMatrixs();
     
     public List<UserPermissionMatrix> getPermissionMatrixsByUserIDs(int [] userIds);
-    
-    public List<UserPermissionMatrix> getPermissionMatrixByFeatures(int [] featureIds);
     
     public void saveOrUpdateUserPermissionMatrix(UserPermissionMatrix matrix);
     
@@ -29,5 +28,7 @@ public interface UserPermissionMatrixDAO
     public List<Integer> draftL2Component(int l1Id);
     
     public List<Integer> draftL3Component(int l2Id);
+    
+    public void deleteUserFeaturePermissionMatrixByFeature(Feature feature);
 }
 

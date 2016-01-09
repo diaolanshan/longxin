@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 import org.longxin.dao.UserPermissionMatrixDAO;
+import org.longxin.domains.Feature;
 import org.longxin.domains.UserPermissionMatrix;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -37,13 +38,6 @@ public class UserPermissionMatrixDAOImpl extends HibernateDaoSupport implements 
     {
         StringBuilder queryStr = new StringBuilder("FROM UserPermissionMatrix matrix WHERE matrix.user.id =? AND matrix.feature.id =?");
         return this.getHibernateTemplate().find(queryStr.toString(), Integer.valueOf(userId), featureId);
-    }
-
-    @Override
-    public List<UserPermissionMatrix> getPermissionMatrixByFeatures(int[] featureIds)
-    {
-        // TODO Auto-generated method stub
-        return null;
     }
     
     public void saveOrUpdateUserPermissionMatrix(UserPermissionMatrix matrix)
@@ -169,5 +163,17 @@ public class UserPermissionMatrixDAOImpl extends HibernateDaoSupport implements 
         return this.getHibernateTemplate().getSessionFactory().getCurrentSession()
                 .createSQLQuery(query.toString()).list();
     }
+
+	@Override
+	public void deleteUserFeaturePermissionMatrixByFeature(Feature feature) 
+	{
+		
+		List<UserPermissionMatrix> matrixs = this.getHibernateTemplate().find("FROM UserPermissionMatrix matrix WHERE matrix.feature =?", feature);
+		
+		for(UserPermissionMatrix matrix : matrixs)
+		{
+			this.getHibernateTemplate().delete(matrix);
+		}
+	}
 }
 

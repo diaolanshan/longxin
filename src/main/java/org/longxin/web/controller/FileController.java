@@ -92,6 +92,24 @@ public class FileController
         return files;
     }
     
+    @RequestMapping(value = "/{category}/{attachmentId}", method = RequestMethod.DELETE)
+    public String deleteAttachment(@PathVariable int attachmentId,
+        @PathVariable String category)
+    {
+    	Attachment attachment = attachmentService.getAttachmentById(attachmentId);
+    	
+    	File attachmentFile = new File(fileRoot + File.separator + category + File.separator + attachment.getReferenceId() + File.separator + attachment.getFileName());
+    	
+    	if(attachmentFile.exists())
+    	{
+    		attachmentFile.delete();
+    	}
+    	
+    	attachmentService.deleteAttachment(attachment);   
+    
+		return "/" + category.toLowerCase() + "/view";
+    }
+    
     @RequestMapping(value = "/upload/{category}/{componentId}/{parameterId}", method = RequestMethod.POST)
     public @ResponseBody
     LinkedList<Attachment> uploadParameterAttachment(

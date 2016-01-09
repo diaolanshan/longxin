@@ -43,12 +43,6 @@ public class UserPermissionMatrixServiceImpl implements UserPermissionMatrixServ
         return userPermissionMatrixDAO.getPermissionMatrixsByUserIDs(userIds);
     }
 
-    @Override
-    public List<UserPermissionMatrix> getPermissionMatrixByFeatures(int[] featureIds)
-    {
-        return userPermissionMatrixDAO.getPermissionMatrixByFeatures(featureIds);
-    }
-
     public List<MatrixBean> constructMatrix(String[] selectedUsers, List<Product> products)
     {
         List<Feature> features = new ArrayList<Feature>();
@@ -157,4 +151,10 @@ public class UserPermissionMatrixServiceImpl implements UserPermissionMatrixServ
     {
         return userPermissionMatrixDAO.draftL3Component(l2Id);
     }
+
+	@Override
+	public void deleteUserFeaturePermissionMatrixByFeature(Feature feature) 
+	{
+		userPermissionMatrixDAO.deleteUserFeaturePermissionMatrixByFeature(feature);
+	}
 }

@@ -84,7 +84,7 @@ public class Attachment implements java.io.Serializable
         this.fileName = fileName;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade= CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade= CascadeType.PERSIST)
     @JoinColumn(name = "OWNER")
     public Users getOwner()
     {

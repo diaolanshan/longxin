@@ -74,7 +74,7 @@ public class FunctionModule implements java.io.Serializable
         this.name = name;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FEATURE", nullable = false)
     public Feature getFeature()
     {

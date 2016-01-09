@@ -91,16 +91,12 @@ public class ProductServiceImpl implements ProductService
 		productDAO.saveProduct(product);
 	}
 
-	public void deleteProduct(Product product)
-	{
-		productDAO.deleteProduct(product);
-	}
-
 	public void deleteProduct(int productID)
 	{
 		logger.info(String
 				.format("Try to delete product with id %s", productID));
 		Product product = this.productDAO.getProductByID(productID);
+		featureService.deleteFeatureByProduct(product);
 		productDAO.deleteProduct(product);
 	}
 

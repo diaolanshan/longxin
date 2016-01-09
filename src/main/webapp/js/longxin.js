@@ -291,16 +291,17 @@ function showParameterAttachments(parameterId, category) {
 									function(idx, item) {
 										var downloadlink = "../../filecontroller/download/"
 												+ item.id;
-										var attachment = "<div style='display: inline;float:left;padding-left:10px; width:70px; text-align:center' title="
-												+ item.fileName
-												+ ">"
+										var attachment = "<div style='display: inline;float:left;padding-left:10px; width:70px; text-align:center' id='parameterAttachment" + item.id
+												+ "'>"
 												+ "<a href = "
 												+ downloadlink
 												+ ">"
 												+ "<img src='../../images/attachment.png' style='width:60px;border:1px dashed'/>"
 												+ "</a>"
 												+ "<br/>"
-												+ item.fileName + "</div>";
+												+ item.fileName
+												+ "<sec:authorize access='hasRole('ROLE_TECHNICALSUPPORT')'><a href='#' onclick='javascript:deleteParameterAttachment(" +item.id + ")'><br/><img src='../../images/delete.png'/></a></sec:authorize>"
+												+ "</div>";
 										$("#parameterAttachmentsDiv").append(
 												attachment);
 									})

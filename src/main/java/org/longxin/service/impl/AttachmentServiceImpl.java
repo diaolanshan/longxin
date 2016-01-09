@@ -63,5 +63,11 @@ public class AttachmentServiceImpl implements AttachmentService
     {
         return this.attachmentDAO.getAttachmentById(id);
     }
+    
+    @Override
+    public void deleteAttachment(Attachment attachment)
+    {
+    	this.attachmentDAO.deleteAttachment(attachment);
+    }
 }
 

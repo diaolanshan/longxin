@@ -22,14 +22,12 @@ String path = request.getContextPath();
 			$.ajax({
 		   	      url:'<%=path%>/user/delete/'+deleteUserId,
 		   	      method: "DELETE",
-		   	     }).done(function(){
-		   	        $('#user'+deleteUserId).fadeOut(function(){
+		   	     })
+ 				$('#user'+deleteUserId).fadeOut(function(){
 		   	          $(this).remove(); 
-		   	        });
-		   	    })
-
+		   	     });
 		    	$('#myModal').modal('hide');
-		    });
+		 });
 	}); 	
 </script>
 

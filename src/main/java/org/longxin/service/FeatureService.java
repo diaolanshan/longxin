@@ -31,4 +31,6 @@ public interface FeatureService
     public void updateFunctionMatrix(Surounder rounder ,int featureId);
     
     public List<Feature> searchByKeywords(String keywords);
+    
+    public void deleteFeatureByProduct(Product product);
 }

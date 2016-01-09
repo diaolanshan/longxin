@@ -34,26 +34,50 @@ String path = request.getContextPath();
 		      );
 			}
 		});
-    	$.ajax({
+		
+		$.ajax({
     		type: "GET", 
-    		url: "../../filecontroller/get/l3component/" + $("#idvalue").val(), 
+    		url: "../../filecontroller/get/L3COMPONENT/" + $("#idvalue").val(), 
     		dataType: "json",
     		contentType: "application/json; charset=utf-8",
     		success: function(data){
     			$.each(data, function(idx,item)
-    			{
-    				var downloadlink = "../../filecontroller/download/" + item.fileName;
-    				var attachment = "<div style='display: inline; width: 10%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:40px;border:2px dashed;border-color:#2bc0be'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
-    				$("#attachments").append(attachment);
-    				
-    			}
-    			)
+    	    			{
+		    				var downloadlink = "../../filecontroller/download/" + item.id;
+		    				var attachment = "<div style='display: inline; width: 10%;float:left; text-align:center' id='attachment" + item.id + "'><a href = " + downloadlink + "><img src='../../images/attachment.png' style='width:40px;border:2px dashed;border-color:#2bc0be' title=" + item.fileName + "/></a><br/>" + item.fileName + "<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><a href='#' onclick='javascript:deleteAttachment(" +item.id + ")'><br/><img src='../../images/delete.png' title='删除'/></a></sec:authorize></div>";
+		    				$("#attachments").append(attachment);
+    	    			}
+    	    			)
     		},
     		error: function(res){
     			alert("Unexpected error! Try again.");
     		}
     	})
 	});
+    
+    function deleteParameterAttachment(attachmentId)
+    {
+    	$.ajax({
+       	      url:"../../filecontroller/L3COMPONENTPARAMETER/" + attachmentId,
+       	      method: "DELETE",
+       	     })
+       	     
+       	  $('#parameterAttachment'+attachmentId).fadeOut(function(){
+ 	         document.getElementById("parameterAttachment"+attachmentId).remove(); 
+ 	 	   });
+    }
+    
+    function deleteAttachment(attachmentId)
+    {
+    	$.ajax({
+	   	      url:'<%=path%>/filecontroller/MODULE/'+attachmentId,
+	   	      method: "DELETE",
+	   	     }).done(function(){
+	   	        $('#attachment'+attachmentId).fadeOut(function(){
+	   	         document.getElementById("attachment"+attachmentId).remove(); 
+	   	        });
+	   	    })
+    }
   
     function update(){
     	$("#updateForm").modal('show');
@@ -140,7 +164,7 @@ String path = request.getContextPath();
 						</c:otherwise>
 					</c:choose>
 					<c:choose>
-						<c:when test="${parameter.options == \"\"}">
+						<c:when test="${parameter.options == ''}">
 							<div style="width: 300px; hefloat: left; display: inline;font-size:11px;color:gray">取值范围(${parameter.minValue},${parameter.maxValue})</div>
 						</c:when>
 						<c:otherwise>
@@ -175,14 +199,14 @@ String path = request.getContextPath();
 			</div>
 		</c:forEach>
 		
-		<div class="form-group">
-			<div class="col-sm-offset-6 col-sm-7" style="align: right">
+		<div class="form-group"  align="right">
+			<div class="col-sm-offset-6 col-sm-6" style="align: right">
 					<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
 						<c:if test="${isAllowed=='true'}">
 							<label for="fileupload" title="上传文件"><img alt="" style="margin-top:-4px;width:24px;height:18px"
 								src="<%=path%>/images/upload.png"> </label> <input id="fileupload"
 								type="file" name="files[]" style="display: none"
-								data-url="../../filecontroller/upload/l3component/${component.id}">&nbsp;
+								data-url="../../filecontroller/upload/L3COMPONENT/${component.id}">&nbsp;
 							<input type="button" onclick="update()" class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;
 							<input type="button" id="add_new" class="btn btn-primary" value="增加属性"></input>
 						</c:if>

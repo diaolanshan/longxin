@@ -7,7 +7,7 @@ String path = request.getContextPath();
 %>
 <script>
 	var deleteId;
-	var category;
+	var deleteCategory;
     $(function () {
 		$('#searchTable1').bootstrapTable({
 			
@@ -50,7 +50,7 @@ String path = request.getContextPath();
     			$.each(data, function(idx,item)
     			{
     				var downloadlink = "../../filecontroller/download/" + item.id;
-    				var attachment = "<div style='display: inline; width: 10%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:40px;border:2px dashed;border-color:#2bc0be'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
+    				var attachment = "<div style='display: inline; width: 10%;float:left; text-align:center' id='attachment" + item.id + "'>" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:40px;border:2px dashed;border-color:#2bc0be' title=" + item.fileName + "/>" + "</a>" + "<br/>" + item.fileName + "<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><br/><a href='#' onclick='javascript:deleteAttachment(" +item.id + ")'><br/><img src='../../images/delete.png' title='删除'/></a></sec:authorize></div>";
     				$("#attachments").append(attachment);
     			}
     			)
@@ -59,15 +59,37 @@ String path = request.getContextPath();
     			alert("Unexpected error! Try again.");
     		}
     	})
+    	
+    	  $('#deleteModuleButton').click(function()
+    	    {
+  				$.ajax({
+  			   	      url:"<%=path%>/feature/" + deleteCategory + "/" + deleteId,
+  			   	      method: "DELETE",
+  			   	     }).done(function(){
+  			   	   		 $('#'+deleteCategory+deleteId).fadeOut(function(){
+			   	          $(this).remove(); 
+			   	        });
+  			   	    })
+  				
+  			    	$('#myModal').modal('hide');
+    	    });
 	});
+    
+    function deleteAttachment(attachmentId)
+    {
+    	$.ajax({
+	   	      url:'<%=path%>/filecontroller/FEATURE/'+attachmentId,
+	   	      method: "DELETE",
+	   	     }).done(function(){
+	   	        $('#attachment'+attachmentId).fadeOut(function(){
+	   	         document.getElementById("attachment"+attachmentId).remove(); 
+	   	        });
+	   	    })
+    }
     function showDailog(id, category){
     	deleteId = id;
-    	category = category;
+    	deleteCategory = category;
     	$('#myModal').modal('show');
-    }
-    function deleteThis(){
-    	$.post('../delete/'+category+'/'+deleteId,location.reload());
-    	$('#myModal').modal('hide');
     }
 </script>
 
@@ -131,7 +153,7 @@ String path = request.getContextPath();
 			   	 	</thead>
 			   	 	<tbody>
 			   	 		<c:forEach items="${modules}" var="module">  
-			            <tr>  
+			            <tr  id="module${module.id}">  
 			                <td>${module.moduleName}</td>  
 			                <td><div style="text-align:left">${module.description}</div></td>  
 			                <td>
@@ -156,7 +178,7 @@ String path = request.getContextPath();
 			   	 	</thead>
 			   	 	<tbody>
 			   	 		<c:forEach items="${functionModules}" var="functionModule">  
-			            <tr>  
+			            <tr  id="functionModule${functionModule.id}">  
 			                <td>${functionModule.name}</td>  
 			                <td>${functionModule.description}</td>  
 			                <td>
@@ -185,7 +207,7 @@ String path = request.getContextPath();
       </div>
       <div class="modal-body"> 确认要删除？</div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="deleteThis()">确定</button>
+        <button type="button" class="btn btn-primary" id="deleteModuleButton">确定</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
       </div>
     </div>

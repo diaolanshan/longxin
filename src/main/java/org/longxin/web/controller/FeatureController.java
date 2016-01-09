@@ -131,10 +131,12 @@ public class FeatureController
         return "redirect:/feature/view/" + featureId;
     }
 
-    @RequestMapping(value = "/delete/module/{id}", method = RequestMethod.POST)
-    public void deleteModule(@PathVariable int id)
+    @RequestMapping(value = "/module/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody String deleteModule(@PathVariable int id)
     {
         moduleService.deleteModule(id);
+        
+        return "SUCCESS";
     }
     
     @RequestMapping(value="/listdraft", method = RequestMethod.GET)

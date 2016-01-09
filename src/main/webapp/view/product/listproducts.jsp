@@ -11,21 +11,32 @@ a {
 }
 </style>
 <script>
-	var deleteProductId;
+	var productToBeDelete;
     $(function () {
 		$('#searchTable1').bootstrapTable({
 		}).on('dbl-click-row.bs.table', function (e, row, $element) {
 			location.href="./list/"+row.id;
         });
+		
+	    $('#deleteProductButton').click(function()
+    	    {
+  				$.ajax({
+  			   	      url:'<%=path%>/product/'+productToBeDelete,
+  			   	      method: "DELETE",
+  			   	     }).done(function(){
+  			   	   		 $('#product'+productToBeDelete).fadeOut(function(){
+			   	          $(this).remove(); 
+			   	        });
+  			   	    })
+  				
+  			    	$('#myModal').modal('hide');
+    	    });
 	});
     function showDailog(productId){
-    	deleteProductId = productId;
+    	productToBeDelete = productId;
     	$('#myModal').modal('show');
     }
-    function deleteProduct(){
-    	$.post('./delete/'+deleteProductId,location.reload());
-    	$('#myModal').modal('hide');
-    }
+    
     function createProduct()
     {
     	document.searchProductForm.method = "POST";
@@ -63,7 +74,7 @@ a {
 	   	 	</thead>
 	   	 	<tbody>
 	   	 		<c:forEach items="${products}" var="product">  
-	            <tr>  
+	            <tr id="product${product.id}">  
 	                <td>${product.id}</td>  
 	                <td>${product.name}</td>  
 	                <td>${product.createdat}</td>
@@ -264,7 +275,7 @@ a {
       </div>
       <div class="modal-body"> 确认要删除该产品？</div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="deleteProduct()">确定</button>
+        <button type="button" class="btn btn-primary" id="deleteProductButton">确定</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
       </div>
     </div>

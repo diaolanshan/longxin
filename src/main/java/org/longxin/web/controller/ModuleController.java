@@ -1,6 +1,5 @@
 package org.longxin.web.controller;
 
-import org.longxin.domains.FunctionModule;
 import org.longxin.domains.L1Component;
 import org.longxin.domains.Module;
 import org.longxin.service.FunctionModuleService;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
@@ -76,10 +76,12 @@ public class ModuleController
 		return "redirect:/module/view/" + moduleId;
 	}
 
-	@RequestMapping(value = "/delete/component/{l1Id}", method = RequestMethod.POST)
-	public void deleteL1Componment(@PathVariable int l1Id)
+	@RequestMapping(value = "/component/{l1Id}", method = RequestMethod.DELETE)
+	public @ResponseBody String deleteL1Componment(@PathVariable int l1Id)
 	{
 		l1ComponentService.deleteL1Component(l1Id);
+		
+		return "SUCCESS";
 	}
 
 	public ModuleService getModuleService()

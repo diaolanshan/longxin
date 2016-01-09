@@ -29,43 +29,28 @@ String path = request.getContextPath();
 		});
     	$.ajax({
     		type: "GET", 
-    		url: "../../filecontroller/get/MODULE/" + $("#idvalue").val(), 
+    		url: "../../filecontroller/get/FUNCTIONMODULE/" + $("#idvalue").val(), 
     		dataType: "json",
     		contentType: "application/json; charset=utf-8",
     		success: function(data){
     			$.each(data, function(idx,item)
-    	    			{
-		    				var downloadlink = "../../filecontroller/download/" + item.id;
-		    				var attachment = "<div style='display: inline; width: 10%;float:left; text-align:center' id='attachment" + item.id + "'><a href = " + downloadlink + "><img src='../../images/attachment.png' style='width:40px;border:2px dashed;border-color:#2bc0be' title=" + item.fileName + "/></a><br/>" + item.fileName + "<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><a href='#' onclick='javascript:deleteAttachment(" +item.id + ")'><br/><img src='../../images/delete.png' title='删除'/></a></sec:authorize></div>";
-		    				$("#attachments").append(attachment);
-    	    			}
-    	    			)
+    			{
+    				var downloadlink = "../../filecontroller/download/" + item.id;
+    				var attachment = "<div style='display: inline; width: 10%;float:left; text-align:center' id='attachment" + item.id + "'><a href = " + downloadlink + "><img src='../../images/attachment.png' style='width:40px;border:2px dashed;border-color:#2bc0be' title=" + item.fileName + "/></a><br/>" + item.fileName + "<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><a href='#' onclick='javascript:deleteAttachment(" +item.id + ")'><br/><img src='../../images/delete.png' title='删除'/></a></sec:authorize></div>";
+    				$("#attachments").append(attachment);
+    			}
+    			)
     		},
     		error: function(res){
     			alert("Unexpected error! Try again.");
     		}
     	})
-    	
-    	 $('#deleteL1ComponentButton').click(function()
- 	    	    {
- 	  				$.ajax({
- 	  			   	      url:"../component" + deleteId,
- 	  			   	      method: "DELETE",
- 	  			   	     }).done(function(){
- 	  			   	   		 $('#l1component'+deleteId).fadeOut(function(){
- 				   	          $(this).remove(); 
- 				   	        });
- 	  			   	    })
- 	  				
- 	  			    	$('#myModal').modal('hide');
- 	    	    });
-    	
 	});
     
     function deleteAttachment(attachmentId)
     {
     	$.ajax({
-	   	      url:'<%=path%>/filecontroller/MODULE/'+attachmentId,
+	   	      url:'<%=path%>/filecontroller/FUNCTIONMODULE/'+attachmentId,
 	   	      method: "DELETE",
 	   	     }).done(function(){
 	   	        $('#attachment'+attachmentId).fadeOut(function(){
@@ -78,6 +63,10 @@ String path = request.getContextPath();
     	deleteId = id;
     	$('#myModal').modal('show');
     }
+    function deleteThis(){
+    	$.post('../delete/component/'+deleteId,location.reload());
+    	$('#myModal').modal('hide');
+    }
     
     function update(){
     	$("#updateForm").modal('show');
@@ -88,50 +77,46 @@ String path = request.getContextPath();
     }
     
 </script>
-<form:form method="POST" modelAttribute="module" role="form"
+
+<form:form method="POST" modelAttribute="functionModule" role="form"
 	class="form-horizontal" id="viewProductForm">
 	<fieldset>
 		<legend>
-			<a href="<%=path%>/feature/view/${module.feature.id}" title="返回"><img alt="" src="<%=path%>/images/back.png" style="width:35px"></a>
-			${module.moduleName} 
-			&nbsp;&nbsp;&nbsp;<a href="../diagram/${module.id}">
+			${functionModule.name} 
+			&nbsp;&nbsp;&nbsp;<a href="../diagram/${functionModule.id}">
 				<span title="物理结构图" class="glyphicon glyphicon-indent-left"></span>
 			</a> 
-			&nbsp;&nbsp;&nbsp;&nbsp;<a href="../functiondiagram/${module.id}">
+			&nbsp;&nbsp;&nbsp;&nbsp;<a href="../functiondiagram/${functionModule.id}">
 			<span title="功能结构图" class="glyphicon glyphicon-indent-right"></span></a>
 		</legend>
 		
 		<div class="form-group">
-			<input type="text" id="idvalue" style="display:none" value="${module.id}">
+			<input type="text" id="idvalue" style="display:none" value="${functionModule.id}">
 			<label for="name" class="col-sm-3 control-label">模块名称：</label>
-			<div class="col-sm-8 control-label">${module.moduleName}</div>
-		</div>
-		<div class="form-group">
-			<label for="name" class="col-sm-3 control-label">功能名称：</label>
-			<div class="col-sm-8 control-label">${module.functionName}</div>
+			<div class="col-sm-8 control-label">${functionModule.name}</div>
 		</div>
 		<div class="form-group">
 			<label for="description" class="col-sm-3 control-label">描述：</label>
-			<div class="col-sm-8 control-label">${module.description}</div>
+			<div class="col-sm-8 control-label">${functionModule.description}</div>
 		</div>
 		<div class="form-group" align="right">
 			<div class="col-sm-offset-7 col-sm-5" style="align: right">
 				<c:choose>
-					<c:when test="${module.template == false}">
+					<c:when test="${functionModule.template == false}">
 						<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
 							<label for="fileupload" title="上传文件"><img alt=""
 								style="margin-top: -4px;width:24px;height:18px" src="<%=path%>/images/upload.png">
 							</label>
 							<input id="fileupload" type="file" name="files[]"
 								style="display: none"
-								data-url="../../filecontroller/upload/MODULE/${module.id}">&nbsp;
+								data-url="../../filecontroller/upload/FUNCTIONMODULE/${functionModule.id}">&nbsp;
 						</sec:authorize>
 						<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
 							<input type="button" onclick="update()"
 								class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;</sec:authorize>
-						<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
+						<!--<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
 							<input type="button" onclick="addComponent()"
-								class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;</sec:authorize>
+								class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;</sec:authorize>-->
 					</c:when>
 					<c:otherwise>
 						<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
@@ -140,14 +125,14 @@ String path = request.getContextPath();
 							</label>
 							<input id="fileupload" type="file" name="files[]"
 								style="display: none"
-								data-url="../../filecontroller/upload/MODULE/${module.id}">&nbsp;
+								data-url="../../filecontroller/upload/FUNCTIONMODULE/${functionModule.id}">&nbsp;
 						</sec:authorize>
 						<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
 							<input type="button" onclick="update()"
 								class="btn btn-primary start-example" value="编辑本模块" />&nbsp;&nbsp;</sec:authorize>
-						<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
+						<!--<sec:authorize access="hasRole('ROLE_SUPERTECHNICALSUPPORT')">
 							<input type="button" onclick="addComponent()"
-								class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;</sec:authorize>
+								class="btn btn-primary start-example" value="添加子模块" />&nbsp;&nbsp;</sec:authorize>-->
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -168,7 +153,7 @@ String path = request.getContextPath();
    	 	</thead>
    	 	<tbody>
    	 		<c:forEach items="${l1components}" var="l1component">  
-            <tr id="l1component${l1component.id}">  
+            <tr>  
                 <td>${l1component.name}</td> 
                 <td>${l1component.functionName}</td>  
                 <td>${l1component.description}</td>  
@@ -182,7 +167,7 @@ String path = request.getContextPath();
 	</table>
 </form:form>
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -194,16 +179,17 @@ String path = request.getContextPath();
 			</div>
 			<div class="modal-body">确认要删除该产品？</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" id="deleteL1ComponentButton">确定</button>
+				<button type="button" class="btn btn-primary"
+					onclick="deleteThis()">确定</button>
 				<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 
 <div class="modal fade" id="updateForm" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
-	<form method="POST" action="../update/${module.id}">
+	<form method="POST" action="../update/${functionModule.id}">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -217,16 +203,16 @@ String path = request.getContextPath();
 						<tr>
 							<td>模块名称：</td>
 							<td><div class="form-group"><input type="text" name="moduleName" class="form-control"
-								value="${module.moduleName}"></div></td>
+								value="${functionModule.name}"></div></td>
 						</tr>
-						<tr>
+						<!-- <tr>
 							<td>功能名称：</td>
 							<td><div class="form-group"><input type="text" name="functionName" class="form-control"
 								value="${module.functionName}"></div></td>
-						</tr>
+						</tr> -->
 						<tr>
 							<td>描述：</td>
-							<td><div class="form-group"><textarea rows="3" name="description" class="form-control">${module.description}</textarea></div></td>
+							<td><div class="form-group"><textarea rows="3" name="description" class="form-control">${functionModule.description}</textarea></div></td>
 						</tr>
 					</table>
 				</div>
@@ -239,7 +225,7 @@ String path = request.getContextPath();
 	</form>
 </div>
 
-<div class="modal fade" id="addComponentForm" tabindex="-1"
+<!-- <div class="modal fade" id="addComponentForm" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<form name="addL1Component" id="addL1Component" method="POST"
 		modelAttribute="l1Component" action="./${module.id}/add/component">
@@ -270,4 +256,4 @@ String path = request.getContextPath();
 			</div>
 		</div>
 	</form>
-</div>
+</div> -->

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.longxin.dao.L1ComponentDAO;
 import org.longxin.domains.Feature;
+import org.longxin.domains.FunctionModule;
 import org.longxin.domains.L1Component;
 import org.longxin.domains.L2Component;
 import org.longxin.domains.L3Component;
@@ -60,6 +61,16 @@ public class L1ComponentServiceImpl implements L1ComponentService
     public List<L1Component> getL1ComponentsByModule(Module module)
     {
         return l1ComponentDAO.getL1ComponentsByModule(module);
+    }
+    
+    /**
+     * Return all the {@link org.longxin.domains.L1Component} object which belongs to the passed in {@link org.longxin.domains.FunctionModule} object.
+     * @param functionModule
+     * @return
+     */
+    public List<L1Component> getL1ComponentsByFunctionModule(FunctionModule functionModule)
+    {
+    	return l1ComponentDAO.getL1ComponentsByFunctionModule(functionModule);
     }
     
     public int getFeatureId(int l1ComponentId)

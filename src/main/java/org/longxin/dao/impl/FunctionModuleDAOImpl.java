@@ -32,7 +32,7 @@ public class FunctionModuleDAOImpl extends HibernateDaoSupport implements Functi
     @Override
     public FunctionModule getFunctionModuleById(int functionModuleId)
     {
-    	return this.getHibernateTemplate().load(FunctionModule.class, functionModuleId);
+    	return this.getHibernateTemplate().get(FunctionModule.class, functionModuleId);
     }
 }
 

@@ -371,7 +371,7 @@ public class Requirements implements java.io.Serializable, Cloneable
     }
 
    // @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "UPDATE_DATE", nullable = false, length = 19)
+    @Column(name = "UPDATE_DATE", length = 19)
     public String getUpdateDate()
     {
         return updateDate;
@@ -395,7 +395,7 @@ public class Requirements implements java.io.Serializable, Cloneable
     }
 
     //@Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CLOSE_DATE", nullable = false, length = 19)
+    @Column(name = "CLOSE_DATE", length = 19)
     public String getCloseDate()
     {
         return closeDate;

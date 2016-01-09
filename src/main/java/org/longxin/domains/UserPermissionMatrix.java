@@ -4,6 +4,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -44,7 +45,7 @@ public class UserPermissionMatrix implements java.io.Serializable
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "FEATURE", nullable = false)
     public Feature getFeature()
     {
@@ -56,7 +57,7 @@ public class UserPermissionMatrix implements java.io.Serializable
         this.feature = feature;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "USER", nullable = false)
     public Users getUser()
     {
@@ -68,7 +69,7 @@ public class UserPermissionMatrix implements java.io.Serializable
         this.user = user;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "CREATED_BY", nullable = false)
     public Users getCreatedBy()
     {

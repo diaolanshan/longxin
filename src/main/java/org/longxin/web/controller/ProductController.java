@@ -162,13 +162,12 @@ public class ProductController
         return "redirect:/product/list/" + product.getId();
     }
 
-    @RequestMapping(value = "/delete/{productId}", method = RequestMethod.POST)
-    public void deleteProduct(@PathVariable int productId, Model model)
+    @RequestMapping(value = "/{productId}", method = RequestMethod.DELETE)
+    public @ResponseBody String deleteProduct(@PathVariable int productId, Model model)
     {
-        Product p = productService.getProjectByID(productId);
-        p.setOwner(null);
-        productService.saveProduct(p);
         productService.deleteProduct(productId);
+        
+        return "SUCCESS";
     }
 
     @RequestMapping(value = "/delete/feature/{featureId}", method = RequestMethod.POST)

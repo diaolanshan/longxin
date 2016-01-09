@@ -2,6 +2,7 @@ package org.longxin.service;
 
 import java.util.List;
 
+import org.longxin.domains.FunctionModule;
 import org.longxin.domains.L1Component;
 import org.longxin.domains.Module;
 
@@ -12,6 +13,8 @@ public interface L1ComponentService
 	public L1Component getL1ComponentByIDForDragram(Integer ID);
 	
 	public List<L1Component> getL1ComponentsByModule(Module module);
+	
+	public List<L1Component> getL1ComponentsByFunctionModule(FunctionModule functionModule);
 
 	public void updateL1Component(L1Component l1Component);
 

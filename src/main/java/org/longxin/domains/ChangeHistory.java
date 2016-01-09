@@ -105,7 +105,7 @@ public class ChangeHistory implements java.io.Serializable
         this.updatedat = updatedat;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade= CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade= CascadeType.PERSIST)
     @JoinColumn(name = "OPERATOR")
     public Users getOperator()
     {

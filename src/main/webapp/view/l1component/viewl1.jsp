@@ -41,18 +41,42 @@ String path = request.getContextPath();
     		contentType: "application/json; charset=utf-8",
     		success: function(data){
     			$.each(data, function(idx,item)
-    			{
-    				var downloadlink = "../../filecontroller/download/" + item.id;
-    				var attachment = "<div style='display: inline; width: 10%;float:left; text-align:center' title=" + item.fileName + ">" + "<a href = " + downloadlink + ">" + "<img src='../../images/attachment.png' style='width:40px;border:2px dashed;border-color:#2bc0be'/>" + "</a>" + "<br/>" + item.fileName + "</div>";
-    				$("#attachments").append(attachment);
-    			}
-    			)
+    	    			{
+		    				var downloadlink = "../../filecontroller/download/" + item.id;
+		    				var attachment = "<div style='display: inline; width: 10%;float:left; text-align:center' id='attachment" + item.id + "'><a href = " + downloadlink + "><img src='../../images/attachment.png' style='width:40px;border:2px dashed;border-color:#2bc0be' title=" + item.fileName + "/></a><br/>" + item.fileName + "<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')"><a href='#' onclick='javascript:deleteAttachment(" +item.id + ")'><br/><img src='../../images/delete.png' title='删除'/></a></sec:authorize></div>";
+		    				$("#attachments").append(attachment);
+    	    			}
+    	    			)
     		},
     		error: function(res){
     			alert("Unexpected error! Try again.");
     		}
     	})
 	});
+    
+    function deleteParameterAttachment(attachmentId)
+    {
+    	$.ajax({
+       	      url:"../../filecontroller/L1COMPONENTPARAMETER/" + attachmentId,
+       	      method: "DELETE",
+       	     })
+       	     
+       	  $('#parameterAttachment'+attachmentId).fadeOut(function(){
+    	         document.getElementById("parameterAttachment"+attachmentId).remove(); 
+    	  });
+    }
+    
+    function deleteAttachment(attachmentId)
+    {
+    	$.ajax({
+	   	      url:'<%=path%>/filecontroller/MODULE/'+attachmentId,
+	   	      method: "DELETE",
+	   	     }).done(function(){
+	   	        $('#attachment'+attachmentId).fadeOut(function(){
+	   	         document.getElementById("attachment"+attachmentId).remove(); 
+	   	        });
+	   	    })
+    }
     
     function update(){
     	$("#updateForm").modal('show');
@@ -134,7 +158,7 @@ String path = request.getContextPath();
 		</c:forEach>
 
 		<div class="form-group">
-			<div class="col-sm-offset-6 col-sm-7" style="align: right">
+			<div class="col-sm-offset-7 col-sm-5" style="align: right">
 				<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
 					<c:if test="${isAllowed=='true'}">
 						<a href="#" data-toggle="popover">

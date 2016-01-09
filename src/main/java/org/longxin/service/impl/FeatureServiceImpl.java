@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.longxin.dao.FeatureDAO;
 import org.longxin.dao.L1ComponentDAO;
-import org.longxin.dao.UserPermissionMatrixDAO;
 import org.longxin.domains.Feature;
 import org.longxin.domains.FunctionModule;
 import org.longxin.domains.L1Component;
@@ -19,6 +18,7 @@ import org.longxin.domains.Users;
 import org.longxin.service.FeatureService;
 import org.longxin.service.FunctionModuleService;
 import org.longxin.service.ModuleService;
+import org.longxin.service.UserPermissionMatrixService;
 import org.longxin.util.Roles;
 import org.longxin.web.controller.bean.Matrix;
 import org.longxin.web.controller.bean.MatrixBean;
@@ -40,7 +40,7 @@ public class FeatureServiceImpl implements FeatureService
     L1ComponentDAO l1ComponentDAO;
     
     @Autowired
-    UserPermissionMatrixDAO permissionMatrixDAO;
+    UserPermissionMatrixService userPermissionMatrixService;
     
     public void saveFeatures(List<Feature> features)
     {
@@ -50,11 +50,6 @@ public class FeatureServiceImpl implements FeatureService
         }
     }
 
-    public List<Feature> cloneFeatures(List<Feature> features)
-    {
-        return null;
-    }
-
     public void saveFeature(Feature features)
     {
         featureDAO.saveFeature(features);
@@ -62,6 +57,8 @@ public class FeatureServiceImpl implements FeatureService
 
     public void deleteFeatureById(Integer featureID)
     {
+    	Feature feature = getFeatureByID(featureID);
+    	userPermissionMatrixService.deleteUserFeaturePermissionMatrixByFeature(feature);
         featureDAO.deleteFeatureByID(featureID);
     }
 
@@ -69,6 +66,15 @@ public class FeatureServiceImpl implements FeatureService
     {
         return featureDAO.getFeatureByProduct(product);
     }
+    
+	public void deleteFeatureByProduct(Product product) {
+		List<Feature> features = getFeatureByProduct(product);
+
+		for (Feature feature : features) {
+			userPermissionMatrixService.deleteUserFeaturePermissionMatrixByFeature(feature);
+			deleteFeatureById(feature.getId());
+		}
+	}
     
     public List<Feature> getFeatureByProductAndPermission(Product product, Users user)
     {
@@ -81,7 +87,7 @@ public class FeatureServiceImpl implements FeatureService
         else
         {
             //normal user, need to check the permission.
-            List<UserPermissionMatrix> matrixs = permissionMatrixDAO.getPermissionMatrixsByUserIDs(new int[] {user.getId()});
+            List<UserPermissionMatrix> matrixs = userPermissionMatrixService.getPermissionMatrixsByUserIDs(new int[] {user.getId()});
 
             Iterator<Feature> iterator = features.iterator();  
             while(iterator.hasNext())
