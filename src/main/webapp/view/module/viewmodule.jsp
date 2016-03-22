@@ -49,7 +49,7 @@ String path = request.getContextPath();
     	 $('#deleteL1ComponentButton').click(function()
  	    	    {
  	  				$.ajax({
- 	  			   	      url:"../component" + deleteId,
+ 	  			   	      url:'<%=path%>/module/component/' + deleteId,
  	  			   	      method: "DELETE",
  	  			   	     }).done(function(){
  	  			   	   		 $('#l1component'+deleteId).fadeOut(function(){
