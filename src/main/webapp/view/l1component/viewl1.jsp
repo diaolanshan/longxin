@@ -138,7 +138,7 @@ String path = request.getContextPath();
 						</c:otherwise>
 					</c:choose>
 				</div>
-				<div class="col-sm-4 control-label">
+				<div class="col-sm-3 control-label">
 					<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
 						<c:if test="${isAllowed=='true'}">
 							<a href="#" data-toggle="popover"><label for="fileupload${parameter.id}" class="glyphicon glyphicon-upload" aria-hidden="true" title="上传文件"></label>
@@ -157,8 +157,8 @@ String path = request.getContextPath();
 			</div>
 		</c:forEach>
 
-		<div class="form-group">
-			<div class="col-sm-offset-7 col-sm-5" style="align: right">
+		<div class="form-group" align="right">
+			<div class="col-sm-offset-6 col-sm-6" style="align: right">
 				<sec:authorize access="hasRole('ROLE_TECHNICALSUPPORT')">
 					<c:if test="${isAllowed=='true'}">
 						<a href="#" data-toggle="popover">

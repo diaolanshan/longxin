@@ -68,7 +68,7 @@
 				</div>
 			</fieldset>
 		
-			<div class="form-group">
+			<div class="form-group" align="left">
 				<div class="col-sm-offset-4">
 					<button type="button" class="btn btn-primary"
 						onclick="javascript:showMatrix()">下一步</button>
