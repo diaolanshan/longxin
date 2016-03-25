@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 @Controller
 @RequestMapping("/user")
@@ -31,6 +32,8 @@ public class UserController {
 	@Autowired
 	DepartmentService departmentService;
 
+	@Autowired
+	Md5PasswordEncoder passwordEncoder;
 	/**
 	 * Json response
 	 * @param model
@@ -79,9 +82,10 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String updateUsers(Model model, Users user) {
+	public String addUsers(Model model, Users user) {
 		user.setCreatedat(new Date());
-		userService.editUser(user);
+		user.setPassword(passwordEncoder.encodePassword(user.getPassword(),null));
+		userService.updateUser(user);
 		model.addAttribute("userSearchBean", new UserSearchBean());
 		model.addAttribute(new Users());
 		return "redirect:/user/search";
@@ -91,6 +95,7 @@ public class UserController {
 	public String editUsers(@PathVariable String userId, Model model) {
 		Users user = userService.findUserByID(Integer.valueOf(userId));
 		user.setPasswordAgain(user.getPassword());
+		user.setPasswordTemp(user.getPassword());
 		model.addAttribute("user", user);
 		model.addAttribute("departments", departmentService.getAllDepartments());
 		model.addAttribute("roles", Roles.values());
@@ -99,7 +104,12 @@ public class UserController {
 
 	@RequestMapping(value = "/edit/{userId}", method = RequestMethod.POST)
 	public String editUsers(Model model, @ModelAttribute("user") Users user) {
-		userService.editUser(user);
+		if (!user.getPasswordTemp().equals(user.getPassword()))
+		{
+			//Password of user changed.
+			user.setPassword(passwordEncoder.encodePassword(user.getPassword(),null));
+		}
+		userService.updateUser(user);
 		model.addAttribute(new Users());
 		return "redirect:/user/search";
 	}
@@ -108,6 +118,7 @@ public class UserController {
 	public String editProfile(@PathVariable String userId, Model model) {
 		Users user = userService.findUserByID(Integer.valueOf(userId));
 		user.setPasswordAgain(user.getPassword());
+		user.setPasswordTemp(user.getPassword());
 		model.addAttribute("user", user);
 		model.addAttribute("departments", departmentService.getAllDepartments());
 		model.addAttribute("roles", Roles.values());
@@ -116,7 +127,12 @@ public class UserController {
 
 	@RequestMapping(value = "/profile/{userId}", method = RequestMethod.POST)
 	public String editProfile(Model model, @ModelAttribute("user") Users user) {
-		userService.editUser(user);
+		if (!user.getPasswordTemp().equals(user.getPassword()))
+		{
+			//Password of user changed.
+			user.setPassword(passwordEncoder.encodePassword(user.getPassword(),null));
+		}
+		userService.updateUser(user);
 		model.addAttribute(
 				"user",
 				userService.getUsersByIds(
@@ -137,6 +153,7 @@ public class UserController {
 				.getContext().getAuthentication().getPrincipal();
 		Users user = userService.findUserByUserName(userDetails.getUsername());
 		user.setPasswordAgain(user.getPassword());
+		user.setPasswordTemp(user.getPassword());
 		model.addAttribute("user", user);
 		model.addAttribute("departments", departmentService.getAllDepartments());
 		model.addAttribute("roles", Roles.values());
@@ -145,7 +162,12 @@ public class UserController {
 
 	@RequestMapping(value = "/profile", method = RequestMethod.POST)
 	public String editUser(@ModelAttribute("user") Users user, Model model) {
-		userService.editUser(user);
+		if (!user.getPasswordTemp().equals(user.getPassword()))
+		{
+			//Password of user changed.
+			user.setPassword(passwordEncoder.encodePassword(user.getPassword(),null));
+		}
+		userService.updateUser(user);
 		model.addAttribute(new Users());
 		return "redirect:/user/profile";
 	}

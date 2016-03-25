@@ -48,6 +48,7 @@ public class Users implements java.io.Serializable {
 	private Department department;
 	private String telephone;
 	private String passwordAgain;
+	private String passwordTemp;
 	private int loginCount; 
 	private Date lastLogin;
 	@SuppressWarnings("unused")
@@ -171,6 +172,15 @@ public class Users implements java.io.Serializable {
 	public void setPasswordAgain(String passwordAgain)
 	{
 		this.passwordAgain = passwordAgain;
+	}
+	
+	@Transient
+	public String getPasswordTemp() {
+		return passwordTemp;
+	}
+
+	public void setPasswordTemp(String passwordTemp) {
+		this.passwordTemp = passwordTemp;
 	}
 
 	@Column(name = "LOGIN_COUNT", length = 256)

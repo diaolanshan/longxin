@@ -72,6 +72,7 @@
 				<div class="col-sm-10">
 					<form:input type="password" class="form-control" id="passwordagain"
 						placeholder="再次输入密码" path="passwordAgain" />
+					<form:input type="password" class="form-control" id="passwordTemp" path="passwordTemp" style="display:none"/>
 				</div>
 			</div>
 

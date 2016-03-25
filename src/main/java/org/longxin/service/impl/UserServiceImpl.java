@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService{
 		userDAO.saveUser(user);
 	}
 
-	public void editUser(Users user) {
+	public void updateUser(Users user) {
 		userDAO.editUser(user);
 	}
 

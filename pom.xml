@@ -220,7 +220,7 @@
       			<version>2.4</version>
    			 </dependency>
 	</dependencies>
-	<build>
+	<!-- <build>
 		<finalName>longxin</finalName>
 		<plugins>
 			<plugin>
@@ -249,5 +249,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</build>
+	</build> -->
 </project>
